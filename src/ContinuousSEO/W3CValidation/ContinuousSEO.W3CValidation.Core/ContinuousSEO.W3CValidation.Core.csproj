@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Css\CssValidator.cs" />
+    <Compile Include="Css\CssValidatorResult.cs" />
+    <Compile Include="Css\CssValidatorSettings.cs" />
     <Compile Include="Html\HtmlValidator.cs" />
     <Compile Include="Html\HtmlValidatorResult.cs" />
     <Compile Include="Html\HtmlValidatorSettings.cs" />
@@ -48,9 +51,7 @@
     <Compile Include="OutputFormat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Css\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

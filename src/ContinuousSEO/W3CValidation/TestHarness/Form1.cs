@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using ContinuousSEO.W3CValidation.Core;
 using ContinuousSEO.W3CValidation.Core.Html;
+using ContinuousSEO.W3CValidation.Core.Css;
 
 namespace TestHarness
 {
@@ -55,6 +56,31 @@ namespace TestHarness
             settings.DocType = "HTML 4.01 Transitional";
 
             result = validator.Validate(@"F:\TestW3C\ResponseFragment.xml", OutputFormat.Soap12, fragment, InputFormat.Fragment, settings);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            CssValidator validator = new CssValidator();
+
+            CssValidatorSettings settings = new CssValidatorSettings();
+
+            CssValidatorResult result = null;
+
+
+            //result = validator.Validate(@"F:\TestW3C\ResponseCss.html", OutputFormat.Html, "http://www.shuttercontractor.com/App_Themes/Theme3/styles.css", InputFormat.Uri, settings);
+
+            //result = validator.Validate(@"F:\TestW3C\ResponseCss.xml", OutputFormat.Soap12, "http://www.shuttercontractor.com/App_Themes/Theme3/styles.css", InputFormat.Uri, settings);
+
+
+            string fragment = @"h1,h2,h3,h4,h5,h6 { padding:0; margin:0; border:0; outline:0; }";
+
+            StreamReader sr = File.OpenText(@"F:\TestW3C\Test.css");
+            fragment = sr.ReadToEnd();
+
+            result = validator.Validate(@"F:\TestW3C\ResponseCssFragment.xml", OutputFormat.Soap12, fragment, InputFormat.Fragment, settings);
+
+
+
         }
     }
 }
