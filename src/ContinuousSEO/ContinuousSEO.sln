@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "W3CValidation", "W3CValidation", "{ED7A14ED-29EA-47F5-BE22-174EAB9C19DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinuousSEO.W3CValidation.Core", "W3CValidation\ContinuousSEO.W3CValidation.Core\ContinuousSEO.W3CValidation.Core.csproj", "{916D4789-55E0-4588-A648-3BA18D9A4B7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinuousSEO.W3CValidation.Runner", "W3CValidation\ContinuousSEO.W3CValidation.Runner\ContinuousSEO.W3CValidation.Runner.csproj", "{D44CE491-B37A-4F8B-A416-14D33C1694F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{916D4789-55E0-4588-A648-3BA18D9A4B7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{916D4789-55E0-4588-A648-3BA18D9A4B7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{916D4789-55E0-4588-A648-3BA18D9A4B7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{916D4789-55E0-4588-A648-3BA18D9A4B7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D44CE491-B37A-4F8B-A416-14D33C1694F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D44CE491-B37A-4F8B-A416-14D33C1694F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D44CE491-B37A-4F8B-A416-14D33C1694F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D44CE491-B37A-4F8B-A416-14D33C1694F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{916D4789-55E0-4588-A648-3BA18D9A4B7D} = {ED7A14ED-29EA-47F5-BE22-174EAB9C19DA}
+		{D44CE491-B37A-4F8B-A416-14D33C1694F3} = {ED7A14ED-29EA-47F5-BE22-174EAB9C19DA}
+	EndGlobalSection
+EndGlobal
