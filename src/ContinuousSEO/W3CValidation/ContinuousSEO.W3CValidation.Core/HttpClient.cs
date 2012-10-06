@@ -54,14 +54,9 @@ namespace ContinuousSEO.W3CValidation.Core
 
                 if (!headersOnly)
                 {
-                    Stream responseStream = response.GetResponseStream();
-                    try
+                    using (Stream responseStream = response.GetResponseStream())
                     {
                         responseStream.CopyTo(output);
-                    }
-                    finally
-                    {
-                        responseStream.Close();
                     }
                 }
             }
@@ -78,14 +73,9 @@ namespace ContinuousSEO.W3CValidation.Core
             request.ContentLength = dataBytes.Length;
 
             // Load the request data
-            Stream requestStream = request.GetRequestStream();
-            try
+            using (Stream requestStream = request.GetRequestStream())
             {
                 requestStream.Write(dataBytes, 0, dataBytes.Length);
-            }
-            finally
-            {
-                requestStream.Close();
             }
         }
 

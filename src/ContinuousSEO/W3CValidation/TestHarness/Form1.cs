@@ -71,19 +71,19 @@ namespace TestHarness
             CssValidatorResult result = null;
 
 
-            //result = validator.Validate(@"F:\TestW3C\ResponseCss.html", OutputFormat.Html, "http://www.shuttercontractor.com/App_Themes/Theme3/styles.css", InputFormat.Uri, settings);
+            result = validator.Validate(@"F:\TestW3C-3\ResponseCss.html", OutputFormat.Html, "http://www.shuttercontractor.com/App_Themes/Theme3/styles.css", InputFormat.Uri, settings);
 
             //result = validator.Validate(@"F:\TestW3C\ResponseCss.xml", OutputFormat.Soap12, "http://www.shuttercontractor.com/App_Themes/Theme3/styles.css", InputFormat.Uri, settings);
 
 
-            string fragment = @"h1,h2,h3,h4,h5,h6 { padding:0; margin:0; border:0; outline:0; }";
+            //string fragment = @"h1,h2,h3,h4,h5,h6 { padding:0; margin:0; border:0; outline:0; }";
 
-            StreamReader sr = File.OpenText(@"F:\TestW3C\Test.css");
-            fragment = sr.ReadToEnd();
+            //StreamReader sr = File.OpenText(@"F:\TestW3C\Test.css");
+            //fragment = sr.ReadToEnd();
 
-            //result = validator.Validate(@"F:\TestW3C\ResponseCssFragment.xml", OutputFormat.Soap12, fragment, InputFormat.Fragment, settings);
+            ////result = validator.Validate(@"F:\TestW3C\ResponseCssFragment.xml", OutputFormat.Soap12, fragment, InputFormat.Fragment, settings);
 
-            result = validator.Validate(fragment, InputFormat.Fragment, settings);
+            //result = validator.Validate(fragment, InputFormat.Fragment, settings);
 
 
         }

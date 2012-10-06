@@ -134,15 +134,9 @@ namespace ContinuousSEO.W3CValidation.Core.Html
                 resourceCopier.CopyResources(directory);
             }
 
-            FileStream output = new FileStream(filename, FileMode.Create);
-            try
+            using (FileStream output = new FileStream(filename, FileMode.Create))
             {
                 result = Validate(output, outputFormat, input, inputFormat, settings, validatorAddress);
-            }
-            finally
-            {
-                output.Flush();
-                output.Dispose();
             }
 
             return result;

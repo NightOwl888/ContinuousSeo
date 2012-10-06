@@ -21,6 +21,11 @@ namespace ContinuousSEO.W3CValidation.Core.Css
         {
             var map = new Dictionary<string, string>();
 
+            map.Add(@"ContinuousSEO.W3CValidation.Core.Resources.images.info_icons.error.png", @"images\info_icons\error.png");
+            map.Add(@"ContinuousSEO.W3CValidation.Core.Resources.images.info_icons.info.png", @"images\info_icons\info.png");
+            map.Add(@"ContinuousSEO.W3CValidation.Core.Resources.images.info_icons.ok.png", @"images\info_icons\ok.png");
+            map.Add(@"ContinuousSEO.W3CValidation.Core.Resources.images.info_icons.warning.png", @"images\info_icons\warning.png");
+            map.Add(@"ContinuousSEO.W3CValidation.Core.Resources.images.w3c.png", @"images\w3c.png");
             map.Add(@"ContinuousSEO.W3CValidation.Core.Resources.style.base.css", @"style\base.css");
             map.Add(@"ContinuousSEO.W3CValidation.Core.Resources.style.results.css", @"style\results.css");
 
