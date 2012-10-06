@@ -40,8 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Css\CssValidator.cs" />
+    <Compile Include="Css\CssValidatorResourceCopier.cs" />
     <Compile Include="Css\CssValidatorResult.cs" />
     <Compile Include="Css\CssValidatorSettings.cs" />
+    <Compile Include="Html\HtmlValidatorResourceCopier.cs" />
     <Compile Include="Html\HtmlValidatorSoap12ResponseParser.cs" />
     <Compile Include="Html\HtmlValidator.cs" />
     <Compile Include="Html\HtmlValidatorResult.cs" />
@@ -51,8 +53,22 @@
     <Compile Include="InputFormat.cs" />
     <Compile Include="OutputFormat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceCopier.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\images\info_icons\error.png" />
+    <EmbeddedResource Include="Resources\images\info_icons\info.png" />
+    <EmbeddedResource Include="Resources\images\info_icons\ok.png" />
+    <EmbeddedResource Include="Resources\images\info_icons\warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\images\opensource-55x48.png" />
+    <EmbeddedResource Include="Resources\images\w3c.png" />
+    <EmbeddedResource Include="Resources\style\base.css" />
+    <EmbeddedResource Include="Resources\style\base" />
+    <EmbeddedResource Include="Resources\style\results.css" />
+    <EmbeddedResource Include="Resources\style\results" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -22,15 +22,17 @@ namespace ContinuousSEO.W3CValidation.Core.Css
 
         const string defaultValidatorAddress = "http://jigsaw.w3.org/css-validator/validator";
         private IHttpClient httpClient;
+        private ResourceCopier resourceCopier;
 
         public CssValidator() :
-            this(new HttpClient())
+            this(new HttpClient(), new CssValidatorResourceCopier())
         {
         }
 
-        public CssValidator(IHttpClient httpClient)
+        public CssValidator(IHttpClient httpClient, ResourceCopier resourceCopier)
         {
             this.httpClient = httpClient;
+            this.resourceCopier = resourceCopier;
         }
 
         #region Validate Methods Without Payload (Status Only)
@@ -123,6 +125,13 @@ namespace ContinuousSEO.W3CValidation.Core.Css
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
+            }
+
+            if (outputFormat == OutputFormat.Html)
+            {
+                // Copy the resources to the output directory if they don't already exist.
+                // This is to ensure all dependencies of the HTML document are there.
+                resourceCopier.CopyResources(directory);
             }
 
             FileStream output = new FileStream(filename, FileMode.Create);
