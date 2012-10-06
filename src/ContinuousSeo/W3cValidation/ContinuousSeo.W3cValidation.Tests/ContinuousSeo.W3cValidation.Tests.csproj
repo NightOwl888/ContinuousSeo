@@ -8,8 +8,8 @@
     <ProjectGuid>{724AAAE8-0CF7-4570-BC6D-CA0DCDF28931}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContinuousSEO.W3CValidation.Tests</RootNamespace>
-    <AssemblyName>ContinuousSEO.W3CValidation.Tests</AssemblyName>
+    <RootNamespace>ContinuousSeo.W3cValidation.Tests</RootNamespace>
+    <AssemblyName>ContinuousSeo.W3cValidation.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -46,13 +46,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ContinuousSEO.W3CValidation.Core\ContinuousSEO.W3CValidation.Core.csproj">
+    <ProjectReference Include="..\ContinuousSeo.W3cValidation.Core\ContinuousSeo.W3cValidation.Core.csproj">
       <Project>{916D4789-55E0-4588-A648-3BA18D9A4B7D}</Project>
-      <Name>ContinuousSEO.W3CValidation.Core</Name>
+      <Name>ContinuousSeo.W3cValidation.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ContinuousSEO.W3CValidation.Runner\ContinuousSEO.W3CValidation.Runner.csproj">
+    <ProjectReference Include="..\ContinuousSeo.W3cValidation.Runner\ContinuousSeo.W3cValidation.Runner.csproj">
       <Project>{D44CE491-B37A-4F8B-A416-14D33C1694F3}</Project>
-      <Name>ContinuousSEO.W3CValidation.Runner</Name>
+      <Name>ContinuousSeo.W3cValidation.Runner</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

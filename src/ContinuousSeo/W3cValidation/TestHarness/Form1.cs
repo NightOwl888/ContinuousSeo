@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using ContinuousSEO.W3CValidation.Core;
-using ContinuousSEO.W3CValidation.Core.Html;
-using ContinuousSEO.W3CValidation.Core.Css;
+using ContinuousSeo.W3cValidation.Core;
+using ContinuousSeo.W3cValidation.Core.Html;
+using ContinuousSeo.W3cValidation.Core.Css;
 
 namespace TestHarness
 {

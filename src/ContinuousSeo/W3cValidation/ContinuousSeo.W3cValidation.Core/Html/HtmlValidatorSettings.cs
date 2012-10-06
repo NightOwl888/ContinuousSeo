@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSEO.W3CValidation.Core.Html
+namespace ContinuousSeo.W3cValidation.Core.Html
 {
 
 

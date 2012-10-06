@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using NUnit.Framework;
-using ContinuousSEO.W3CValidation.Core;
-using ContinuousSEO.W3CValidation.Core.Html;
+using ContinuousSeo.W3cValidation.Core;
+using ContinuousSeo.W3cValidation.Core.Html;
 
-namespace ContinuousSEO.W3CValidation.Tests.Core
+namespace ContinuousSeo.W3cValidation.Tests.Core
 {
     [TestFixture]
     public class HtmlValidatorTests

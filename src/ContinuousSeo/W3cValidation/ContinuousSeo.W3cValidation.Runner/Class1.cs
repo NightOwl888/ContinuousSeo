@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ContinuousSEO.W3CValidation.Runner
+namespace ContinuousSeo.W3cValidation.Runner
 {
     public class Class1
     {

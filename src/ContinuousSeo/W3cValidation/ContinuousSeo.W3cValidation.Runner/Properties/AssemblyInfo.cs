@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ContinuousSEO.W3CValidation.Runner")]
+[assembly: AssemblyTitle("ContinuousSeo.W3cValidation.Runner")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ContinuousSEO.W3CValidation.Runner")]
+[assembly: AssemblyProduct("ContinuousSeo.W3cValidation.Runner")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

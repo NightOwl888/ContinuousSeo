@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "W3CValidation", "W3CValidation", "{ED7A14ED-29EA-47F5-BE22-174EAB9C19DA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "W3cValidation", "W3cValidation", "{ED7A14ED-29EA-47F5-BE22-174EAB9C19DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinuousSEO.W3CValidation.Core", "W3CValidation\ContinuousSEO.W3CValidation.Core\ContinuousSEO.W3CValidation.Core.csproj", "{916D4789-55E0-4588-A648-3BA18D9A4B7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinuousSeo.W3cValidation.Core", "W3cValidation\ContinuousSeo.W3cValidation.Core\ContinuousSeo.W3cValidation.Core.csproj", "{916D4789-55E0-4588-A648-3BA18D9A4B7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinuousSEO.W3CValidation.Runner", "W3CValidation\ContinuousSEO.W3CValidation.Runner\ContinuousSEO.W3CValidation.Runner.csproj", "{D44CE491-B37A-4F8B-A416-14D33C1694F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinuousSeo.W3cValidation.Runner", "W3cValidation\ContinuousSeo.W3cValidation.Runner\ContinuousSeo.W3cValidation.Runner.csproj", "{D44CE491-B37A-4F8B-A416-14D33C1694F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinuousSEO.W3CValidation.Tests", "W3CValidation\ContinuousSEO.W3CValidation.Tests\ContinuousSEO.W3CValidation.Tests.csproj", "{724AAAE8-0CF7-4570-BC6D-CA0DCDF28931}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinuousSeo.W3cValidation.Tests", "W3cValidation\ContinuousSeo.W3cValidation.Tests\ContinuousSeo.W3cValidation.Tests.csproj", "{724AAAE8-0CF7-4570-BC6D-CA0DCDF28931}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "W3CValidation\TestHarness\TestHarness.csproj", "{33AF7A56-5855-4337-9291-F0080869D254}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "W3cValidation\TestHarness\TestHarness.csproj", "{33AF7A56-5855-4337-9291-F0080869D254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

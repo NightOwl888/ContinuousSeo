@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSEO.W3CValidation.Core
+namespace ContinuousSeo.W3cValidation.Core
 {
     using System;
     using System.Collections.Generic;

@@ -8,8 +8,8 @@
     <ProjectGuid>{916D4789-55E0-4588-A648-3BA18D9A4B7D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContinuousSEO.W3CValidation.Core</RootNamespace>
-    <AssemblyName>ContinuousSEO.W3CValidation.Core</AssemblyName>
+    <RootNamespace>ContinuousSeo.W3cValidation.Core</RootNamespace>
+    <AssemblyName>ContinuousSeo.W3cValidation.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

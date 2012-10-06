@@ -8,8 +8,8 @@
     <ProjectGuid>{D44CE491-B37A-4F8B-A416-14D33C1694F3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContinuousSEO.W3CValidation.Runner</RootNamespace>
-    <AssemblyName>ContinuousSEO.W3CValidation.Runner</AssemblyName>
+    <RootNamespace>ContinuousSeo.W3cValidation.Runner</RootNamespace>
+    <AssemblyName>ContinuousSeo.W3cValidation.Runner</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -42,9 +42,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ContinuousSEO.W3CValidation.Core\ContinuousSEO.W3CValidation.Core.csproj">
+    <ProjectReference Include="..\ContinuousSeo.W3cValidation.Core\ContinuousSeo.W3cValidation.Core.csproj">
       <Project>{916D4789-55E0-4588-A648-3BA18D9A4B7D}</Project>
-      <Name>ContinuousSEO.W3CValidation.Core</Name>
+      <Name>ContinuousSeo.W3cValidation.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
