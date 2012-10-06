@@ -8,7 +8,7 @@ namespace ContinuousSEO.W3CValidation.Core.Html
 {
 
     /// <summary>
-    /// The resultant header information from the API.
+    /// The resultant header information from the W3C HTML Validation API.
     /// </summary>
     public class HtmlValidatorResult
     {

@@ -55,7 +55,9 @@ namespace TestHarness
 
             settings.DocType = "HTML 4.01 Transitional";
 
-            result = validator.Validate(@"F:\TestW3C\ResponseFragment.xml", OutputFormat.Soap12, fragment, InputFormat.Fragment, settings);
+            //result = validator.Validate(@"F:\TestW3C\ResponseFragment.xml", OutputFormat.Soap12, fragment, InputFormat.Fragment, settings);
+
+            result = validator.Validate(fragment, InputFormat.Fragment);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -77,8 +79,9 @@ namespace TestHarness
             StreamReader sr = File.OpenText(@"F:\TestW3C\Test.css");
             fragment = sr.ReadToEnd();
 
-            result = validator.Validate(@"F:\TestW3C\ResponseCssFragment.xml", OutputFormat.Soap12, fragment, InputFormat.Fragment, settings);
+            //result = validator.Validate(@"F:\TestW3C\ResponseCssFragment.xml", OutputFormat.Soap12, fragment, InputFormat.Fragment, settings);
 
+            result = validator.Validate(fragment, InputFormat.Fragment, settings);
 
 
         }

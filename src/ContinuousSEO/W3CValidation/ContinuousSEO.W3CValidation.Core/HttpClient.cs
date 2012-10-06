@@ -15,7 +15,8 @@ namespace ContinuousSEO.W3CValidation.Core
     using System.Net;
 
     /// <summary>
-    /// Used to send either a Get or Post request, filling the request body as appropriate.
+    /// Used to send either a Get or Post request, filling the request body as appropriate
+    /// and returning the payload if the output stream is not null.
     /// </summary>
     public class HttpClient : IHttpClient
     {
@@ -28,15 +29,12 @@ namespace ContinuousSEO.W3CValidation.Core
 
         public NameValueCollection Post(Stream output, string url, string data)
         {
-            if (output == null)
-            {
-                throw new ArgumentNullException("output");
-            }
-
             if (string.IsNullOrEmpty(url))
             {
                 throw new ArgumentNullException("url");
             }
+
+            bool headersOnly = (output == null);
 
             NameValueCollection result = new NameValueCollection();
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -49,17 +47,23 @@ namespace ContinuousSEO.W3CValidation.Core
             // Get the response from the server
             WebResponse response = request.GetResponse();
 
-            // Get the headers
-            result.Add(response.Headers);
+            if (response != null && response.Headers != null)
+            {
+                // Get the headers
+                result.Add(response.Headers);
 
-            Stream responseStream = response.GetResponseStream();
-            try
-            {
-                responseStream.CopyTo(output);
-            }
-            finally
-            {
-                responseStream.Close();
+                if (!headersOnly)
+                {
+                    Stream responseStream = response.GetResponseStream();
+                    try
+                    {
+                        responseStream.CopyTo(output);
+                    }
+                    finally
+                    {
+                        responseStream.Close();
+                    }
+                }
             }
            
             return result;

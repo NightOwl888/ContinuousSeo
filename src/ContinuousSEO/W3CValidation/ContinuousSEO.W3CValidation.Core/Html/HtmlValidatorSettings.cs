@@ -9,24 +9,21 @@ namespace ContinuousSEO.W3CValidation.Core.Html
 
 
     /// <summary>
-    /// The settings to be passed in to the HTML W3C validator API.
+    /// Advanced settings to be passed in to the HTML W3C validator API. These
+    /// settings are documented at http://validator.w3.org/docs/api.html#requestformat.
     /// </summary>
     public class HtmlValidatorSettings
     {
-        public HtmlValidatorSettings()
-        {
-            //Verbose = true;
-            //Debug = true;
-            //ShowSource = true;
-            //Outline = true;
-            //OutputFormat = OutputFormat.Html;
-            //InputFormat = InputFormat.Uri;
+        //public HtmlValidatorSettings()
+        //{
+        //    //Verbose = true;
+        //    //Debug = true;
+        //    //ShowSource = true;
+        //    //Outline = true;
 
-            Verbose = false;
-        }
+        //    Verbose = false;
+        //}
 
-        //public InputFormat InputFormat { get; set; }
-        //public OutputFormat OutputFormat { get; set; }
         public string CharSet { get; set; }
         public string DocType { get; set; }
         public bool Verbose { get; set; }

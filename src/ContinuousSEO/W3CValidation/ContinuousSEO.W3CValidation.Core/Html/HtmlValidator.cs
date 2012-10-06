@@ -13,7 +13,10 @@ namespace ContinuousSEO.W3CValidation.Core.Html
     using System.Collections.Specialized;
 
     /// <summary>
-    /// Wraps the W3C Validator web service at http://validator.w3.org/ and provides the ability to output as either SOAP or HTML.
+    /// Class that contains methods that wrap the W3C HTML Validation API at 
+    /// http://validator.w3.org/. These methods allow for quick header-only 
+    /// inspection of status or to write the output in either SOAP or HTML 
+    /// format to a file or stream.
     /// </summary>
     public class HtmlValidator
     {
@@ -30,7 +33,51 @@ namespace ContinuousSEO.W3CValidation.Core.Html
             this.httpClient = httpClient;
         }
 
-        #region Validate File Methods
+        #region Validate Methods Without Payload (Status Only)
+
+        public HtmlValidatorResult Validate(string input)
+        {
+            return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, new HtmlValidatorSettings(), defaultValidatorAddress);
+        }
+
+        public HtmlValidatorResult Validate(string input, HtmlValidatorSettings settings)
+        {
+            return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, settings, defaultValidatorAddress);
+        }
+
+        public HtmlValidatorResult Validate(string input, InputFormat inputFormat)
+        {
+            return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, new HtmlValidatorSettings(), defaultValidatorAddress);
+        }
+
+        public HtmlValidatorResult Validate(string input, InputFormat inputFormat, HtmlValidatorSettings settings)
+        {
+            return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, settings, defaultValidatorAddress);
+        }
+
+        //public HtmlValidatorResult Validate(string input, string validatorAddress)
+        //{
+        //    return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, new HtmlValidatorSettings(), validatorAddress);
+        //}
+
+        public HtmlValidatorResult Validate(string input, HtmlValidatorSettings settings, string validatorAddress)
+        {
+            return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, settings, validatorAddress);
+        }
+
+        public HtmlValidatorResult Validate(string input, InputFormat inputFormat, string validatorAddress)
+        {
+            return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, new HtmlValidatorSettings(), validatorAddress);
+        }
+
+        public HtmlValidatorResult Validate(string input, InputFormat inputFormat, HtmlValidatorSettings settings, string validatorAddress)
+        {
+            return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, settings, validatorAddress);
+        }
+
+        #endregion
+
+        #region Validate Methods (Write to File)
 
         public HtmlValidatorResult Validate(string filename, string input)
         {
@@ -94,7 +141,7 @@ namespace ContinuousSEO.W3CValidation.Core.Html
 
         #endregion
 
-        #region Validate Stream Methods
+        #region Validate Methods (Write to Stream)
 
         public HtmlValidatorResult Validate(Stream output, string input)
         {
@@ -133,11 +180,6 @@ namespace ContinuousSEO.W3CValidation.Core.Html
 
         public HtmlValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, HtmlValidatorSettings settings, string validatorAddress)
         {
-            if (output == null)
-            {
-                throw new ArgumentNullException("output");
-            }
-
             if (string.IsNullOrEmpty(input))
             {
                 throw new ArgumentNullException("input");
@@ -147,7 +189,7 @@ namespace ContinuousSEO.W3CValidation.Core.Html
             {
                 throw new ArgumentNullException("settings");
             }
-            
+
             if (string.IsNullOrEmpty(validatorAddress))
                 validatorAddress = defaultValidatorAddress;
 

@@ -42,6 +42,7 @@
     <Compile Include="Css\CssValidator.cs" />
     <Compile Include="Css\CssValidatorResult.cs" />
     <Compile Include="Css\CssValidatorSettings.cs" />
+    <Compile Include="Html\HtmlValidatorSoap12ResponseParser.cs" />
     <Compile Include="Html\HtmlValidator.cs" />
     <Compile Include="Html\HtmlValidatorResult.cs" />
     <Compile Include="Html\HtmlValidatorSettings.cs" />

@@ -12,7 +12,7 @@ namespace ContinuousSEO.W3CValidation.Core.Css
     using System.Text;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// The resultant header information from the W3C CSS Validation API.
     /// </summary>
     public class CssValidatorResult
     {

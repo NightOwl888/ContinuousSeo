@@ -12,16 +12,17 @@ namespace ContinuousSEO.W3CValidation.Core.Css
     using System.Text;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Advanced settings to be passed in to the CSS W3C validator API. These
+    /// settings are documented at http://jigsaw.w3.org/css-validator/manual.html#requestformat.
     /// </summary>
     public class CssValidatorSettings
     {
-        public CssValidatorSettings()
-        {
-            CssProfile = "css2";
-            Language = "en";
-            WarningLevel = "2";
-        }
+        //public CssValidatorSettings()
+        //{
+        //    CssProfile = "css2";
+        //    Language = "en";
+        //    WarningLevel = "2";
+        //}
 
         public string UserMedium { get; set; }
         public string CssProfile { get; set; }
