@@ -3,16 +3,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <ProductVersion>
+    </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D44CE491-B37A-4F8B-A416-14D33C1694F3}</ProjectGuid>
+    <ProjectGuid>{CEBE5A40-BD2A-4B15-999B-C40D47F33942}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContinuousSeo.W3cValidation.Runner</RootNamespace>
-    <AssemblyName>ContinuousSeo.W3cValidation.Runner</AssemblyName>
+    <RootNamespace>TestProject1</RootNamespace>
+    <AssemblyName>TestProject1</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,7 +23,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,25 +33,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parser\HtmlUrlFileLineInfo.cs" />
-    <Compile Include="Parser\HtmlUrlFileParser.cs" />
-    <Compile Include="Parser\IUrlFileLineInfo.cs" />
-    <Compile Include="Parser\IUrlFileParser.cs" />
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HtmlUrlFileParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ContinuousSeo.W3cValidation.Core\ContinuousSeo.W3cValidation.Core.csproj">
+    <Shadow Include="Test References\ContinuousSeo.W3cValidation.Runner.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\W3cValidation\ContinuousSeo.W3cValidation.Core\ContinuousSeo.W3cValidation.Core.csproj">
       <Project>{916D4789-55E0-4588-A648-3BA18D9A4B7D}</Project>
       <Name>ContinuousSeo.W3cValidation.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\W3cValidation\ContinuousSeo.W3cValidation.Runner\ContinuousSeo.W3cValidation.Runner.csproj">
+      <Project>{D44CE491-B37A-4F8B-A416-14D33C1694F3}</Project>
+      <Name>ContinuousSeo.W3cValidation.Runner</Name>
+    </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

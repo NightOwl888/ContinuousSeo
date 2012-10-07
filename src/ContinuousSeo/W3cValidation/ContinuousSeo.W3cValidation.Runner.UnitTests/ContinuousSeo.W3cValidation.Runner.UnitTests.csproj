@@ -5,14 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D44CE491-B37A-4F8B-A416-14D33C1694F3}</ProjectGuid>
+    <ProjectGuid>{68B7E3BC-596A-4130-B9A0-BFAB94030394}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContinuousSeo.W3cValidation.Runner</RootNamespace>
-    <AssemblyName>ContinuousSeo.W3cValidation.Runner</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>ContinuousSeo.W3cValidation.Runner.UnitTests</RootNamespace>
+    <AssemblyName>ContinuousSeo.W3cValidation.Runner.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.0.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,22 +32,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\tools\NUnit\framework\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parser\HtmlUrlFileLineInfo.cs" />
-    <Compile Include="Parser\HtmlUrlFileParser.cs" />
-    <Compile Include="Parser\IUrlFileLineInfo.cs" />
-    <Compile Include="Parser\IUrlFileParser.cs" />
+    <Compile Include="HtmlUrlFileParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ContinuousSeo.W3cValidation.Core\ContinuousSeo.W3cValidation.Core.csproj">
-      <Project>{916D4789-55E0-4588-A648-3BA18D9A4B7D}</Project>
-      <Name>ContinuousSeo.W3cValidation.Core</Name>
+    <ProjectReference Include="..\ContinuousSeo.W3cValidation.Runner\ContinuousSeo.W3cValidation.Runner.csproj">
+      <Project>{D44CE491-B37A-4F8B-A416-14D33C1694F3}</Project>
+      <Name>ContinuousSeo.W3cValidation.Runner</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
