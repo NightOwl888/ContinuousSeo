@@ -1,12 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
-using ContinuousSeo.W3cValidation.Runner.Parser;
-
 namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.IO;
+    using System.Linq;
+    using NUnit.Framework;
+    using ContinuousSeo.W3cValidation.Runner.Parser;
+
     [TestFixture]
     public class UrlFileParserTests
     {
@@ -165,8 +166,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             var result = target.ParseLine(line, args);
 
             // assert
-            UrlFileLineInfo actual = result;
-            UrlFileLineInfo expected = null;
+            IUrlFileLineInfo actual = result;
+            IUrlFileLineInfo expected = null;
 
             Assert.AreEqual(expected, actual);
         }
@@ -183,8 +184,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             var result = target.ParseLine(line, args);
 
             // assert
-            UrlFileLineInfo actual = result;
-            UrlFileLineInfo expected = null;
+            IUrlFileLineInfo actual = result;
+            IUrlFileLineInfo expected = null;
 
             Assert.AreEqual(expected, actual);
         }
@@ -193,7 +194,55 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
         #region ParseFile Method
 
+        private void WriteLinesToStream(Stream stream, string[] lines)
+        {
+            StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
+            foreach (string line in lines)
+            {
+                writer.WriteLine(line);
+            }
+            // Flush the writer
+            writer.Flush();
 
+            // Leave StreamWriter open or the underlying stream will be closed
+
+            // Reset stream to beginning
+            stream.Position = 0;
+        }
+
+        private void WriteStreamWith4Urls(Stream stream)
+        {
+            List<String> lines = new List<String>();
+            lines.Add("http://www.google.com/\tsingle");
+            lines.Add("http://www.google.com/test.aspx\tsingle");
+            lines.Add("http://www.google.com/test2.aspx\tsingle");
+            lines.Add("http://www.google.com/test3.aspx\tsingle");
+            WriteLinesToStream(stream, lines.ToArray());
+        }
+
+        [Test]
+        public void ParseFile_ValidStreamWith4Urls_ShouldReturn4Urls()
+        {
+            // arrange
+            string[] args = new string[] { };
+            UrlFileParser target = new UrlFileParser();
+            IEnumerable<IUrlFileLineInfo> result;
+
+            using (Stream file = new MemoryStream())
+            {
+                WriteStreamWith4Urls(file);
+
+            // act
+                result = target.ParseFile(file, args);
+            }
+
+
+            // assert
+            var actual = result.Count();
+            var expected = 4;
+
+            Assert.AreEqual(expected, actual);
+        }
 
         #endregion
 

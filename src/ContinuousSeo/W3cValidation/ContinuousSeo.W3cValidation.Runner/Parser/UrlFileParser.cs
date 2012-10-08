@@ -10,6 +10,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Parser
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.IO;
 
     /// <summary>
     /// TODO: Update summary.
@@ -26,7 +27,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Parser
         /// formatting syntax. For example, the string {0} will be replaced by the first argument in this array, 
         /// the string {1} by the second, and so forth.</param>
         /// <returns>A <see cref="IUrlFileLineInfo"/> object.</returns>
-        public UrlFileLineInfo ParseLine(string line, string[] urlReplacementArgs)
+        public IUrlFileLineInfo ParseLine(string line, string[] urlReplacementArgs)
         {
             if (string.IsNullOrEmpty(line))
                 return null;
@@ -55,6 +56,31 @@ namespace ContinuousSeo.W3cValidation.Runner.Parser
             return result;
         }
 
+        public IEnumerable<IUrlFileLineInfo> ParseFile(Stream file, string[] urlReplacementArgs)
+        {
+            List<IUrlFileLineInfo> result = new List<IUrlFileLineInfo>();
+            using (StreamReader reader = new StreamReader(file))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    result.Add(ParseLine(line, urlReplacementArgs));
+                }
+            }
+            return result;
+        }
+
+        public IEnumerable<IUrlFileLineInfo> ParseFile(string path, string[] urlReplacementArgs)
+        {
+            using (FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                return ParseFile(file, urlReplacementArgs);
+            }
+        }
+
+
         #endregion
+
+
     }
 }

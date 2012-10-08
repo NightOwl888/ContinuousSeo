@@ -7,12 +7,15 @@
 namespace ContinuousSeo.W3cValidation.Runner.Parser
 {
     using System;
+    using System.Collections.Generic;
+    using System.IO;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public interface IUrlFileParser
     {
-        UrlFileLineInfo ParseLine(string line, string[] urlReplacementArgs);
+        IUrlFileLineInfo ParseLine(string line, string[] urlReplacementArgs);
+        IEnumerable<IUrlFileLineInfo> ParseFile(Stream file, string[] urlReplacementArgs);
     }
 }

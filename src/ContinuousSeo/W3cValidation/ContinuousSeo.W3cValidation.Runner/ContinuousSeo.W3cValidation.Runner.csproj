@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Parser\IUrlFileLineInfo.cs" />
     <Compile Include="Parser\UrlFileLineInfo.cs" />
     <Compile Include="Parser\UrlFileParser.cs" />
     <Compile Include="Parser\IUrlFileParser.cs" />
@@ -49,6 +50,9 @@
       <Project>{916D4789-55E0-4588-A648-3BA18D9A4B7D}</Project>
       <Name>ContinuousSeo.W3cValidation.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UrlProcessor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
