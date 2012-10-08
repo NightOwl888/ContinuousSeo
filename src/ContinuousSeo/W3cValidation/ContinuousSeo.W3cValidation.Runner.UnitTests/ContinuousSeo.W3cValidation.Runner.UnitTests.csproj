@@ -50,6 +50,7 @@
     <Compile Include="UrlFileParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitemapsParserTests.cs" />
+    <Compile Include="HtmlUrlProcessorTests.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>

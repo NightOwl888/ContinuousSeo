@@ -43,13 +43,16 @@
     <Compile Include="Parsers\UrlFileLineInfo.cs" />
     <Compile Include="Parsers\UrlFileParser.cs" />
     <Compile Include="Parsers\IUrlFileParser.cs" />
+    <Compile Include="Processors\HtmlUrlProcessor.cs" />
+    <Compile Include="Processors\IUrlAggregator.cs" />
+    <Compile Include="Processors\IUrlProcessor.cs" />
+    <Compile Include="Processors\IValidationStatistics.cs" />
+    <Compile Include="Processors\UrlAggregator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parsers\ISitemapsParser.cs" />
     <Compile Include="Parsers\SitemapsParser.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Processors\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\ContinuousSeo.Core\ContinuousSeo.Core.csproj">
       <Project>{2AC99A59-525D-40D5-9FF8-D17911761DB2}</Project>
