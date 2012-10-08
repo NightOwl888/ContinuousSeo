@@ -69,6 +69,12 @@
     <EmbeddedResource Include="Resources\style\results.css" />
     <EmbeddedResource Include="Resources\style\results" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ContinuousSeo.Core\ContinuousSeo.Core.csproj">
+      <Project>{2AC99A59-525D-40D5-9FF8-D17911761DB2}</Project>
+      <Name>ContinuousSeo.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

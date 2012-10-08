@@ -1,10 +1,10 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IHtmlUrlFileParser.cs" company="">
+// <copyright file="IUrlModeProcessor.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Parser
+namespace ContinuousSeo.W3cValidation.Runner.Parsers
 {
     using System;
     using System.Collections.Generic;
@@ -13,9 +13,9 @@ namespace ContinuousSeo.W3cValidation.Runner.Parser
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IUrlFileParser
+    public interface ISitemapsParser
     {
-        IUrlFileLineInfo ParseLine(string line, string[] urlReplacementArgs);
-        IEnumerable<IUrlFileLineInfo> ParseFile(Stream file, string[] urlReplacementArgs);
+        IEnumerable<string> ParseUrlsFromFile(Stream file);
+        IEnumerable<string> ParseUrlsFromFile(string pathOrUrl);
     }
 }

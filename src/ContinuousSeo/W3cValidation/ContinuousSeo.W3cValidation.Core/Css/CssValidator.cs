@@ -10,6 +10,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
     using System.IO;
     using System.Web;
     using System.Collections.Specialized;
+    using ContinuousSeo.Core.Net;
 
     /// <summary>
     /// Class that contains methods that wrap the W3C CSS Validation API at 

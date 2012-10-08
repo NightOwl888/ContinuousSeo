@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Parser
+namespace ContinuousSeo.W3cValidation.Runner.Parsers
 {
     using System;
     using System.Collections.Generic;

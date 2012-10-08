@@ -11,6 +11,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
     using System.Text;
     using System.Web;
     using System.Collections.Specialized;
+    using ContinuousSeo.Core.Net;
 
     /// <summary>
     /// Class that contains methods that wrap the W3C HTML Validation API at 

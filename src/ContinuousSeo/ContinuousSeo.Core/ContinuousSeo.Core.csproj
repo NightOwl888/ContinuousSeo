@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D44CE491-B37A-4F8B-A416-14D33C1694F3}</ProjectGuid>
+    <ProjectGuid>{2AC99A59-525D-40D5-9FF8-D17911761DB2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContinuousSeo.W3cValidation.Runner</RootNamespace>
-    <AssemblyName>ContinuousSeo.W3cValidation.Runner</AssemblyName>
+    <RootNamespace>ContinuousSeo.Core</RootNamespace>
+    <AssemblyName>ContinuousSeo.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -22,7 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,27 +34,20 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parsers\IUrlFileLineInfo.cs" />
-    <Compile Include="Parsers\UrlFileLineInfo.cs" />
-    <Compile Include="Parsers\UrlFileParser.cs" />
-    <Compile Include="Parsers\IUrlFileParser.cs" />
+    <Compile Include="IO\FileReader.cs" />
+    <Compile Include="IO\IFileReader.cs" />
+    <Compile Include="Net\HttpClient.cs" />
+    <Compile Include="Net\IHttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Parsers\ISitemapsParser.cs" />
-    <Compile Include="Parsers\SitemapsParser.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Processors\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ContinuousSeo.Core\ContinuousSeo.Core.csproj">
-      <Project>{2AC99A59-525D-40D5-9FF8-D17911761DB2}</Project>
-      <Name>ContinuousSeo.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

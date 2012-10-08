@@ -4,19 +4,30 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Parser
+namespace ContinuousSeo.W3cValidation.Runner.Parsers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.IO;
+    using ContinuousSeo.Core.IO;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class UrlFileParser : IUrlFileParser
     {
+        private readonly IFileReader FileReader;
+
+        public UrlFileParser(IFileReader fileReader)
+        {
+            if (fileReader == null)
+                throw new ArgumentNullException("fileReader");
+
+            this.FileReader = fileReader;
+        }
+
         #region IUrlFileParser Members
 
         /// <summary>
