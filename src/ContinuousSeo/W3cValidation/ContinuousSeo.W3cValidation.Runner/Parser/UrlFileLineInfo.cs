@@ -14,18 +14,15 @@ namespace ContinuousSeo.W3cValidation.Runner.Parser
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class HtmlUrlFileLineInfo : IUrlFileLineInfo
+    public class UrlFileLineInfo
     {
-        public HtmlUrlFileLineInfo()
+        public UrlFileLineInfo()
         {
             this.Mode = "single";
         }
 
-        #region IUrlFileLineInfo Members
-
         public string Url { get; set; }
         public string Mode { get; set; }
 
-        #endregion
     }
 }

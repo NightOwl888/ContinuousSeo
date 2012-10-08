@@ -13,6 +13,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Parser
     /// </summary>
     public interface IUrlFileParser
     {
-        IUrlFileLineInfo ParseLine(string line, string domain);
+        UrlFileLineInfo ParseLine(string line, string[] urlReplacementArgs);
     }
 }

@@ -8,7 +8,7 @@ using ContinuousSeo.W3cValidation.Runner.Parser;
 namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 {
     [TestFixture]
-    public class HtmlUrlFileParserTests
+    public class UrlFileParserTests
     {
         #region SetUp / TearDown
 
@@ -24,17 +24,18 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
         #region Tests
 
+        #region ParseLine Method
 
         [Test]
         public void ParseLine_ValidLine_ShouldReturnUrlFromLine()
         {
             // arrange
             string line = "http://www.google.com/\tsingle";
-            string domain = string.Empty;
-            HtmlUrlFileParser target = new HtmlUrlFileParser();
+            string[] args = new string[0];
+            UrlFileParser target = new UrlFileParser();
 
             // act
-            IUrlFileLineInfo result = target.ParseLine(line, domain);
+            var result = target.ParseLine(line, args);
             
 
             // assert
@@ -48,12 +49,30 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         public void ParseLine_ValidLine_ShouldReturnModeFromLine()
         {
             // arrange
-            string line = "http://www.google.com/\t\ttestmode";
-            string domain = string.Empty;
-            HtmlUrlFileParser target = new HtmlUrlFileParser();
+            string line = "http://www.google.com/\ttestmode";
+            string[] args = new string[0];
+            UrlFileParser target = new UrlFileParser();
 
             // act
-            IUrlFileLineInfo result = target.ParseLine(line, domain);
+            var result = target.ParseLine(line, args);
+
+            // assert
+            var actual = result.Mode;
+            var expected = "testmode";
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void ParseLine_ValidLine_ShouldReturnLowercaseModeFromLine()
+        {
+            // arrange
+            string line = "http://www.google.com/\tTESTMODE";
+            string[] args = new string[0];
+            UrlFileParser target = new UrlFileParser();
+
+            // act
+            var result = target.ParseLine(line, args);
 
             // assert
             var actual = result.Mode;
@@ -67,11 +86,11 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             // arrange
             string line = "http://www.google.com/";
-            string domain = string.Empty;
-            HtmlUrlFileParser target = new HtmlUrlFileParser();
+            string[] args = new string[0];
+            UrlFileParser target = new UrlFileParser();
 
             // act
-            IUrlFileLineInfo result = target.ParseLine(line, domain);
+            var result = target.ParseLine(line, args);
 
             // assert
             var actual = result.Mode;
@@ -85,11 +104,11 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             // arrange
             string line = "http://www.google.com/\t";
-            string domain = string.Empty;
-            HtmlUrlFileParser target = new HtmlUrlFileParser();
+            string[] args = new string[0];
+            UrlFileParser target = new UrlFileParser();
 
             // act
-            IUrlFileLineInfo result = target.ParseLine(line, domain);
+            var result = target.ParseLine(line, args);
 
             // assert
             var actual = result.Mode;
@@ -99,15 +118,15 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         }
 
         [Test]
-        public void ParseLine_ValidLineAndDomain_ShouldReturnJoinedUrl()
+        public void ParseLine_LineUrlWithReplacementDomain_ShouldReturnUrlWithDomain()
         {
             // arrange
-            string line = "/test.aspx\t";
-            string domain = "www.google.com";
-            HtmlUrlFileParser target = new HtmlUrlFileParser();
+            string line = "http://{0}/test.aspx";
+            string[] args = new string[] { "www.google.com" };
+            UrlFileParser target = new UrlFileParser();
 
             // act
-            IUrlFileLineInfo result = target.ParseLine(line, domain);
+            var result = target.ParseLine(line, args);
 
             // assert
             var actual = result.Url;
@@ -117,55 +136,19 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         }
 
         [Test]
-        public void ParseLine_LineUrlWithoutPreceedingSlash_ShouldReturnUrlWithSlash()
+        public void ParseLine_LineUrlWith2ReplacementDomains_ShouldReturnUrlWith2ndDomain()
         {
             // arrange
-            string line = "test.aspx";
-            string domain = "www.google.com";
-            HtmlUrlFileParser target = new HtmlUrlFileParser();
+            string line = "http://{1}/test.aspx";
+            string[] args = new string[] { "www.google.com", "www.mydomain.com" };
+            UrlFileParser target = new UrlFileParser();
 
             // act
-            IUrlFileLineInfo result = target.ParseLine(line, domain);
+            var result = target.ParseLine(line, args);
 
             // assert
             var actual = result.Url;
-            var expected = "http://www.google.com/test.aspx";
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void ParseLine_ValidLineWithHttpsProtocol_ShouldAppendHttpsProtocolToUrl()
-        {
-            // arrange
-            string line = "/test.aspx\thttps\t";
-            string domain = "www.google.com";
-            HtmlUrlFileParser target = new HtmlUrlFileParser();
-
-            // act
-            IUrlFileLineInfo result = target.ParseLine(line, domain);
-
-            // assert
-            var actual = result.Url;
-            var expected = "https://www.google.com/test.aspx";
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void ParseLine_ValidLineWithoutProtocol_ShouldAppendHttpProtocolToUrl()
-        {
-            // arrange
-            string line = "/test.aspx\t\tsingle";
-            string domain = "www.google.com";
-            HtmlUrlFileParser target = new HtmlUrlFileParser();
-
-            // act
-            IUrlFileLineInfo result = target.ParseLine(line, domain);
-
-            // assert
-            var actual = result.Url;
-            var expected = "http://www.google.com/test.aspx";
+            var expected = "http://www.mydomain.com/test.aspx";
 
             Assert.AreEqual(expected, actual);
         }
@@ -175,15 +158,15 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             // arrange
             string line = null;
-            string domain = "www.google.com";
-            HtmlUrlFileParser target = new HtmlUrlFileParser();
+            string[] args = new string[] { "www.google.com" };
+            UrlFileParser target = new UrlFileParser();
 
             // act
-            IUrlFileLineInfo result = target.ParseLine(line, domain);
+            var result = target.ParseLine(line, args);
 
             // assert
-            IUrlFileLineInfo actual = result;
-            IUrlFileLineInfo expected = null;
+            UrlFileLineInfo actual = result;
+            UrlFileLineInfo expected = null;
 
             Assert.AreEqual(expected, actual);
         }
@@ -193,18 +176,26 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             // arrange
             string line = string.Empty;
-            string domain = "www.google.com";
-            HtmlUrlFileParser target = new HtmlUrlFileParser();
+            string[] args = new string[] { "www.google.com" };
+            UrlFileParser target = new UrlFileParser();
 
             // act
-            IUrlFileLineInfo result = target.ParseLine(line, domain);
+            var result = target.ParseLine(line, args);
 
             // assert
-            IUrlFileLineInfo actual = result;
-            IUrlFileLineInfo expected = null;
+            UrlFileLineInfo actual = result;
+            UrlFileLineInfo expected = null;
 
             Assert.AreEqual(expected, actual);
         }
+
+        #endregion
+
+        #region ParseFile Method
+
+
+
+        #endregion
 
         #endregion
 

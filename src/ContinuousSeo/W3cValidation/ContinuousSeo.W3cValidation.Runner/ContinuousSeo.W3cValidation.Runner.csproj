@@ -39,9 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parser\HtmlUrlFileLineInfo.cs" />
-    <Compile Include="Parser\HtmlUrlFileParser.cs" />
-    <Compile Include="Parser\IUrlFileLineInfo.cs" />
+    <Compile Include="Parser\UrlFileLineInfo.cs" />
+    <Compile Include="Parser\UrlFileParser.cs" />
     <Compile Include="Parser\IUrlFileParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
