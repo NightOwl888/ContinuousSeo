@@ -36,6 +36,15 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             this.resourceCopier = resourceCopier;
         }
 
+        #region IsDefaultValidatorAddress
+
+        public virtual bool IsDefaultValidatorAddress(string url)
+        {
+            return (string.Compare(url, defaultValidatorAddress, StringComparison.InvariantCultureIgnoreCase) == 0);
+        }
+
+        #endregion
+
         #region Validate Methods Without Payload (Status Only)
 
         public CssValidatorResult Validate(string input)

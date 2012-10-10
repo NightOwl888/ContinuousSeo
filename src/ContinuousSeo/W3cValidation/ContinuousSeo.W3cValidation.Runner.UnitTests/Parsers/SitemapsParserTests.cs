@@ -8,6 +8,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
     using System.Xml;
     using NUnit.Framework;
     using Moq;
+    using ContinuousSeo.Core.Extensions;
     using ContinuousSeo.Core.Net;
     using ContinuousSeo.Core.IO;
     using ContinuousSeo.W3cValidation.Runner.Parsers;

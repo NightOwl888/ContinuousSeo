@@ -48,8 +48,7 @@
     <Compile Include="Html\HtmlValidator.cs" />
     <Compile Include="Html\HtmlValidatorResult.cs" />
     <Compile Include="Html\HtmlValidatorSettings.cs" />
-    <Compile Include="HttpClient.cs" />
-    <Compile Include="IHttpClient.cs" />
+    <Compile Include="Html\IHtmlValidatorSettings.cs" />
     <Compile Include="InputFormat.cs" />
     <Compile Include="OutputFormat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

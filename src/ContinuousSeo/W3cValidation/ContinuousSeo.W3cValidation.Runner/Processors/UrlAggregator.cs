@@ -29,7 +29,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         #region IUrlAggregator Members
 
-        public IEnumerable<string> ProcessUrl(IUrlFileLineInfo urlInfo)
+        public IEnumerable<string> ProcessLine(IUrlFileLineInfo urlInfo)
         {
             if (urlInfo == null)
                 throw new ArgumentNullException("urlInfo");

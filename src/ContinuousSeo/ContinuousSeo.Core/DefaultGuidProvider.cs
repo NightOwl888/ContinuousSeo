@@ -1,20 +1,24 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IUrlAggregator.cs" company="">
+// <copyright file="DefaultGuidProvider.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Processors
+namespace ContinuousSeo.Core
 {
     using System;
     using System.Collections.Generic;
-    using ContinuousSeo.W3cValidation.Runner.Parsers;
+    using System.Linq;
+    using System.Text;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IUrlAggregator
+    public class DefaultGuidProvider : GuidProvider
     {
-        IEnumerable<string> ProcessLine(IUrlFileLineInfo urlInfo);
+        public override Guid NewGuid
+        {
+            get { return Guid.NewGuid(); }
+        }
     }
 }

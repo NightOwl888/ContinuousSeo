@@ -21,6 +21,12 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
             this.Mode = "single";
         }
 
+        public UrlFileLineInfo(string url, string mode)
+        {
+            this.Url = url;
+            this.Mode = mode;
+        }
+
         public string Url { get; set; }
         public string Mode { get; set; }
 

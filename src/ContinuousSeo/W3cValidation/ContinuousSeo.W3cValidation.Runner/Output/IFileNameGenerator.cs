@@ -1,20 +1,21 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IUrlAggregator.cs" company="">
+// <copyright file="IFileNameGenerator.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Processors
+namespace ContinuousSeo.W3cValidation.Runner.Output
 {
     using System;
     using System.Collections.Generic;
-    using ContinuousSeo.W3cValidation.Runner.Parsers;
+    using System.Linq;
+    using System.Text;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IUrlAggregator
+    public interface IFileNameGenerator
     {
-        IEnumerable<string> ProcessLine(IUrlFileLineInfo urlInfo);
+        string GenerateFileName(string url, string extension);
     }
 }

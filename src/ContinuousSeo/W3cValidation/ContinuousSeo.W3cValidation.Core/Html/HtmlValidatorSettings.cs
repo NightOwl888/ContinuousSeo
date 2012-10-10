@@ -12,7 +12,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
     /// Advanced settings to be passed in to the HTML W3C validator API. These
     /// settings are documented at http://validator.w3.org/docs/api.html#requestformat.
     /// </summary>
-    public class HtmlValidatorSettings
+    public class HtmlValidatorSettings : IHtmlValidatorSettings
     {
         //public HtmlValidatorSettings()
         //{

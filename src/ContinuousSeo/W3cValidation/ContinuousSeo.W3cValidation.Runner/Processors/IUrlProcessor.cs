@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IUrlAggregator.cs" company="">
+// <copyright file="IUrlProcessor.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -8,13 +8,14 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 {
     using System;
     using System.Collections.Generic;
-    using ContinuousSeo.W3cValidation.Runner.Parsers;
+    using System.Linq;
+    using System.Text;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IUrlAggregator
+    public interface IUrlProcessor
     {
-        IEnumerable<string> ProcessLine(IUrlFileLineInfo urlInfo);
+        IEnumerable<IValidatorReportItem> ProcessUrls();
     }
 }

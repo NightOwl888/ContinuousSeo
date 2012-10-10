@@ -36,44 +36,53 @@ namespace ContinuousSeo.W3cValidation.Core.Html
             this.resourceCopier = resourceCopier;
         }
 
+        #region IsDefaultValidatorAddress
+
+        public virtual bool IsDefaultValidatorAddress(string url)
+        {
+            return (string.Compare(url, defaultValidatorAddress, StringComparison.InvariantCultureIgnoreCase) == 0);
+        }
+
+        #endregion
+
         #region Validate Methods Without Payload (Status Only)
 
-        public HtmlValidatorResult Validate(string input)
+        public virtual HtmlValidatorResult Validate(string input)
         {
             return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, new HtmlValidatorSettings(), defaultValidatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string input, HtmlValidatorSettings settings)
+        public virtual HtmlValidatorResult Validate(string input, IHtmlValidatorSettings settings)
         {
             return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, settings, defaultValidatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string input, InputFormat inputFormat)
+        public virtual HtmlValidatorResult Validate(string input, InputFormat inputFormat)
         {
             return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, new HtmlValidatorSettings(), defaultValidatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string input, InputFormat inputFormat, HtmlValidatorSettings settings)
+        public virtual HtmlValidatorResult Validate(string input, InputFormat inputFormat, IHtmlValidatorSettings settings)
         {
             return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, settings, defaultValidatorAddress);
         }
 
-        //public HtmlValidatorResult Validate(string input, string validatorAddress)
+        //public virtual HtmlValidatorResult Validate(string input, string validatorAddress)
         //{
         //    return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, new HtmlValidatorSettings(), validatorAddress);
         //}
 
-        public HtmlValidatorResult Validate(string input, HtmlValidatorSettings settings, string validatorAddress)
+        public virtual HtmlValidatorResult Validate(string input, IHtmlValidatorSettings settings, string validatorAddress)
         {
             return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, settings, validatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string input, InputFormat inputFormat, string validatorAddress)
+        public virtual HtmlValidatorResult Validate(string input, InputFormat inputFormat, string validatorAddress)
         {
             return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, new HtmlValidatorSettings(), validatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string input, InputFormat inputFormat, HtmlValidatorSettings settings, string validatorAddress)
+        public virtual HtmlValidatorResult Validate(string input, InputFormat inputFormat, IHtmlValidatorSettings settings, string validatorAddress)
         {
             return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, settings, validatorAddress);
         }
@@ -82,42 +91,42 @@ namespace ContinuousSeo.W3cValidation.Core.Html
 
         #region Validate Methods (Write to File)
 
-        public HtmlValidatorResult Validate(string filename, string input)
+        public virtual HtmlValidatorResult Validate(string filename, string input)
         {
             return Validate(filename, OutputFormat.Html, input, InputFormat.Uri, new HtmlValidatorSettings(), defaultValidatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string filename, string input, HtmlValidatorSettings settings)
+        public virtual HtmlValidatorResult Validate(string filename, string input, IHtmlValidatorSettings settings)
         {
             return Validate(filename, OutputFormat.Html, input, InputFormat.Uri, settings, defaultValidatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat)
+        public virtual HtmlValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat)
         {
             return Validate(filename, outputFormat, input, inputFormat, new HtmlValidatorSettings(), defaultValidatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat, HtmlValidatorSettings settings)
+        public virtual HtmlValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat, IHtmlValidatorSettings settings)
         {
             return Validate(filename, outputFormat, input, inputFormat, settings, defaultValidatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string filename, string input, string validatorAddress)
+        public virtual HtmlValidatorResult Validate(string filename, string input, string validatorAddress)
         {
             return Validate(filename, OutputFormat.Html, input, InputFormat.Uri, new HtmlValidatorSettings(), validatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string filename, string input, HtmlValidatorSettings settings, string validatorAddress)
+        public virtual HtmlValidatorResult Validate(string filename, string input, IHtmlValidatorSettings settings, string validatorAddress)
         {
             return Validate(filename, OutputFormat.Html, input, InputFormat.Uri, settings, validatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat, string validatorAddress)
+        public virtual HtmlValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat, string validatorAddress)
         {
             return Validate(filename, outputFormat, input, inputFormat, new HtmlValidatorSettings(), validatorAddress);
         }
 
-        public HtmlValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat, HtmlValidatorSettings settings, string validatorAddress)
+        public virtual HtmlValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat, IHtmlValidatorSettings settings, string validatorAddress)
         {
             HtmlValidatorResult result = null;
 
@@ -147,42 +156,42 @@ namespace ContinuousSeo.W3cValidation.Core.Html
 
         #region Validate Methods (Write to Stream)
 
-        public HtmlValidatorResult Validate(Stream output, string input)
+        public virtual HtmlValidatorResult Validate(Stream output, string input)
         {
             return Validate(output, OutputFormat.Html, input, InputFormat.Uri, new HtmlValidatorSettings(), defaultValidatorAddress);
         }
 
-        public HtmlValidatorResult Validate(Stream output, string input, HtmlValidatorSettings settings)
+        public virtual HtmlValidatorResult Validate(Stream output, string input, IHtmlValidatorSettings settings)
         {
             return Validate(output, OutputFormat.Html, input, InputFormat.Uri, settings, defaultValidatorAddress);
         }
 
-        public HtmlValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat)
+        public virtual HtmlValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat)
         {
             return Validate(output, outputFormat, input, inputFormat, new HtmlValidatorSettings(), defaultValidatorAddress);
         }
 
-        public HtmlValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, HtmlValidatorSettings settings)
+        public virtual HtmlValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, IHtmlValidatorSettings settings)
         {
             return Validate(output, outputFormat, input, inputFormat, settings, defaultValidatorAddress);
         }
 
-        public HtmlValidatorResult Validate(Stream output, string input, string validatorAddress)
+        public virtual HtmlValidatorResult Validate(Stream output, string input, string validatorAddress)
         {
             return Validate(output, OutputFormat.Html, input, InputFormat.Uri, new HtmlValidatorSettings(), validatorAddress);
         }
 
-        public HtmlValidatorResult Validate(Stream output, string input, HtmlValidatorSettings settings, string validatorAddress)
+        public virtual HtmlValidatorResult Validate(Stream output, string input, IHtmlValidatorSettings settings, string validatorAddress)
         {
             return Validate(output, OutputFormat.Html, input, InputFormat.Uri, settings, validatorAddress);
         }
 
-        public HtmlValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, string validatorAddress)
+        public virtual HtmlValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, string validatorAddress)
         {
             return Validate(output, outputFormat, input, inputFormat, new HtmlValidatorSettings(), validatorAddress);
         }
 
-        public HtmlValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, HtmlValidatorSettings settings, string validatorAddress)
+        public virtual HtmlValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, IHtmlValidatorSettings settings, string validatorAddress)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -218,7 +227,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
 
         #region IO Handling
 
-        private string GetFormData(string input, InputFormat inputFormat, OutputFormat outputFormat, HtmlValidatorSettings settings)
+        private string GetFormData(string input, InputFormat inputFormat, OutputFormat outputFormat, IHtmlValidatorSettings settings)
         {
             if (string.IsNullOrEmpty(input))
             {

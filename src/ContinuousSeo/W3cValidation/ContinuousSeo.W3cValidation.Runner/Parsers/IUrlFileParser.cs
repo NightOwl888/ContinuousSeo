@@ -17,5 +17,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
     {
         IUrlFileLineInfo ParseLine(string line, string[] urlReplacementArgs);
         IEnumerable<IUrlFileLineInfo> ParseFile(Stream file, string[] urlReplacementArgs);
+        IEnumerable<IUrlFileLineInfo> ParseFile(string path, string[] urlReplacementArgs);
     }
 }

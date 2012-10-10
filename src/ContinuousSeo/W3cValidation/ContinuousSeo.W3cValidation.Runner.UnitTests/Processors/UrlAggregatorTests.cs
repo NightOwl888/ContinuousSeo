@@ -40,7 +40,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
 
             // act
-            result = target.ProcessUrl(info.Object);
+            result = target.ProcessLine(info.Object);
 
             // assert
             var actual = result.First();
@@ -64,7 +64,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
 
             // act
-            result = target.ProcessUrl(info.Object);
+            result = target.ProcessLine(info.Object);
 
             // assert
             var actual = result.First();
@@ -88,7 +88,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
 
             // act
-            result = target.ProcessUrl(info.Object);
+            result = target.ProcessLine(info.Object);
 
             // assert
             var actual = result.First();
@@ -116,7 +116,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
 
             // act
-            result = target.ProcessUrl(info.Object);
+            result = target.ProcessLine(info.Object);
 
             // assert
             var actual = result.Count();
@@ -144,7 +144,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
 
             // act
-            result = target.ProcessUrl(info.Object);
+            result = target.ProcessLine(info.Object);
 
             // assert
             var actual = result.First();
@@ -172,7 +172,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
 
             // act
-            result = target.ProcessUrl(info.Object);
+            result = target.ProcessLine(info.Object);
 
             // assert
             var actual = result.ElementAt(1);

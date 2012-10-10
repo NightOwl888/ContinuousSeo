@@ -4,12 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.UnitTests
+namespace ContinuousSeo.Core.Extensions
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Reflection;
     using System.ComponentModel;
 

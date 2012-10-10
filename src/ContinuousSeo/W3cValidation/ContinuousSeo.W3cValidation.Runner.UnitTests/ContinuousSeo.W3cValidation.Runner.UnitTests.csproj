@@ -42,15 +42,18 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnumExtensions.cs" />
+    <Compile Include="Output\FileNameGeneratorTests.cs" />
+    <Compile Include="Output\OutputPathProviderTests.cs" />
     <Compile Include="UrlAggregatorTests.cs" />
     <Compile Include="UrlFileParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitemapsParserTests.cs" />
-    <Compile Include="HtmlUrlProcessorTests.cs" />
+    <Compile Include="Processors\HtmlValidatorUrlProcessorTests.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,11 +61,16 @@
       <Project>{2AC99A59-525D-40D5-9FF8-D17911761DB2}</Project>
       <Name>ContinuousSeo.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ContinuousSeo.W3cValidation.Core\ContinuousSeo.W3cValidation.Core.csproj">
+      <Project>{916D4789-55E0-4588-A648-3BA18D9A4B7D}</Project>
+      <Name>ContinuousSeo.W3cValidation.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ContinuousSeo.W3cValidation.Runner\ContinuousSeo.W3cValidation.Runner.csproj">
       <Project>{D44CE491-B37A-4F8B-A416-14D33C1694F3}</Project>
       <Name>ContinuousSeo.W3cValidation.Runner</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

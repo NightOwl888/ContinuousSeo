@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultGuidProvider.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="GuidProvider.cs" />
     <Compile Include="IO\FileReader.cs" />
     <Compile Include="IO\IFileReader.cs" />
     <Compile Include="Net\HttpClient.cs" />
