@@ -92,6 +92,5 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
 
         #endregion
 
-
     }
 }

@@ -28,35 +28,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
         #endregion
 
-        #region ProcessModeSingle Method
-
-        //[Test]
-        //public void ProcessModeSingle_SingleUrl_ShouldReturn1Url()
-        //{
-        //    // arrange
-        //    string line = "http://www.google.com/\tsingle";
-        //    string[] args = new string[0];
-
-        //    // Create mock Url Info
-        //    var urlInfo = new Mock<IUrlFileLineInfo>();
-        //    urlInfo.Setup(t => t.Url).Returns("http://www.google.com/");
-
-
-        //    UrlModeProcessor target = new UrlModeProcessor();
-
-        //    // act
-        //    var result = target.ProcessModeSingle(urlInfo);
-
-
-        //    // assert
-        //    var actual = result.Count();
-        //    var expected = 1;
-
-        //    Assert.AreEqual(expected, actual);
-        //}
-
-        #endregion
-
         #region ProcessSitemapsFile Method
 
         private static void WriteSitemapsStream(Stream stream, IEnumerable<SitemapInfo> entries)

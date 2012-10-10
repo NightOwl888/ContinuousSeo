@@ -19,6 +19,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     {
         private readonly ISitemapsParser SitemapsParser;
 
+        #region Constructor
+
         public UrlAggregator(ISitemapsParser sitemapsParser)
         {
             if (sitemapsParser == null)
@@ -26,6 +28,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
             this.SitemapsParser = sitemapsParser;
         }
+
+        #endregion
 
         #region IUrlAggregator Members
 

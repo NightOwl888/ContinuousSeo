@@ -24,7 +24,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         public bool IsValid { get; set; }
         public int Errors { get; set; }
         public int Warnings { get; set; }
-        public string ExceptionMessage { get; set; }
+        public string ErrorMessage { get; set; }
 
         #endregion
     }

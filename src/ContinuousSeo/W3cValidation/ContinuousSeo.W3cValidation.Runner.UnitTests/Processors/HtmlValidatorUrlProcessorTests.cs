@@ -42,10 +42,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
                 .Setup(x => x.ValidatorUrl)
                 .Returns("http://www.whereever.com/validator");
 
-            //mParser
-            //    .Setup(x => x.ParseFile(It.IsAny<string>(), It.IsAny<string[]>()))
-            //    .Returns(new List<IUrlFileLineInfo>(GetFileLineInfoWith4SingleUrls()));
-
             mAggregator
                 .Setup(x => x.ProcessLine(It.IsAny<IUrlFileLineInfo>()))
                 .Returns((IUrlFileLineInfo x) => new List<string>() { x.Url });
@@ -62,28 +58,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             mOutputPathProvider = null;
             mTotalValidatorValidateCalls = 0;
         }
-
-        //private static IEnumerable<IUrlFileLineInfo> GetFileLineInfoWith4SingleUrls()
-        //{
-        //    return new List<IUrlFileLineInfo>()
-        //    {
-        //        new UrlFileLineInfo("http://www.google.com/", "single"),
-        //        new UrlFileLineInfo("http://www.google.com/test.aspx","single"),
-        //        new UrlFileLineInfo("http://www.google.com/test2.aspx", "single"),
-        //        new UrlFileLineInfo("http://www.google.com/test3.aspx", "single")
-        //    };
-        //}
-
-        //private static IEnumerable<string> GetIEnumerableStringWith4SingleUrls()
-        //{
-        //    return new List<string>()
-        //    {
-        //        "http://www.google.com/",
-        //        "http://www.google.com/test.aspx",
-        //        "http://www.google.com/test2.aspx",
-        //        "http://www.google.com/test3.aspx"
-        //    };
-        //}
 
         private void SetupValidValidatorValidateReturnStatusWith8Warnings()
         {
@@ -117,79 +91,12 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
                         new UrlFileLineInfo("http://www.google.com/test2.aspx", "single"),
                         new UrlFileLineInfo("http://www.google.com/test3.aspx", "single")
                     });
-
-            //mParser
-            //    .Setup(x => x.ParseFile(It.IsAny<string>(), It.IsAny<string[]>()))
-            //    .Returns(new List<IUrlFileLineInfo>(GetFileLineInfoWith4SingleUrls()));
         }
 
         private int mTotalValidatorValidateCalls = 0;
 
         private void SetupValidatorValidateToTrackNumberOfCallsToAllValidOverloads()
         {
-            ////mValidator
-            ////    .Setup(x => x.Validate(It.IsAny<string>()))
-            ////    .Callback(() => mTotalValidatorValidateCalls++);
-            ////mValidator
-            ////    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<IHtmlValidatorSettings>()))
-            ////    .Callback(() => mTotalValidatorValidateCalls++);
-            ////mValidator
-            ////    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<InputFormat>()))
-            ////    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<string>(),It.IsAny<string>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<System.IO.Stream>(), It.IsAny<string>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            ////mValidator
-            ////    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<IHtmlValidatorSettings>(), It.IsAny<string>()))
-            ////    .Callback(() => mTotalValidatorValidateCalls++);
-            ////mValidator
-            ////    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<InputFormat>(), It.IsAny<IHtmlValidatorSettings>()))
-            ////    .Callback(() => mTotalValidatorValidateCalls++);
-            ////mValidator
-            ////    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<InputFormat>(), It.IsAny<string>()))
-            ////    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<IHtmlValidatorSettings>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<System.IO.Stream>(), It.IsAny<string>(), It.IsAny<IHtmlValidatorSettings>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<System.IO.Stream>(), It.IsAny<string>(), It.IsAny<string>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            ////mValidator
-            ////    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<InputFormat>(), It.IsAny<IHtmlValidatorSettings>(), It.IsAny<string>()))
-            ////    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), It.IsAny<InputFormat>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<IHtmlValidatorSettings>(), It.IsAny<string>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<System.IO.Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), It.IsAny<InputFormat>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<System.IO.Stream>(), It.IsAny<string>(), It.IsAny<IHtmlValidatorSettings>(), It.IsAny<string>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), It.IsAny<InputFormat>(), It.IsAny<IHtmlValidatorSettings>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), It.IsAny<InputFormat>(), It.IsAny<string>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<System.IO.Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), It.IsAny<InputFormat>(), It.IsAny<IHtmlValidatorSettings>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
-            //mValidator
-            //    .Setup(x => x.Validate(It.IsAny<System.IO.Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), It.IsAny<InputFormat>(), It.IsAny<string>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
             mValidator
                 .Setup(x => x.Validate(It.IsAny<string>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), It.IsAny<InputFormat>(), It.IsAny<IHtmlValidatorSettings>(), It.IsAny<string>()))
                 .Callback(() => mTotalValidatorValidateCalls++);
@@ -519,7 +426,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             var result = target.ProcessUrl(url);
 
             // assert
-            var actual = result.ExceptionMessage;
+            var actual = result.ErrorMessage;
             var expected = "The url is not in a valid format.";
 
             Assert.AreEqual(expected, actual);

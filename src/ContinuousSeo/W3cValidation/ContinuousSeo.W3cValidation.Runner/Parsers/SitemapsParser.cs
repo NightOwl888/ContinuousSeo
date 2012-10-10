@@ -18,8 +18,14 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
     /// </summary>
     public class SitemapsParser : ISitemapsParser
     {
+        #region Private Members
+
         private readonly IHttpClient HttpClient;
         private readonly IFileReader FileReader;
+
+        #endregion
+
+        #region Constructor
 
         public SitemapsParser(IHttpClient httpClient, IFileReader fileReader)
         {
@@ -32,7 +38,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
             this.FileReader = fileReader;
         }
 
-
+        #endregion
+        
         #region ISitemapsParser Members
 
         public IEnumerable<string> ParseUrlsFromFile(Stream file)
