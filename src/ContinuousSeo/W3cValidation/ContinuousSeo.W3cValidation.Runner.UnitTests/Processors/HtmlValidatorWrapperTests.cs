@@ -56,17 +56,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             mValidator
                 .Setup(x => x.Validate(It.IsAny<Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), InputFormat.Uri, mContext.Object, It.IsAny<string>()))
                 .Returns(new HtmlValidatorResult("Valid", 0, 8, 1));
-
-            //var result = new Mock<IValidatorReportItem>().SetupAllProperties().Object;
-
-            //result.IsValid = true;
-            //result.Errors = 0;
-            //result.Warnings = 8;
-
-            //mValidator
-            //    .Setup(x => x.ValidateUrl(It.IsAny<string>(), It.IsAny<Stream>(), It.IsAny<OutputFormat>()))
-            //    .Returns(result);
-
         }
 
         private void SetupInalidValidatorValidateReturnStatusWith4ErrorsAnd11Warnings()
@@ -74,16 +63,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             mValidator
                 .Setup(x => x.Validate(It.IsAny<Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), InputFormat.Uri, mContext.Object, It.IsAny<string>()))
                 .Returns(new HtmlValidatorResult("Invalid", 4, 11, 1));
-
-            //var result = new Mock<IValidatorReportItem>().SetupAllProperties().Object;
-
-            //result.IsValid = false;
-            //result.Errors = 4;
-            //result.Warnings = 11;
-
-            //mValidator
-            //    .Setup(x => x.ValidateUrl(It.IsAny<string>(), It.IsAny<Stream>(), It.IsAny<OutputFormat>()))
-            //    .Returns(result);
         }
 
         private void SetupValidatorValidateToThrowHttpException()
@@ -91,11 +70,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             mValidator
                 .Setup(x => x.Validate(It.IsAny<Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), InputFormat.Uri, mContext.Object, It.IsAny<string>()))
                 .Throws<System.Web.HttpException>();
-
-
-            //mValidator
-            //    .Setup(x => x.ValidateUrl(It.IsAny<string>(), It.IsAny<Stream>(), It.IsAny<OutputFormat>()))
-            //    .Throws<System.Web.HttpException>();
         }
 
 
@@ -110,10 +84,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             mValidator
                 .Setup(x => x.Validate(It.IsAny<System.IO.Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), It.IsAny<InputFormat>(), It.IsAny<IHtmlValidatorSettings>(), It.IsAny<string>()))
                 .Callback(() => mTotalValidatorValidateCalls++);
-
-            //mValidator
-            //    .Setup(x => x.ValidateUrl(It.IsAny<string>(), It.IsAny<Stream>(), It.IsAny<OutputFormat>()))
-            //    .Callback(() => mTotalValidatorValidateCalls++);
         }
 
         #endregion
@@ -405,31 +375,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             var actual = mTotalValidatorValidateCalls;
             Assert.AreEqual(expected, actual);
         }
-
-        //[Test]
-        //public void ValidateUrl_OutputPathProviderReturnedValue_CallsValidatorValidateWithSameOutputPath()
-        //{
-        //    // arrange
-        //    var url = "http://www.google.com/test.aspx";
-        //    var path = @"C:\TestDir\TestFile.html";
-
-        //    mOutputPathProvider.Setup(x => x.GetOutputPath(url)).Returns(path);
-
-        //    var target = NewHtmlValidatorWrapperInstance();
-
-        //    // act
-        //    IValidatorReportItem result;
-        //    using (var output = new MemoryStream())
-        //    {
-        //        result = target.ValidateUrl(url, output, OutputFormat.Html);
-        //    }
-
-        //    // assert
-        //    var expectedValue = path;
-        //    mValidator
-        //        .Verify(x => x.Validate(expectedValue, It.IsAny<OutputFormat>(), It.IsAny<string>(), InputFormat.Uri, mContext.Object, It.IsAny<string>()), 
-        //        Times.AtMostOnce());
-        //}
 
         [Test]
         public void ValidateUrl_ValidUrl_CallsValidatorValidateWithSameUrl()

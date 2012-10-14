@@ -17,6 +17,5 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     public interface IUrlAggregator
     {
         IEnumerable<string> AggregateUrls(HtmlValidatorRunnerContext context);
-        //IEnumerable<string> ProcessLine(IUrlFileLineInfo urlInfo);
     }
 }

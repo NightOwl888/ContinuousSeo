@@ -27,15 +27,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             mUrlFileParser = new Mock<IUrlFileParser>();
             mSitemapsParser = new Mock<ISitemapsParser>();
-
-            //mUrlFileParser
-            //    .Setup(x => x.ParseFile(It.IsAny<string>(), It.IsAny<string[]>()))
-            //    .Returns((string path, string[] args) => new List<string>() { string.Empty });
-
-            //mSitemapsParser
-            //    .Setup(x => x.ParseUrlsFromFile(It.IsAny<string>()))
-            //    .Returns((string fileOrUrl) => new string[] { string.Empty });
-                
         }
 
         [TearDown]
@@ -52,12 +43,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             return new UrlAggregator(mUrlFileParser.Object, mSitemapsParser.Object);
         }
-
-        // For testing the ParseLine method
-        //private MockUrlAggregator NewMockUrlAgregatorInstance()
-        //{
-        //    return new MockUrlAggregator(mUrlFileParser.Object, mSitemapsParser.Object);
-        //}
 
         private void SetupSitemapsParserParseFileToTrackNumberOfCallsToAllOverloads()
         {
