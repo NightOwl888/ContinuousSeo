@@ -1,20 +1,19 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IUrlProcessor.cs" company="">
+// <copyright file="IValidatorSoap12ResponseParser.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Processors
+namespace ContinuousSeo.W3cValidation.Core
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IUrlProcessor
+    public interface IValidatorSoap12ResponseParser
     {
-        void ProcessUrls();
+        IValidatorReport ParseResponse(Stream response);
     }
 }

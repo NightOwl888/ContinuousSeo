@@ -39,19 +39,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HtmlValidatonRunner.cs" />
+    <Compile Include="IValidationRunner.cs" />
     <Compile Include="Output\FileNameGenerator.cs" />
+    <Compile Include="Output\HtmlValidatorIndexFileCreator.cs" />
     <Compile Include="Output\IFileNameGenerator.cs" />
     <Compile Include="Initialization\HtmlValidatorRunnerContext.cs" />
     <Compile Include="Initialization\IValidatorRunnerContext.cs" />
+    <Compile Include="Output\IHtmlValidatorIndexFileCreator.cs" />
     <Compile Include="Output\IOutputPathProvider.cs" />
+    <Compile Include="Output\IStreamFactory.cs" />
+    <Compile Include="Output\IValidatorReportTextWriter.cs" />
+    <Compile Include="Output\IValidatorReportWriterFactory.cs" />
     <Compile Include="Output\OutputPathProvider.cs" />
+    <Compile Include="Output\StreamFactory.cs" />
+    <Compile Include="Output\ValidatorReportWriterFactory.cs" />
+    <Compile Include="Output\ValidatorReportXmlTextWriter.cs" />
     <Compile Include="Parsers\IUrlFileLineInfo.cs" />
     <Compile Include="Parsers\UrlFileLineInfo.cs" />
     <Compile Include="Parsers\UrlFileParser.cs" />
     <Compile Include="Parsers\IUrlFileParser.cs" />
+    <Compile Include="Processors\HtmlValidatorWrapper.cs" />
     <Compile Include="Processors\HtmlValidatorUrlProcessor.cs" />
     <Compile Include="Processors\IUrlAggregator.cs" />
     <Compile Include="Processors\IUrlProcessor.cs" />
+    <Compile Include="Processors\IValidatorWrapper.cs" />
     <Compile Include="Processors\IValidatorReportItem.cs" />
     <Compile Include="Processors\UrlAggregator.cs" />
     <Compile Include="Processors\ValidatorReportItem.cs" />

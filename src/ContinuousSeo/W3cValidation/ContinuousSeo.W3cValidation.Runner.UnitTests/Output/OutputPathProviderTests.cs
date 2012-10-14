@@ -213,7 +213,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Output
 
         #endregion
 
-        #region GetOutputPathWithoutExtension Method
+        #region GetOutputPath Method (no parameters)
 
         [Test]
         public void GetOutputPathWithoutExtension_ContextOutputPathProvided_ReturnsPath()
@@ -231,7 +231,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Output
             OutputPathProvider target = new OutputPathProvider(context.Object, fileNameGenerator.Object);
 
             // act
-            var result = target.GetOutputPathWithoutExtension();
+            var result = target.GetOutputPath();
 
             // assert
             var actual = result;

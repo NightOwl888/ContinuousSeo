@@ -33,10 +33,10 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
 
         public string GetOutputPath(string url)
         {
-            return Path.Combine(GetOutputPathWithoutExtension(), GetOutputFileName(url));
+            return Path.Combine(GetOutputPath(), GetOutputFileName(url));
         }
 
-        public string GetOutputPathWithoutExtension()
+        public string GetOutputPath()
         {
             return (RunnerContext.OutputPath == null) ? string.Empty : RunnerContext.OutputPath;
         }

@@ -11,6 +11,9 @@ using ContinuousSeo.W3cValidation.Core;
 using ContinuousSeo.W3cValidation.Core.Html;
 using ContinuousSeo.W3cValidation.Core.Css;
 
+using ContinuousSeo.W3cValidation.Runner.Output;
+using ContinuousSeo.W3cValidation.Runner.Processors;
+
 namespace TestHarness
 {
     public partial class Form1 : Form
@@ -86,6 +89,24 @@ namespace TestHarness
             //result = validator.Validate(fragment, InputFormat.Fragment, settings);
 
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var creator = new HtmlValidatorIndexFileCreator();
+            var fileName = @"F:\TestW3C-4\index.html";
+            var dir = Path.GetDirectoryName(fileName);
+
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+
+            using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                creator.CreateIndexFile(stream, new List<IValidatorReportItem>());
+            }
+
+            MessageBox.Show("Done");
         }
     }
 }

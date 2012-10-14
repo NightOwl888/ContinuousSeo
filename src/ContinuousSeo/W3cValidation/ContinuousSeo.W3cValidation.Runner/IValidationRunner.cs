@@ -1,10 +1,10 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IOutputPathProvider.cs" company="">
+// <copyright file="IValidationRunner.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Output
+namespace ContinuousSeo.W3cValidation.Runner
 {
     using System;
     using System.Collections.Generic;
@@ -14,11 +14,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IOutputPathProvider
+    public interface IValidationRunner
     {
-        string GetOutputPath(string url);
-        string GetOutputPath();
-        string GetOutputFileName(string url);
-        string GetOutputFileNameExtension();
+        void Execute();
     }
 }
