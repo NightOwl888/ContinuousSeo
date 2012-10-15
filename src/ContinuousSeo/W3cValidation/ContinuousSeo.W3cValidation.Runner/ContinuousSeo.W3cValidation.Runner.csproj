@@ -53,8 +53,10 @@
     <Compile Include="Output\IHtmlValidatorIndexFileCreator.cs" />
     <Compile Include="Output\IValidatorReportTextWriter.cs" />
     <Compile Include="Output\IValidatorReportWriterFactory.cs" />
+    <Compile Include="Output\IXslTransformer.cs" />
     <Compile Include="Output\ValidatorReportWriterFactory.cs" />
     <Compile Include="Output\ValidatorReportXmlTextWriter.cs" />
+    <Compile Include="Output\XslTransformer.cs" />
     <Compile Include="Parsers\IUrlFileLineInfo.cs" />
     <Compile Include="Parsers\UrlFileLineInfo.cs" />
     <Compile Include="Parsers\UrlFileParser.cs" />
@@ -71,7 +73,9 @@
     <Compile Include="Parsers\ISitemapsParser.cs" />
     <Compile Include="Parsers\SitemapsParser.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="HtmlValidatorIndex.xsl" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ContinuousSeo.Core\ContinuousSeo.Core.csproj">
       <Project>{2AC99A59-525D-40D5-9FF8-D17911761DB2}</Project>

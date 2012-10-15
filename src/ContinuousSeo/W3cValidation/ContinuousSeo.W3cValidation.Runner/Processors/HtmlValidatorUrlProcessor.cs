@@ -12,6 +12,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
+    using System.Reflection;
     using ContinuousSeo.W3cValidation.Core;
     using ContinuousSeo.Core.IO;
     using ContinuousSeo.W3cValidation.Core.Html;
@@ -38,6 +39,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         private readonly ResourceCopier mResourceCopier; // HTML only
         private readonly IValidatorReportWriterFactory mReportWriterFactory;
         private readonly IStreamFactory mStreamFactory;
+        private readonly IXslTransformer mXslTransformer;
 
         #endregion
 
@@ -50,7 +52,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             IFileNameGenerator fileNameGenerator,
             ResourceCopier resourceCopier,
             IValidatorReportWriterFactory reportWriterFactory,
-            IStreamFactory streamFactory)
+            IStreamFactory streamFactory,
+            IXslTransformer xslTransformer)
         {
             if (validator == null)
                 throw new ArgumentNullException("validator");
@@ -66,6 +69,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
                 throw new ArgumentNullException("reportWriterFactory");
             if (streamFactory == null)
                 throw new ArgumentNullException("streamFactory");
+            if (xslTransformer == null)
+                throw new ArgumentNullException("xslTransformer");
 
             this.mValidator = validator;
             this.mRunnerContext = runnerContext;
@@ -74,6 +79,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             this.mResourceCopier = resourceCopier;
             this.mReportWriterFactory = reportWriterFactory;
             this.mStreamFactory = streamFactory;
+            this.mXslTransformer = xslTransformer;
         }
 
         #endregion
@@ -148,16 +154,88 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
                     writer.WriteEndDocument();
                     writer.Flush();
 
-                    // TODO: If Html output, process xml report using Xslt here
+                    // If Html output, process xml report using Xslt here
                     outputXmlReport.Position = 0;
-                    using (var output = mStreamFactory.GetFileStream(Path.Combine(outputPath, "index.xml"), FileMode.Create, FileAccess.Write))
+
+                    var xslFilePath = "ContinuousSeo.W3cValidation.Runner.HtmlValidatorIndex.xsl";
+                    using (Stream xsl = Assembly.GetExecutingAssembly().GetManifestResourceStream(xslFilePath))
                     {
-                        outputXmlReport.CopyTo(output);
+                        mXslTransformer.Transform(outputXmlReport, xsl, Path.Combine(outputPath, "index.html"));
                     }
 
                 }
             }
         }
+
+        //private void ValidateUrlsWithHtmlOutput(IEnumerable<string> urls)
+        //{
+        //    IValidatorReportItem report;
+        //    Stream outputStream;
+        //    string outputPath = (mRunnerContext.OutputPath == null) ? string.Empty : mRunnerContext.OutputPath;
+        //    bool areResourcesWritten = false;
+
+        //    // Remove any filename from the path
+        //    if (!string.IsNullOrEmpty(outputPath))
+        //    {
+        //        outputPath = Path.GetDirectoryName(outputPath);
+        //    }
+
+        //    using (Stream outputXmlReport = mStreamFactory.GetMemoryStream())
+        //    {
+        //        var xslFilePath = "ContinuousSeo.W3cValidation.Runner.HtmlValidatorIndex.xsl";
+        //        using (Stream xsl = Assembly.GetExecutingAssembly().GetManifestResourceStream(xslFilePath))
+        //        {
+        //            mXslTransformer.Transform(outputXmlReport, xsl, Path.Combine(outputPath, "index.html"));
+        //        }
+
+        //        using (var writer = mReportWriterFactory.GetTextWriter(outputXmlReport, Encoding.UTF8))
+        //        {
+        //            writer.WriteStartDocument();
+
+        //            // Process aggregated urls
+        //            foreach (var url in urls)
+        //            {
+        //                string fileName = Path.Combine(outputPath, mFileNameGenerator.GenerateFileName(url, "html"));
+        //                using (outputStream = mStreamFactory.GetFileStream(fileName, FileMode.Create, FileAccess.Write))
+        //                {
+        //                    report = mValidator.ValidateUrl(url, outputStream, OutputFormat.Html);
+        //                }
+
+        //                report.FileName = Path.GetFileName(fileName);
+        //                writer.WriteUrlElement(report);
+
+        //                if (!areResourcesWritten)
+        //                {
+        //                    mResourceCopier.CopyResources(outputPath);
+        //                    areResourcesWritten = true;
+        //                }
+
+        //                if (mValidator.IsDefaultValidatorUrl())
+        //                {
+        //                    Thread.Sleep(1000);
+        //                }
+        //            }
+
+        //            writer.WriteEndDocument();
+        //            writer.Flush();
+
+        //            // TODO: If Html output, process xml report using Xslt here
+        //            //outputXmlReport.Position = 0;
+        //            //using (var output = mStreamFactory.GetFileStream(Path.Combine(outputPath, "index.xml"), FileMode.Create, FileAccess.Write))
+        //            //{
+        //            //    outputXmlReport.CopyTo(output);
+        //            //}
+
+        //            //var xsl = new MemoryStream();
+        //            //var xslFilePath = "ContinuousSeo.W3cValidation.Runner.HtmlValidatorIndex.xsl";
+        //            //using (Stream xsl = Assembly.GetExecutingAssembly().GetManifestResourceStream(xslFilePath))
+        //            //{
+        //            //    mXslTransformer.Transform(outputXmlReport, xsl, Path.Combine(outputPath, "index.html"));
+        //            //}
+
+        //        }
+        //    }
+        //}
 
         #endregion
 

@@ -69,6 +69,7 @@ namespace ContinuousSeo.W3cValidation.Runner.DI
             this.For<ResourceCopier>().Use(x => x.GetInstance<HtmlValidatorResourceCopier>()); // From validation.core
             this.For<IValidatorReportWriterFactory>().Use(x => x.GetInstance<ValidatorReportWriterFactory>());
             this.For<IStreamFactory>().Use(x => x.GetInstance<StreamFactory>()); // from core
+            this.For<IXslTransformer>().Use(x => x.GetInstance<XslTransformer>());
 
             // HtmlValidationWrapper
             //this.For<HtmlValidator>().Use(x => x.GetInstance<HtmlValidator>()); // from validation.core

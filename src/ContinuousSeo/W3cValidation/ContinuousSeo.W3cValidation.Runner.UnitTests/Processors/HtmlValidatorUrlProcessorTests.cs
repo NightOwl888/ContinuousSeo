@@ -25,6 +25,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         private TestResourceCopier mResourceCopier = null;
         private Mock<IValidatorReportWriterFactory> mReportWriterFactory = null;
         private Mock<IStreamFactory> mStreamFactory = null;
+        private Mock<IXslTransformer> mXslTransformer = null;
 
         #region SetUp / TearDown
 
@@ -38,6 +39,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             mResourceCopier = new TestResourceCopier();
             mReportWriterFactory = new Mock<IValidatorReportWriterFactory>();
             mStreamFactory = new Mock<IStreamFactory>();
+            mXslTransformer = new Mock<IXslTransformer>();
             
 
             mValidator
@@ -80,7 +82,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
                 mFileNameGenerator.Object,
                 mResourceCopier,
                 mReportWriterFactory.Object,
-                mStreamFactory.Object);
+                mStreamFactory.Object,
+                mXslTransformer.Object);
         }
 
         private int mTotalValidatorValidateUrlCalls = 0;
