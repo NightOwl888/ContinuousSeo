@@ -31,9 +31,9 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             mProcessor = null;
         }
 
-        private HtmlValidatonRunner NewHtmlValidationRunnerInstance()
+        private HtmlValidatorRunner NewHtmlValidationRunnerInstance()
         {
-            return new HtmlValidatonRunner(mContext.Object, mProcessor.Object);
+            return new HtmlValidatorRunner(mContext.Object, mProcessor.Object);
         }
 
         #endregion

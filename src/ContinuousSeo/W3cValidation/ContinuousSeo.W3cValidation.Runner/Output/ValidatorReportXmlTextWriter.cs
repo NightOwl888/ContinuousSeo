@@ -72,8 +72,13 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
         public void WriteUrlElement(IValidatorReportItem urlReport, Stream response)
         {
             WriteStartUrlElement(urlReport);
-
+            WriteUrlElementValue(response);
             WriteEndUrlElement();
+        }
+
+        public void Flush()
+        {
+            mWriter.Flush();
         }
 
         #region Private Members
@@ -175,7 +180,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
             if (!string.IsNullOrEmpty(message.Message))
             {
                 mWriter.WriteStartElement("message");
-                mWriter.WriteValue(message.Message);
+                mWriter.WriteCData(message.Message);
                 mWriter.WriteEndElement();
             }
 
@@ -189,14 +194,14 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
             if (!string.IsNullOrEmpty(message.Explanation))
             {
                 mWriter.WriteStartElement("explanation");
-                mWriter.WriteValue(message.Explanation);
+                mWriter.WriteCData(message.Explanation);
                 mWriter.WriteEndElement();
             }
 
             if (!string.IsNullOrEmpty(message.Source))
             {
                 mWriter.WriteStartElement("source");
-                mWriter.WriteValue(message.Source);
+                mWriter.WriteCData(message.Source);
                 mWriter.WriteEndElement();
             }
         }

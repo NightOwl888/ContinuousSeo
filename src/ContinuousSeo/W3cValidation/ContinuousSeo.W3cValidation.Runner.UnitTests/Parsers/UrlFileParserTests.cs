@@ -35,8 +35,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             // arrange
             string line = "http://www.google.com/\tsingle";
             string[] args = new string[0];
-            var fileReader = new Mock<IFileReader>();
-            IUrlFileParser target = new UrlFileParser(fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            IUrlFileParser target = new UrlFileParser(streamFactory.Object);
 
             // act
             var result = target.ParseLine(line, args);
@@ -54,8 +54,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             // arrange
             string line = "http://www.google.com/\ttestmode";
             string[] args = new string[0];
-            var fileReader = new Mock<IFileReader>();
-            UrlFileParser target = new UrlFileParser(fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            UrlFileParser target = new UrlFileParser(streamFactory.Object);
 
             // act
             var result = target.ParseLine(line, args);
@@ -73,8 +73,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             // arrange
             string line = "http://www.google.com/\tTESTMODE";
             string[] args = new string[0];
-            var fileReader = new Mock<IFileReader>();
-            UrlFileParser target = new UrlFileParser(fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            UrlFileParser target = new UrlFileParser(streamFactory.Object);
 
             // act
             var result = target.ParseLine(line, args);
@@ -92,8 +92,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             // arrange
             string line = "http://www.google.com/";
             string[] args = new string[0];
-            var fileReader = new Mock<IFileReader>();
-            UrlFileParser target = new UrlFileParser(fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            UrlFileParser target = new UrlFileParser(streamFactory.Object);
 
             // act
             var result = target.ParseLine(line, args);
@@ -111,8 +111,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             // arrange
             string line = "http://www.google.com/\t";
             string[] args = new string[0];
-            var fileReader = new Mock<IFileReader>();
-            UrlFileParser target = new UrlFileParser(fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            UrlFileParser target = new UrlFileParser(streamFactory.Object);
 
             // act
             var result = target.ParseLine(line, args);
@@ -130,8 +130,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             // arrange
             string line = "http://{0}/test.aspx";
             string[] args = new string[] { "www.google.com" };
-            var fileReader = new Mock<IFileReader>();
-            UrlFileParser target = new UrlFileParser(fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            UrlFileParser target = new UrlFileParser(streamFactory.Object);
 
             // act
             var result = target.ParseLine(line, args);
@@ -149,8 +149,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             // arrange
             string line = "http://{1}/test.aspx";
             string[] args = new string[] { "www.google.com", "www.mydomain.com" };
-            var fileReader = new Mock<IFileReader>();
-            UrlFileParser target = new UrlFileParser(fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            UrlFileParser target = new UrlFileParser(streamFactory.Object);
 
             // act
             var result = target.ParseLine(line, args);
@@ -168,8 +168,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             // arrange
             string line = null;
             string[] args = new string[] { "www.google.com" };
-            var fileReader = new Mock<IFileReader>();
-            UrlFileParser target = new UrlFileParser(fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            UrlFileParser target = new UrlFileParser(streamFactory.Object);
 
             // act
             var result = target.ParseLine(line, args);
@@ -187,8 +187,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             // arrange
             string line = string.Empty;
             string[] args = new string[] { "www.google.com" };
-            var fileReader = new Mock<IFileReader>();
-            UrlFileParser target = new UrlFileParser(fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            UrlFileParser target = new UrlFileParser(streamFactory.Object);
 
             // act
             var result = target.ParseLine(line, args);
@@ -219,8 +219,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             // arrange
             string[] args = new string[] {};
-            var fileReader = new Mock<IFileReader>();
-            UrlFileParser target = new UrlFileParser(fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            UrlFileParser target = new UrlFileParser(streamFactory.Object);
             IEnumerable<IUrlFileLineInfo> result;
 
             using (Stream file = new MemoryStream())
@@ -249,9 +249,9 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             {
                 WriteStreamWith4Urls(stream);
 
-                var fileReader = new Mock<IFileReader>();
-                fileReader.Setup(x => x.GetFileStream(string.Empty)).Returns(stream);
-                UrlFileParser target = new UrlFileParser(fileReader.Object);
+                var streamFactory = new Mock<IStreamFactory>();
+                streamFactory.Setup(x => x.GetFileStream(It.IsAny<string>(), It.IsAny<FileMode>(), It.IsAny<FileAccess>())).Returns(stream);
+                UrlFileParser target = new UrlFileParser(streamFactory.Object);
 
                 // act
                 result = target.ParseFile(stream, args);

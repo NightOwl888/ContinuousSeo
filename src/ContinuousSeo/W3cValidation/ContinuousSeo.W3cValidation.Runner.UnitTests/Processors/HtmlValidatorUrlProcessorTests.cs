@@ -7,6 +7,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
     using System.IO;
     using NUnit.Framework;
     using Moq;
+    using ContinuousSeo.Core.IO;
     using ContinuousSeo.W3cValidation.Core;
     using ContinuousSeo.W3cValidation.Core.Html;
     using ContinuousSeo.W3cValidation.Runner.Processors;

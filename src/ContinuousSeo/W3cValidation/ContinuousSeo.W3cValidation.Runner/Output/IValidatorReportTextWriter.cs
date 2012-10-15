@@ -22,5 +22,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
         void WriteEndDocument();
         void WriteUrlElement(IValidatorReportItem urlReport);
         void WriteUrlElement(IValidatorReportItem urlReport, Stream response);
+        void Flush();
     }
 }

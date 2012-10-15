@@ -12,16 +12,18 @@ namespace ContinuousSeo.W3cValidation.Runner
     using System.Text;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
     using ContinuousSeo.W3cValidation.Runner.Processors;
+    using ContinuousSeo.W3cValidation.Runner.DI;
+    using StructureMap;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class HtmlValidatonRunner : IValidationRunner
+    public class HtmlValidatorRunner : IValidatorRunner
     {
         private readonly HtmlValidatorRunnerContext mContext;
         protected IUrlProcessor mProcessor;
 
-        public HtmlValidatonRunner(HtmlValidatorRunnerContext context, IUrlProcessor processor)
+        public HtmlValidatorRunner(HtmlValidatorRunnerContext context, IUrlProcessor processor)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -34,10 +36,13 @@ namespace ContinuousSeo.W3cValidation.Runner
 
         protected virtual void Intialize()
         {
+            //var container = new Container();
 
+            //// Setup configuration of DI
+            //container.Configure(r => r.AddRegistry<HtmlValidatorRegistry>());
         }
 
-        #region IValidationRunner Members
+        #region IValidatorRunner Members
 
         public void Execute()
         {

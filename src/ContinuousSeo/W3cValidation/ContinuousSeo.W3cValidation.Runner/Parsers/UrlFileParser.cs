@@ -18,14 +18,14 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
     /// </summary>
     public class UrlFileParser : IUrlFileParser
     {
-        private readonly IFileReader FileReader;
+        private readonly IStreamFactory mStreamFactory;
 
-        public UrlFileParser(IFileReader fileReader)
+        public UrlFileParser(IStreamFactory streamFactory)
         {
-            if (fileReader == null)
-                throw new ArgumentNullException("fileReader");
+            if (streamFactory == null)
+                throw new ArgumentNullException("streamFactory");
 
-            this.FileReader = fileReader;
+            this.mStreamFactory = streamFactory;
         }
 
         #region IUrlFileParser Members
@@ -83,7 +83,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
 
         public IEnumerable<IUrlFileLineInfo> ParseFile(string path, string[] urlReplacementArgs)
         {
-            using (FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read))
+            using (var file = mStreamFactory.GetFileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return ParseFile(file, urlReplacementArgs);
             }

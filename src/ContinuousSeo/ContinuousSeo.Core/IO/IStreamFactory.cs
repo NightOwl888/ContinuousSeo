@@ -4,12 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Output
+namespace ContinuousSeo.Core.IO
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.IO;
 
     /// <summary>

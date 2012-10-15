@@ -7,12 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using StructureMap;
+//using StructureMap.Configuration.DSL;
 using ContinuousSeo.W3cValidation.Core;
 using ContinuousSeo.W3cValidation.Core.Html;
 using ContinuousSeo.W3cValidation.Core.Css;
 
+using ContinuousSeo.W3cValidation.Runner;
 using ContinuousSeo.W3cValidation.Runner.Output;
 using ContinuousSeo.W3cValidation.Runner.Processors;
+using ContinuousSeo.W3cValidation.Runner.Initialization;
+using ContinuousSeo.W3cValidation.Runner.DI;
+using ContinuousSeo.W3cValidation.Runner.Parsers;
 
 namespace TestHarness
 {
@@ -107,6 +113,37 @@ namespace TestHarness
             }
 
             MessageBox.Show("Done");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var container = new StructureMap.Container();
+
+            // Setup configuration of DI
+            container.Configure(r => r.AddRegistry<HtmlValidatorRegistry>());
+
+
+            var context = new HtmlValidatorRunnerContext()
+            {
+                OutputPath = @"F:\TestW3C-4\",
+                OutputFormat = "html",
+                TargetUrls = new List<string>() { @"http://www.shuttercontractor.com/", @"http://www.foldingchairdepot.com/" },
+            };
+
+
+            //container.Configure(r => r.For<IUrlProcessor>().Use<HtmlValidatorUrlProcessor>());
+
+            container.Configure(r => r.For<HtmlValidatorRunnerContext>().Singleton().Use(x => context));
+
+
+            //var parser = container.GetInstance<IUrlFileParser>();
+
+            //var validator = container.GetInstance<IValidatorWrapper>();
+
+
+            var runner = container.GetInstance<IValidatorRunner>();
+
+            runner.Execute();
         }
     }
 }

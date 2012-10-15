@@ -33,26 +33,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\..\..\tools\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HtmlValidatonRunner.cs" />
-    <Compile Include="IValidationRunner.cs" />
+    <Compile Include="DI\HtmlValidatorRegistry.cs" />
+    <Compile Include="HtmlValidatorRunner.cs" />
+    <Compile Include="IValidatorRunner.cs" />
     <Compile Include="Output\FileNameGenerator.cs" />
     <Compile Include="Output\HtmlValidatorIndexFileCreator.cs" />
     <Compile Include="Output\IFileNameGenerator.cs" />
     <Compile Include="Initialization\HtmlValidatorRunnerContext.cs" />
     <Compile Include="Initialization\IValidatorRunnerContext.cs" />
     <Compile Include="Output\IHtmlValidatorIndexFileCreator.cs" />
-    <Compile Include="Output\IOutputPathProvider.cs" />
-    <Compile Include="Output\IStreamFactory.cs" />
     <Compile Include="Output\IValidatorReportTextWriter.cs" />
     <Compile Include="Output\IValidatorReportWriterFactory.cs" />
-    <Compile Include="Output\OutputPathProvider.cs" />
-    <Compile Include="Output\StreamFactory.cs" />
     <Compile Include="Output\ValidatorReportWriterFactory.cs" />
     <Compile Include="Output\ValidatorReportXmlTextWriter.cs" />
     <Compile Include="Parsers\IUrlFileLineInfo.cs" />

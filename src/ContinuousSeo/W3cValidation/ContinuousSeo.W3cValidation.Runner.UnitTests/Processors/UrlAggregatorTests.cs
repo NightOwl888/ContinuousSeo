@@ -16,6 +16,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
     {
         #region SetUp / TearDown
 
+        private Mock<HtmlValidatorRunnerContext> mContext = null;
         private Mock<IUrlFileParser> mUrlFileParser = null;
         private Mock<ISitemapsParser> mSitemapsParser = null;
         private int mTotalUrlFileParserParseFileCalls = 0;
@@ -25,6 +26,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         [SetUp]
         public void Init()
         {
+            mContext = new Mock<HtmlValidatorRunnerContext>();
             mUrlFileParser = new Mock<IUrlFileParser>();
             mSitemapsParser = new Mock<ISitemapsParser>();
         }
@@ -32,6 +34,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         [TearDown]
         public void Dispose()
         {
+            mContext = null;
             mUrlFileParser = null;
             mSitemapsParser = null;
             mTotalUrlFileParserParseFileCalls = 0;
@@ -41,7 +44,10 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
         private IUrlAggregator NewUrlAggregatorInstance()
         {
-            return new UrlAggregator(mUrlFileParser.Object, mSitemapsParser.Object);
+            return new UrlAggregator(
+                mContext.Object, 
+                mUrlFileParser.Object, 
+                mSitemapsParser.Object);
         }
 
         private void SetupSitemapsParserParseFileToTrackNumberOfCallsToAllOverloads()
@@ -90,8 +96,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         public void AggregateUrls_ContextTargetSitemapFiles3Provided_CallsSitemapsParserProcessFile3Times()
         {
             // arrange
-            var context = new Mock<HtmlValidatorRunnerContext>();
-            context.Setup(x => x.TargetSitemapsFiles).Returns(new List<string>() {
+            mContext.Setup(x => x.TargetSitemapsFiles).Returns(new List<string>() {
                 "http://mysite.com/sitemaps1.xml",
                 "http://myothersite.com/sitemaps.sitemap",
                 "http://www.whatever.com/sitemaps.file"
@@ -101,7 +106,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             var target = NewUrlAggregatorInstance();
 
             // act
-            var result = target.AggregateUrls(context.Object);
+            var result = target.AggregateUrls();
 
             // assert
             var actual = mTotalSitemapsParserParseFileCalls;
@@ -124,15 +129,14 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
                 @"www.mydomain1.com",
                 @"www.mydomain2.com"
             };
-            var context = new Mock<HtmlValidatorRunnerContext>();
-            context.Setup(x => x.TargetSitemapsFiles).Returns(targetSitemapsFiles);
-            context.Setup(x => x.UrlReplacementArgs).Returns(urlReplacementArgs);
+            mContext.Setup(x => x.TargetSitemapsFiles).Returns(targetSitemapsFiles);
+            mContext.Setup(x => x.UrlReplacementArgs).Returns(urlReplacementArgs);
             SetupSitemapsParserParseFileToTrackNumberOfCallsToAllOverloads();
 
             var target = NewUrlAggregatorInstance();
 
             // act
-            var result = target.AggregateUrls(context.Object);
+            var result = target.AggregateUrls();
 
             // assert
             var expectedUrl1 = @"http://www.mydomain1.com/sitemap.xml";
@@ -155,13 +159,12 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
                 @"http://www.mydomain.com/url.html",
                 @"http://www.mydomain2.com/url2.html"
             };
-            var context = new Mock<HtmlValidatorRunnerContext>();
-            context.Setup(x => x.TargetUrls).Returns(targetUrls);
+            mContext.Setup(x => x.TargetUrls).Returns(targetUrls);
             
             var target = NewUrlAggregatorInstance();
 
             // act
-            var result = target.AggregateUrls(context.Object);
+            var result = target.AggregateUrls();
 
             // assert
             var actual1 = result.ElementAt(0);
@@ -189,14 +192,13 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
                 @"www.mydomain2.com"
             };
 
-            var context = new Mock<HtmlValidatorRunnerContext>();
-            context.Setup(x => x.TargetUrls).Returns(targetUrls);
-            context.Setup(x => x.UrlReplacementArgs).Returns(urlReplacementArgs);
+            mContext.Setup(x => x.TargetUrls).Returns(targetUrls);
+            mContext.Setup(x => x.UrlReplacementArgs).Returns(urlReplacementArgs);
 
             var target = NewUrlAggregatorInstance();
 
             // act
-            var result = target.AggregateUrls(context.Object);
+            var result = target.AggregateUrls();
 
             // assert
             var actual1 = result.ElementAt(0);
@@ -217,13 +219,12 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
             SetupUrlFileParserParseFileToReturn4SingleUrls();
 
-            var context = new Mock<HtmlValidatorRunnerContext>();
-            context.Setup(x => x.TargetUrlFiles).Returns(targetUrlFiles);
+            mContext.Setup(x => x.TargetUrlFiles).Returns(targetUrlFiles);
 
             var target = NewUrlAggregatorInstance();
 
             // act
-            var result = target.AggregateUrls(context.Object);
+            var result = target.AggregateUrls();
 
             // assert
             mUrlFileParser
@@ -239,13 +240,12 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
             SetupUrlFileParserParseFileToReturn4SingleUrls();
 
-            var context = new Mock<HtmlValidatorRunnerContext>();
-            context.Setup(x => x.TargetUrlFiles).Returns(targetUrlFiles);
+            mContext.Setup(x => x.TargetUrlFiles).Returns(targetUrlFiles);
 
             var target = NewUrlAggregatorInstance();
 
             // act
-            var result = target.AggregateUrls(context.Object);
+            var result = target.AggregateUrls();
 
             // assert
             var expected = 4;
@@ -269,7 +269,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
         //    var sitemapsParser = new Mock<ISitemapsParser>();
             
-        //    UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
+        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
 
         //    // act
         //    result = target.ProcessLine(info.Object);
@@ -293,7 +293,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
         //    var sitemapsParser = new Mock<ISitemapsParser>();
 
-        //    UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
+        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
 
         //    // act
         //    result = target.ProcessLine(info.Object);
@@ -317,7 +317,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
         //    var sitemapsParser = new Mock<ISitemapsParser>();
 
-        //    UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
+        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
 
         //    // act
         //    result = target.ProcessLine(info.Object);
@@ -345,7 +345,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         //    var sitemapsParser = new Mock<ISitemapsParser>();
         //    sitemapsParser.Setup(x => x.ParseUrlsFromFile(url)).Returns(urlList);
 
-        //    UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
+        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
 
         //    // act
         //    result = target.ProcessLine(info.Object);
@@ -373,7 +373,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         //    var sitemapsParser = new Mock<ISitemapsParser>();
         //    sitemapsParser.Setup(x => x.ParseUrlsFromFile(url)).Returns(urlList);
 
-        //    UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
+        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
 
         //    // act
         //    result = target.ProcessLine(info.Object);
@@ -401,7 +401,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         //    var sitemapsParser = new Mock<ISitemapsParser>();
         //    sitemapsParser.Setup(x => x.ParseUrlsFromFile(url)).Returns(urlList);
 
-        //    UrlAggregator target = new UrlAggregator(sitemapsParser.Object);
+        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
 
         //    // act
         //    result = target.ProcessLine(info.Object);
@@ -417,7 +417,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
          #region Mock Classes
 
-        //private class MockUrlAggregator : UrlAggregator
+        //private class MockUrlAggregator : mUrlAggregator
         //{
             
         //    public MockUrlAggregator(IUrlFileParser urlFileParser, ISitemapsParser sitemapsParser) 

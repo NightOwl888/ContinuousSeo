@@ -20,22 +20,22 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
     {
         #region Private Members
 
-        private readonly IHttpClient HttpClient;
-        private readonly IFileReader FileReader;
+        private readonly IHttpClient mHttpClient;
+        private readonly IStreamFactory mStreamFactory;
 
         #endregion
 
         #region Constructor
 
-        public SitemapsParser(IHttpClient httpClient, IFileReader fileReader)
+        public SitemapsParser(IHttpClient httpClient, IStreamFactory streamFactory)
         {
             if (httpClient == null)
                 throw new ArgumentNullException("httpClient");
-            if (fileReader == null)
-                throw new ArgumentNullException("fileReader");
+            if (streamFactory == null)
+                throw new ArgumentNullException("streamFactory");
 
-            this.HttpClient = httpClient;
-            this.FileReader = fileReader;
+            this.mHttpClient = httpClient;
+            this.mStreamFactory = streamFactory;
         }
 
         #endregion
@@ -81,14 +81,14 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
         {
             if (pathOrUrl.Contains("/"))
             {
-                using (Stream file = HttpClient.GetResponseStream(pathOrUrl))
+                using (Stream file = mHttpClient.GetResponseStream(pathOrUrl))
                 {
                     return ParseUrlsFromFile(file);
                 }
             }
             else
             {
-                using (Stream file = FileReader.GetFileStream(pathOrUrl))
+                using (Stream file = mStreamFactory.GetFileStream(pathOrUrl, FileMode.Open, FileAccess.Read))
                 {
                     return ParseUrlsFromFile(file);
                 }

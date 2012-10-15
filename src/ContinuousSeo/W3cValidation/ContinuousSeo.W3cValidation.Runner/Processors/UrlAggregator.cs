@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="UrlAggregator.cs" company="">
+// <copyright file="mUrlAggregator.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -18,35 +18,39 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     /// </summary>
     public class UrlAggregator : IUrlAggregator
     {
-        private readonly ISitemapsParser SitemapsParser;
-        private readonly IUrlFileParser UrlFileParser;
+        private readonly HtmlValidatorRunnerContext mContext;
+        private readonly ISitemapsParser mSitemapsParser;
+        private readonly IUrlFileParser mUrlFileParser;
 
         #region Constructor
 
-        public UrlAggregator(IUrlFileParser urlFileParser, ISitemapsParser sitemapsParser)
+        public UrlAggregator(HtmlValidatorRunnerContext context, IUrlFileParser urlFileParser, ISitemapsParser sitemapsParser)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
             if (urlFileParser == null)
                 throw new ArgumentNullException("urlFileParser");
             if (sitemapsParser == null)
                 throw new ArgumentNullException("sitemapsParser");
 
-            this.UrlFileParser = urlFileParser;
-            this.SitemapsParser = sitemapsParser;
+            this.mContext = context;
+            this.mUrlFileParser = urlFileParser;
+            this.mSitemapsParser = sitemapsParser;
         }
 
         #endregion
 
         #region IUrlAggregator Members
 
-        public IEnumerable<string> AggregateUrls(HtmlValidatorRunnerContext context)
+        public IEnumerable<string> AggregateUrls()
         {
             var urls = new List<string>();
             var lines = new List<IUrlFileLineInfo>();
-            string[] args = context.UrlReplacementArgs.ToArray();
+            string[] args = (mContext.UrlReplacementArgs == null) ? new string[0] : mContext.UrlReplacementArgs.ToArray();
 
-            AddTargetUrls(context.TargetUrls, urls, args);
-            AddLinesFromTargetSitemapsFiles(context.TargetSitemapsFiles, lines, args);
-            AddLinesFromTargetUrlFiles(context.TargetUrlFiles, lines, args);
+            AddTargetUrls(mContext.TargetUrls, urls, args);
+            AddLinesFromTargetSitemapsFiles(mContext.TargetSitemapsFiles, lines, args);
+            AddLinesFromTargetUrlFiles(mContext.TargetUrlFiles, lines, args);
             AddUrlsFromProcessedLines(lines, urls);
 
             return urls;
@@ -72,7 +76,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
                     break;
 
                 case "sitemaps":
-                    result.AddRange(SitemapsParser.ParseUrlsFromFile(urlInfo.Url));
+                    result.AddRange(mSitemapsParser.ParseUrlsFromFile(urlInfo.Url));
                     break;
             }
 
@@ -90,6 +94,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         private void AddLinesFromTargetSitemapsFiles(IEnumerable<string> targetSitemapsFiles, List<IUrlFileLineInfo> lines, string[] args)
         {
+            if (targetSitemapsFiles == null) return;
+
             // Add sitemaps files passed in directly from context
             foreach (var file in targetSitemapsFiles)
             {
@@ -100,9 +106,11 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         private void AddLinesFromTargetUrlFiles(IEnumerable<string> targetUrlFiles, List<IUrlFileLineInfo> lines, string[] args)
         {
+            if (targetUrlFiles == null) return;
+
             foreach (var file in targetUrlFiles)
             {
-                lines.AddRange(UrlFileParser.ParseFile(file, args));
+                lines.AddRange(mUrlFileParser.ParseFile(file, args));
             }
         }
 

@@ -86,8 +86,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             // arrange
             var httpClient = new Mock<IHttpClient>();
-            var fileReader = new Mock<IFileReader>();
-            SitemapsParser target = new SitemapsParser(httpClient.Object, fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            SitemapsParser target = new SitemapsParser(httpClient.Object, streamFactory.Object);
             IEnumerable<string> result;
 
             using (Stream file = new MemoryStream())
@@ -111,8 +111,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             // arrange
             var httpClient = new Mock<IHttpClient>();
-            var fileReader = new Mock<IFileReader>();
-            SitemapsParser target = new SitemapsParser(httpClient.Object, fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            SitemapsParser target = new SitemapsParser(httpClient.Object, streamFactory.Object);
             IEnumerable<string> result;
 
             using (Stream file = new MemoryStream())
@@ -136,8 +136,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             // arrange
             var httpClient = new Mock<IHttpClient>();
-            var fileReader = new Mock<IFileReader>();
-            SitemapsParser target = new SitemapsParser(httpClient.Object, fileReader.Object);
+            var streamFactory = new Mock<IStreamFactory>();
+            SitemapsParser target = new SitemapsParser(httpClient.Object, streamFactory.Object);
             IEnumerable<string> result;
 
             using (Stream file = new MemoryStream())
@@ -168,8 +168,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
                 var httpClient = new Mock<IHttpClient>();
                 httpClient.Setup(x => x.GetResponseStream(sitemapsUrl)).Returns(sitemapsFile);
-                var fileReader = new Mock<IFileReader>();
-                SitemapsParser target = new SitemapsParser(httpClient.Object, fileReader.Object);
+                var streamFactory = new Mock<IStreamFactory>();
+                SitemapsParser target = new SitemapsParser(httpClient.Object, streamFactory.Object);
                 
 
                 // act
@@ -194,8 +194,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
                 var httpClient = new Mock<IHttpClient>();
                 httpClient.Setup(x => x.GetResponseStream(sitemapsUrl)).Returns(sitemapsFile);
-                var fileReader = new Mock<IFileReader>();
-                SitemapsParser target = new SitemapsParser(httpClient.Object, fileReader.Object);
+                var streamFactory = new Mock<IStreamFactory>();
+                SitemapsParser target = new SitemapsParser(httpClient.Object, streamFactory.Object);
 
                 // act
                 result = target.ParseUrlsFromFile(sitemapsUrl);
@@ -220,9 +220,9 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
                 WriteValidSitemapsStreamWith4Urls(sitemapsFile);
 
                 var httpClient = new Mock<IHttpClient>();
-                var fileReader = new Mock<IFileReader>();
-                fileReader.Setup(x => x.GetFileStream(sitemapsPath)).Returns(sitemapsFile);
-                SitemapsParser target = new SitemapsParser(httpClient.Object, fileReader.Object);
+                var streamFactory = new Mock<IStreamFactory>();
+                streamFactory.Setup(x => x.GetFileStream(sitemapsPath, FileMode.Open, FileAccess.Read)).Returns(sitemapsFile);
+                SitemapsParser target = new SitemapsParser(httpClient.Object, streamFactory.Object);
 
                 // act
                 result = target.ParseUrlsFromFile(sitemapsPath);
