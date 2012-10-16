@@ -127,7 +127,13 @@ namespace TestHarness
             {
                 OutputPath = @"F:\TestW3C-4\",
                 OutputFormat = "html",
-                TargetUrls = new List<string>() { @"http://www.shuttercontractor.com/", @"http://www.foldingchairdepot.com/" },
+                TargetUrls = new List<string>() 
+                { 
+                    @"http://www.shuttercontractor.com/", 
+                    @"http://www.foldingchairdepot.com/", 
+                    @"http://www.articles-about-exterior-shutters.info", 
+                    @"http://www.articles-about-exterior-shutters.info/articles/different-types-of-exterior-window-shutters.aspx" 
+                },
             };
 
 
