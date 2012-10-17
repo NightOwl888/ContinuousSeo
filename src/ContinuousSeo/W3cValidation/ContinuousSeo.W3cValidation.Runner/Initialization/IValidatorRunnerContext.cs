@@ -17,7 +17,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Initialization
     public interface IValidatorRunnerContext
     {
         IEnumerable<string> TargetUrls { get; set; }
-        IEnumerable<string> TargetUrlFiles { get; set; }
+        IEnumerable<string> TargetProjectFiles { get; set; }
         IEnumerable<string> UrlReplacementArgs { get; set; }
         string OutputPath { get; set; } // Directory to write output files
         string OutputFormat { get; set; } // Currently only accepts Html

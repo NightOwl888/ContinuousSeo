@@ -38,7 +38,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
             var transform = new XslCompiledTransform();
             var xmlDocument = new XPathDocument(xml);
 
-            using (var xslReader = XmlReader.Create(xsl, new XmlReaderSettings() { DtdProcessing = DtdProcessing.Parse }))
+            using (var xslReader = XmlReader.Create(xsl, new XmlReaderSettings() { ProhibitDtd = false }))
             {
                 using (var output = mStreamFactory.GetFileStream(outputPath, FileMode.Create, FileAccess.Write))
                 {

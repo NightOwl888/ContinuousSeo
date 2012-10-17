@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="HtmlUrlFileParser.cs" company="">
+// <copyright file="ProjectFileParser.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -16,11 +16,11 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class UrlFileParser : IUrlFileParser
+    public class ProjectFileParser : IProjectFileParser
     {
         private readonly IStreamFactory mStreamFactory;
 
-        public UrlFileParser(IStreamFactory streamFactory)
+        public ProjectFileParser(IStreamFactory streamFactory)
         {
             if (streamFactory == null)
                 throw new ArgumentNullException("streamFactory");
@@ -28,7 +28,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
             this.mStreamFactory = streamFactory;
         }
 
-        #region IUrlFileParser Members
+        #region IProjectFileParser Members
 
         /// <summary>
         /// Parses a line from a Url input file.
@@ -37,8 +37,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
         /// <param name="urlReplacementArgs">Arguments to be replaced in the Url field using standard .NET string 
         /// formatting syntax. For example, the string {0} will be replaced by the first argument in this array, 
         /// the string {1} by the second, and so forth.</param>
-        /// <returns>A <see cref="IUrlFileLineInfo"/> object.</returns>
-        public IUrlFileLineInfo ParseLine(string line, string[] urlReplacementArgs)
+        /// <returns>A <see cref="IProjectFileLineInfo"/> object.</returns>
+        public IProjectFileLineInfo ParseLine(string line, string[] urlReplacementArgs)
         {
             if (string.IsNullOrEmpty(line))
                 return null;
@@ -46,7 +46,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
             // separate the fields in the line by tab character
             string[] fields = line.Split(Convert.ToChar(9));
 
-            var result = new UrlFileLineInfo();
+            var result = new ProjectFileLineInfo();
 
             // Get Url
             if (fields.Count() > 0 && !string.IsNullOrEmpty(fields[0]))
@@ -67,9 +67,9 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
             return result;
         }
 
-        public IEnumerable<IUrlFileLineInfo> ParseFile(Stream file, string[] urlReplacementArgs)
+        public IEnumerable<IProjectFileLineInfo> ParseFile(Stream file, string[] urlReplacementArgs)
         {
-            List<IUrlFileLineInfo> result = new List<IUrlFileLineInfo>();
+            List<IProjectFileLineInfo> result = new List<IProjectFileLineInfo>();
             using (StreamReader reader = new StreamReader(file))
             {
                 string line;
@@ -81,7 +81,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
             return result;
         }
 
-        public IEnumerable<IUrlFileLineInfo> ParseFile(string path, string[] urlReplacementArgs)
+        public IEnumerable<IProjectFileLineInfo> ParseFile(string path, string[] urlReplacementArgs)
         {
             using (var file = mStreamFactory.GetFileStream(path, FileMode.Open, FileAccess.Read))
             {

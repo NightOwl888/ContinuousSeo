@@ -12,6 +12,7 @@ namespace ContinuousSeo.Core.Net
     using System.IO;
     using System.Collections.Specialized;
     using System.Net;
+    using ContinuousSeo.Core.IO;
 
     /// <summary>
     /// Used to send either a Get or Post request, filling the request body as appropriate

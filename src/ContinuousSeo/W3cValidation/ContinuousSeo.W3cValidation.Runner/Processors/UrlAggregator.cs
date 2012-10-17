@@ -20,21 +20,21 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     {
         private readonly HtmlValidatorRunnerContext mContext;
         private readonly ISitemapsParser mSitemapsParser;
-        private readonly IUrlFileParser mUrlFileParser;
+        private readonly IProjectFileParser mProjectFileParser;
 
         #region Constructor
 
-        public UrlAggregator(HtmlValidatorRunnerContext context, IUrlFileParser urlFileParser, ISitemapsParser sitemapsParser)
+        public UrlAggregator(HtmlValidatorRunnerContext context, IProjectFileParser projectFileParser, ISitemapsParser sitemapsParser)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
-            if (urlFileParser == null)
-                throw new ArgumentNullException("urlFileParser");
+            if (projectFileParser == null)
+                throw new ArgumentNullException("projectFileParser");
             if (sitemapsParser == null)
                 throw new ArgumentNullException("sitemapsParser");
 
             this.mContext = context;
-            this.mUrlFileParser = urlFileParser;
+            this.mProjectFileParser = projectFileParser;
             this.mSitemapsParser = sitemapsParser;
         }
 
@@ -45,12 +45,12 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         public IEnumerable<string> AggregateUrls()
         {
             var urls = new List<string>();
-            var lines = new List<IUrlFileLineInfo>();
+            var lines = new List<IProjectFileLineInfo>();
             string[] args = (mContext.UrlReplacementArgs == null) ? new string[0] : mContext.UrlReplacementArgs.ToArray();
 
             AddTargetUrls(mContext.TargetUrls, urls, args);
             AddLinesFromTargetSitemapsFiles(mContext.TargetSitemapsFiles, lines, args);
-            AddLinesFromTargetUrlFiles(mContext.TargetUrlFiles, lines, args);
+            AddLinesFromTargetUrlFiles(mContext.TargetProjectFiles, lines, args);
             AddUrlsFromProcessedLines(lines, urls);
 
             return urls;
@@ -60,7 +60,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         #region Private Members
 
-        private IEnumerable<string> ProcessLine(IUrlFileLineInfo urlInfo)
+        private IEnumerable<string> ProcessLine(IProjectFileLineInfo urlInfo)
         {
             if (urlInfo == null)
                 throw new ArgumentNullException("urlInfo");
@@ -92,7 +92,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             }
         }
 
-        private void AddLinesFromTargetSitemapsFiles(IEnumerable<string> targetSitemapsFiles, List<IUrlFileLineInfo> lines, string[] args)
+        private void AddLinesFromTargetSitemapsFiles(IEnumerable<string> targetSitemapsFiles, List<IProjectFileLineInfo> lines, string[] args)
         {
             if (targetSitemapsFiles == null) return;
 
@@ -100,21 +100,21 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             foreach (var file in targetSitemapsFiles)
             {
                 var fileReplaced = string.Format(file, (object[])args);
-                lines.Add(new UrlFileLineInfo(fileReplaced, "sitemaps"));
+                lines.Add(new ProjectFileLineInfo(fileReplaced, "sitemaps"));
             }
         }
 
-        private void AddLinesFromTargetUrlFiles(IEnumerable<string> targetUrlFiles, List<IUrlFileLineInfo> lines, string[] args)
+        private void AddLinesFromTargetProjectFiles(IEnumerable<string> targetProjectFiles, List<IProjectFileLineInfo> lines, string[] args)
         {
-            if (targetUrlFiles == null) return;
+            if (targetProjectFiles == null) return;
 
-            foreach (var file in targetUrlFiles)
+            foreach (var file in targetProjectFiles)
             {
-                lines.AddRange(mUrlFileParser.ParseFile(file, args));
+                lines.AddRange(mProjectFileParser.ParseFile(file, args));
             }
         }
 
-        private void AddUrlsFromProcessedLines(IEnumerable<IUrlFileLineInfo> lines, List<string> urls)
+        private void AddUrlsFromProcessedLines(IEnumerable<IProjectFileLineInfo> lines, List<string> urls)
         {
             // Process lines in file/passed in
             foreach (var line in lines)

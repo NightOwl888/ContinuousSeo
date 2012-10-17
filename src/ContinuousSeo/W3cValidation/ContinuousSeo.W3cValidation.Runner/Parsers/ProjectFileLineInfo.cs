@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="HtmlUrlFileLineInfo.cs" company="">
+// <copyright file="ProjectFileLineInfo.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -14,14 +14,14 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class UrlFileLineInfo : IUrlFileLineInfo
+    public class ProjectFileLineInfo : IProjectFileLineInfo
     {
-        public UrlFileLineInfo()
+        public ProjectFileLineInfo()
         {
             this.Mode = "single";
         }
 
-        public UrlFileLineInfo(string url, string mode)
+        public ProjectFileLineInfo(string url, string mode)
         {
             this.Url = url;
             this.Mode = mode;

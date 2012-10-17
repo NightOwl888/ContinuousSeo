@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IHtmlUrlFileParser.cs" company="">
+// <copyright file="IProjectFileParser.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -13,10 +13,10 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IUrlFileParser
+    public interface IProjectFileParser
     {
-        IUrlFileLineInfo ParseLine(string line, string[] urlReplacementArgs);
-        IEnumerable<IUrlFileLineInfo> ParseFile(Stream file, string[] urlReplacementArgs);
-        IEnumerable<IUrlFileLineInfo> ParseFile(string path, string[] urlReplacementArgs);
+        IProjectFileLineInfo ParseLine(string line, string[] urlReplacementArgs);
+        IEnumerable<IProjectFileLineInfo> ParseFile(Stream file, string[] urlReplacementArgs);
+        IEnumerable<IProjectFileLineInfo> ParseFile(string path, string[] urlReplacementArgs);
     }
 }

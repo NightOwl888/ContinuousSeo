@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ContinuousSeo.Core</RootNamespace>
     <AssemblyName>ContinuousSeo.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -36,7 +36,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -45,6 +44,7 @@
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="GuidProvider.cs" />
     <Compile Include="IO\IStreamFactory.cs" />
+    <Compile Include="IO\StreamExtensions.cs" />
     <Compile Include="IO\StreamFactory.cs" />
     <Compile Include="Net\HttpClient.cs" />
     <Compile Include="Net\IHttpClient.cs" />

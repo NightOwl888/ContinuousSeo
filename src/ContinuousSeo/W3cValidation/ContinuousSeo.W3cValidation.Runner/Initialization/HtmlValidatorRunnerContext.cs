@@ -22,7 +22,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Initialization
         #region IValidatorRunnerContext Members
 
         public virtual IEnumerable<string> TargetUrls { get; set; }
-        public virtual IEnumerable<string> TargetUrlFiles { get; set; }
+        public virtual IEnumerable<string> TargetProjectFiles { get; set; }
         public virtual IEnumerable<string> UrlReplacementArgs { get; set; }
         public virtual string OutputPath { get; set; } // Directory to write output files
         public virtual string OutputFormat { get; set; } // Currently only accepts Html

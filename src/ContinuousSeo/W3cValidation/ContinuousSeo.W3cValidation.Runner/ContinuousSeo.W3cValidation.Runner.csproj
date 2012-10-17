@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ContinuousSeo.W3cValidation.Runner</RootNamespace>
     <AssemblyName>ContinuousSeo.W3cValidation.Runner</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -38,7 +38,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -55,10 +54,10 @@
     <Compile Include="Output\ValidatorReportWriterFactory.cs" />
     <Compile Include="Output\ValidatorReportXmlTextWriter.cs" />
     <Compile Include="Output\XslTransformer.cs" />
-    <Compile Include="Parsers\IUrlFileLineInfo.cs" />
-    <Compile Include="Parsers\UrlFileLineInfo.cs" />
-    <Compile Include="Parsers\UrlFileParser.cs" />
-    <Compile Include="Parsers\IUrlFileParser.cs" />
+    <Compile Include="Parsers\IProjectFileLineInfo.cs" />
+    <Compile Include="Parsers\ProjectFileLineInfo.cs" />
+    <Compile Include="Parsers\ProjectFileParser.cs" />
+    <Compile Include="Parsers\IProjectFileParser.cs" />
     <Compile Include="Processors\HtmlValidatorWrapper.cs" />
     <Compile Include="Processors\HtmlValidatorUrlProcessor.cs" />
     <Compile Include="Processors\IUrlAggregator.cs" />

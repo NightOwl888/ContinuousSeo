@@ -10,6 +10,7 @@ namespace ContinuousSeo.W3cValidation.Core
     using System.IO;
     using System.Reflection;
     using System.Collections.Generic;
+    using ContinuousSeo.Core.IO;
 
     /// <summary>
     /// Abstract base class with common methods used to copy resources from within this

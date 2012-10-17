@@ -130,7 +130,7 @@ namespace TestHarness
             container.Configure(r => r.For<HtmlValidatorRunnerContext>().Singleton().Use(x => context));
 
 
-            //var parser = container.GetInstance<IUrlFileParser>();
+            //var parser = container.GetInstance<IProjectFileParser>();
 
             //var validator = container.GetInstance<IValidatorWrapper>();
 

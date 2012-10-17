@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IUrlFileLineInfo.cs" company="">
+// <copyright file="IProjectFileLineInfo.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -12,7 +12,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IUrlFileLineInfo
+    public interface IProjectFileLineInfo
     {
         string Url { get; set; }
         string Mode { get; set; }

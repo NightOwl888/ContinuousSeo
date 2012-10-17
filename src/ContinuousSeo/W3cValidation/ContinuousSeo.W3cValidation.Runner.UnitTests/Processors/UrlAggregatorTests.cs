@@ -17,9 +17,9 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         #region SetUp / TearDown
 
         private Mock<HtmlValidatorRunnerContext> mContext = null;
-        private Mock<IUrlFileParser> mUrlFileParser = null;
+        private Mock<IProjectFileParser> mProjectFileParser = null;
         private Mock<ISitemapsParser> mSitemapsParser = null;
-        private int mTotalUrlFileParserParseFileCalls = 0;
+        private int mTotalProjectFileParserParseFileCalls = 0;
         private int mTotalSitemapsParserParseFileCalls = 0;
         
 
@@ -27,7 +27,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         public void Init()
         {
             mContext = new Mock<HtmlValidatorRunnerContext>();
-            mUrlFileParser = new Mock<IUrlFileParser>();
+            mProjectFileParser = new Mock<IProjectFileParser>();
             mSitemapsParser = new Mock<ISitemapsParser>();
         }
 
@@ -35,9 +35,9 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         public void Dispose()
         {
             mContext = null;
-            mUrlFileParser = null;
+            mProjectFileParser = null;
             mSitemapsParser = null;
-            mTotalUrlFileParserParseFileCalls = 0;
+            mTotalProjectFileParserParseFileCalls = 0;
             mTotalSitemapsParserParseFileCalls = 0;
         }
 
@@ -46,7 +46,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             return new UrlAggregator(
                 mContext.Object, 
-                mUrlFileParser.Object, 
+                mProjectFileParser.Object, 
                 mSitemapsParser.Object);
         }
 
@@ -62,28 +62,28 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
                 .Returns((string fileOrUrl) => new string[] { string.Empty });
         }
 
-        private void SetupUrlFileParserParseFileToTrackNumberOfCallsToAllOverloads()
+        private void SetupProjectFileParserParseFileToTrackNumberOfCallsToAllOverloads()
         {
-            mUrlFileParser
+            mProjectFileParser
                 .Setup(x => x.ParseFile(It.IsAny<Stream>(), It.IsAny<string[]>()))
-                .Callback(() => mTotalUrlFileParserParseFileCalls++)
-                .Returns((Stream file, string[] args) => new List<IUrlFileLineInfo>());
-            mUrlFileParser
+                .Callback(() => mTotalProjectFileParserParseFileCalls++)
+                .Returns((Stream file, string[] args) => new List<IProjectFileLineInfo>());
+            mProjectFileParser
                 .Setup(x => x.ParseFile(It.IsAny<string>(), It.IsAny<string[]>()))
-                .Callback(() => mTotalUrlFileParserParseFileCalls++)
-                .Returns((string path, string[] args) => new List<IUrlFileLineInfo>());
+                .Callback(() => mTotalProjectFileParserParseFileCalls++)
+                .Returns((string path, string[] args) => new List<IProjectFileLineInfo>());
         }
 
-        private void SetupUrlFileParserParseFileToReturn4SingleUrls()
+        private void SetupProjectFileParserParseFileToReturn4SingleUrls()
         {
-            mUrlFileParser
+            mProjectFileParser
                 .Setup(x => x.ParseFile(It.IsAny<string>(), It.IsAny<string[]>()))
-                .Returns(new List<IUrlFileLineInfo>()
+                .Returns(new List<IProjectFileLineInfo>()
                     {
-                        new UrlFileLineInfo("http://www.google.com/", "single"),
-                        new UrlFileLineInfo("http://www.google.com/test.aspx","single"),
-                        new UrlFileLineInfo("http://www.google.com/test2.aspx", "single"),
-                        new UrlFileLineInfo("http://www.google.com/test3.aspx", "single")
+                        new ProjectFileLineInfo("http://www.google.com/", "single"),
+                        new ProjectFileLineInfo("http://www.google.com/test.aspx","single"),
+                        new ProjectFileLineInfo("http://www.google.com/test2.aspx", "single"),
+                        new ProjectFileLineInfo("http://www.google.com/test3.aspx", "single")
                     });
         }
 
@@ -212,14 +212,14 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         }
 
         [Test]
-        public void AggregateUrls_ContextTargetUrlFileWith4SingleUrls_ShouldCallUrlFileParserParseFile1Time()
+        public void AggregateUrls_ContextTargetProjectFileWith4SingleUrls_ShouldCallUrlFileParserParseFile1Time()
         {
             // arrange
             var targetUrlFiles = new List<string>() { @"C:\Testing\Test.txt" };
 
-            SetupUrlFileParserParseFileToReturn4SingleUrls();
+            SetupProjectFileParserParseFileToReturn4SingleUrls();
 
-            mContext.Setup(x => x.TargetUrlFiles).Returns(targetUrlFiles);
+            mContext.Setup(x => x.TargetProjectFiles).Returns(targetUrlFiles);
 
             var target = NewUrlAggregatorInstance();
 
@@ -227,20 +227,20 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             var result = target.AggregateUrls();
 
             // assert
-            mUrlFileParser
+            mProjectFileParser
                 .Verify(x => x.ParseFile(It.IsAny<string>(), It.IsAny<string[]>()), 
                 Times.Once());
         }
 
         [Test]
-        public void AggregateUrls_ContextTargetUrlFileWith4SingleUrls_ShouldReturn4Urls()
+        public void AggregateUrls_ContextTargetProjectFileWith4SingleUrls_ShouldReturn4Urls()
         {
             // arrange
-            var targetUrlFiles = new List<string>() { @"C:\Testing\Test.txt" };
+            var targetProjectFiles = new List<string>() { @"C:\Testing\Test.txt" };
 
-            SetupUrlFileParserParseFileToReturn4SingleUrls();
+            SetupProjectFileParserParseFileToReturn4SingleUrls();
 
-            mContext.Setup(x => x.TargetUrlFiles).Returns(targetUrlFiles);
+            mContext.Setup(x => x.TargetProjectFiles).Returns(targetProjectFiles);
 
             var target = NewUrlAggregatorInstance();
 
@@ -264,7 +264,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         //    // arrange
         //    IEnumerable<string> result;
         //    var url = "http://www.google.com/test.aspx";
-        //    var info = new Mock<IUrlFileLineInfo>();
+        //    var info = new Mock<IProjectFileLineInfo>();
         //    info.Setup(x => x.Url).Returns(url);
 
         //    var sitemapsParser = new Mock<ISitemapsParser>();
@@ -287,7 +287,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         //    // arrange
         //    IEnumerable<string> result;
         //    var url = "http://www.google.com/test.aspx";
-        //    var info = new Mock<IUrlFileLineInfo>();
+        //    var info = new Mock<IProjectFileLineInfo>();
         //    info.Setup(x => x.Url).Returns(url);
         //    info.Setup(x => x.Mode).Returns((string)null);
 
@@ -311,7 +311,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         //    // arrange
         //    IEnumerable<string> result;
         //    var url = "http://www.google.com/test.aspx";
-        //    var info = new Mock<IUrlFileLineInfo>();
+        //    var info = new Mock<IProjectFileLineInfo>();
         //    info.Setup(x => x.Url).Returns(url);
         //    info.Setup(x => x.Mode).Returns("single");
 
@@ -335,7 +335,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         //    // arrange
         //    IEnumerable<string> result;
         //    var url = "http://www.google.com/sitemaps.xml";
-        //    var info = new Mock<IUrlFileLineInfo>();
+        //    var info = new Mock<IProjectFileLineInfo>();
         //    info.Setup(x => x.Url).Returns(url);
         //    info.Setup(x => x.Mode).Returns("sitemaps");
 
@@ -363,7 +363,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         //    // arrange
         //    IEnumerable<string> result;
         //    var url = "http://www.google.com/sitemaps.xml";
-        //    var info = new Mock<IUrlFileLineInfo>();
+        //    var info = new Mock<IProjectFileLineInfo>();
         //    info.Setup(x => x.Url).Returns(url);
         //    info.Setup(x => x.Mode).Returns("sitemaps");
 
@@ -391,7 +391,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         //    // arrange
         //    IEnumerable<string> result;
         //    var url = "http://www.google.com/sitemaps.xml";
-        //    var info = new Mock<IUrlFileLineInfo>();
+        //    var info = new Mock<IProjectFileLineInfo>();
         //    info.Setup(x => x.Url).Returns(url);
         //    info.Setup(x => x.Mode).Returns("sitemaps");
 
@@ -420,13 +420,13 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         //private class MockUrlAggregator : mUrlAggregator
         //{
             
-        //    public MockUrlAggregator(IUrlFileParser urlFileParser, ISitemapsParser sitemapsParser) 
-        //        : base(urlFileParser, sitemapsParser)
+        //    public MockUrlAggregator(IProjectFileParser projectFileParser, ISitemapsParser sitemapsParser) 
+        //        : base(projectFileParser, sitemapsParser)
         //    {
         //    }
 
 
-        //    public override IEnumerable<string> ProcessLine(IUrlFileLineInfo urlInfo)
+        //    public override IEnumerable<string> ProcessLine(IProjectFileLineInfo urlInfo)
         //    {
         //        return base.ProcessLine(urlInfo);
         //    }
