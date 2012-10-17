@@ -313,17 +313,17 @@ namespace ContinuousSeo.W3cValidation.Core.Html
 
         private string FixHtmlFragment(string input)
         {
-            if (input.IndexOf("<body>", StringComparison.InvariantCultureIgnoreCase) == -1)
+            if (input.IndexOf("<body", StringComparison.InvariantCultureIgnoreCase) == -1)
             {
                 input = "<body>" + input + "</body>";
             }
 
-            if (input.IndexOf("<html>", StringComparison.InvariantCultureIgnoreCase) == -1)
+            if (input.IndexOf("<html", StringComparison.InvariantCultureIgnoreCase) == -1)
             {
                 input = "<html><head><title></title></head>" + input + "</html>";
             }
 
-            if (!input.StartsWith("<!DOCTYPE", StringComparison.InvariantCultureIgnoreCase))
+            if (input.IndexOf("<!DOCTYPE", StringComparison.InvariantCultureIgnoreCase) == -1)
             {
                 // Default to HTML5 if doctype not supplied
                 input = "<!DOCTYPE html>" + input;
