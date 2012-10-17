@@ -18,8 +18,10 @@ namespace ContinuousSeo.Core.Net
     /// Used to send either a Get or Post request, filling the request body as appropriate
     /// and returning the payload if the output stream is not null.
     /// </summary>
-    public class HttpClient : IHttpClient
+    public class HttpClient : IHttpClient, IDisposable
     {
+        private WebResponse mWebResponse = null;
+
 
         public NameValueCollection Get(Stream output, string url)
         {
@@ -72,13 +74,15 @@ namespace ContinuousSeo.Core.Net
                 throw new ArgumentNullException("url");
             }
 
-            NameValueCollection result = new NameValueCollection();
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
-            using (WebResponse response = request.GetResponse())
-            {
-                return response.GetResponseStream();
-            }
+            this.mWebResponse = request.GetResponse();
+            return mWebResponse.GetResponseStream();
+        }
+
+        public void Close()
+        {
+            this.Dispose();
         }
 
         public string GetResponseText(string url)
@@ -121,5 +125,17 @@ namespace ContinuousSeo.Core.Net
         }
 
 
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            if (mWebResponse != null)
+            {
+                mWebResponse.Close();
+            }
+        }
+
+        #endregion
     }
 }

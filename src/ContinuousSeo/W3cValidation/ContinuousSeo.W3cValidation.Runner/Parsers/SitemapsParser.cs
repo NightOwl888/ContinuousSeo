@@ -79,20 +79,29 @@ namespace ContinuousSeo.W3cValidation.Runner.Parsers
 
         public IEnumerable<string> ParseUrlsFromFile(string pathOrUrl)
         {
+            var result = new List<string>();
             if (pathOrUrl.Contains("/"))
             {
-                using (Stream file = mHttpClient.GetResponseStream(pathOrUrl))
+                try
                 {
-                    return ParseUrlsFromFile(file);
+                    using (Stream file = mHttpClient.GetResponseStream(pathOrUrl))
+                    {
+                        result.AddRange(ParseUrlsFromFile(file));
+                    }
+                }
+                finally
+                {
+                    mHttpClient.Close();
                 }
             }
             else
             {
                 using (Stream file = mStreamFactory.GetFileStream(pathOrUrl, FileMode.Open, FileAccess.Read))
                 {
-                    return ParseUrlsFromFile(file);
+                    result.AddRange(ParseUrlsFromFile(file));
                 }
             }
+            return result;
         }
 
 

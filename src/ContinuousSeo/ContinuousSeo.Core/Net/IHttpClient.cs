@@ -18,6 +18,8 @@ namespace ContinuousSeo.Core.Net
         NameValueCollection Get(Stream output, string url);
         NameValueCollection Post(Stream output, string url, string data);
         Stream GetResponseStream(string url);
+        void Close();
+        void Dispose();
         string GetResponseText(string url);
     }
 }
