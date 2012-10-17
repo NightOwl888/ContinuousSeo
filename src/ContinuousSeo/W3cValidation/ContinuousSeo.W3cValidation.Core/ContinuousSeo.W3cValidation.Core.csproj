@@ -44,7 +44,6 @@
     <Compile Include="Css\CssValidatorResourceCopier.cs" />
     <Compile Include="Css\CssValidatorResult.cs" />
     <Compile Include="Css\CssValidatorSettings.cs" />
-    <Compile Include="Html\HtmlValidatorHtmlResponseParser.cs" />
     <Compile Include="Html\HtmlValidatorMessage.cs" />
     <Compile Include="Html\HtmlValidatorReport.cs" />
     <Compile Include="Html\HtmlValidatorResourceCopier.cs" />
