@@ -50,7 +50,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
             AddTargetUrls(mContext.TargetUrls, urls, args);
             AddLinesFromTargetSitemapsFiles(mContext.TargetSitemapsFiles, lines, args);
-            AddLinesFromTargetUrlFiles(mContext.TargetProjectFiles, lines, args);
+            AddLinesFromTargetProjectFiles(mContext.TargetProjectFiles, lines, args);
             AddUrlsFromProcessedLines(lines, urls);
 
             return urls;
