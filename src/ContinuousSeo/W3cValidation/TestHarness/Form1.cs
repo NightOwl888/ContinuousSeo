@@ -66,6 +66,7 @@ namespace TestHarness
 
             settings.DocType = "HTML 4.01 Transitional";
 
+
             //result = validator.Validate(@"F:\TestW3C\ResponseFragment.xml", OutputFormat.Soap12, fragment, InputFormat.Fragment, settings);
 
             result = validator.Validate(fragment, InputFormat.Fragment);
@@ -126,7 +127,7 @@ namespace TestHarness
             var context = new HtmlValidatorRunnerContext()
             {
                 OutputPath = @"F:\TestW3C-4\",
-                OutputFormat = "html",
+                OutputFormat = "xml",
                 TargetUrls = new List<string>() 
                 { 
                     @"http://www.shuttercontractor.com/", 

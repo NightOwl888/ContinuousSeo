@@ -19,7 +19,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Initialization
         IEnumerable<string> TargetUrls { get; set; }
         IEnumerable<string> TargetUrlFiles { get; set; }
         IEnumerable<string> UrlReplacementArgs { get; set; }
-        IEnumerable<string> TargetSitemapsFiles { get; set; }
         string OutputPath { get; set; } // Directory to write output files
         string OutputFormat { get; set; } // Currently only accepts Html
         string ValidatorUrl { get; set; }

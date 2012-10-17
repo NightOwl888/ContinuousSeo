@@ -31,15 +31,12 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         private readonly IValidatorWrapper mValidator;
         private readonly HtmlValidatorRunnerContext mRunnerContext;
 
-        // parsing inputs
-        private readonly IUrlAggregator mUrlAggregator;
-
         // output
         private readonly IFileNameGenerator mFileNameGenerator; // HTML only
         private readonly ResourceCopier mResourceCopier; // HTML only
         private readonly IValidatorReportWriterFactory mReportWriterFactory;
         private readonly IStreamFactory mStreamFactory;
-        private readonly IXslTransformer mXslTransformer;
+        private readonly IXslTransformer mXslTransformer; // HTML only
 
         #endregion
 
@@ -48,7 +45,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         public HtmlValidatorUrlProcessor(
             IValidatorWrapper validator, 
             HtmlValidatorRunnerContext runnerContext, 
-            IUrlAggregator urlAggregator,
             IFileNameGenerator fileNameGenerator,
             ResourceCopier resourceCopier,
             IValidatorReportWriterFactory reportWriterFactory,
@@ -59,8 +55,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
                 throw new ArgumentNullException("validator");
             if (runnerContext == null)
                 throw new ArgumentNullException("runnerContext");
-            if (urlAggregator == null)
-                throw new ArgumentNullException("urlAggregator");
             if (fileNameGenerator == null)
                 throw new ArgumentNullException("fileNameGenerator");
             if (resourceCopier == null)
@@ -74,7 +68,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
             this.mValidator = validator;
             this.mRunnerContext = runnerContext;
-            this.mUrlAggregator = urlAggregator;
             this.mFileNameGenerator = fileNameGenerator;
             this.mResourceCopier = resourceCopier;
             this.mReportWriterFactory = reportWriterFactory;
@@ -86,10 +79,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         #region IUrlProcessor Members
 
-        public void ProcessUrls()
+        public void ProcessUrls(IEnumerable<string> urls)
         {
-            var urls = mUrlAggregator.AggregateUrls();
-
             string outputFormat = (string.IsNullOrEmpty(mRunnerContext.OutputFormat)) ? string.Empty : mRunnerContext.OutputFormat.ToLowerInvariant();
             switch (outputFormat)
             {
@@ -108,115 +99,11 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         #region Html Output
 
-        //private void ProcessHtmlOutput(IEnumerable<string> urls)
-        //{
-        //    IValidatorReportItem report;
-        //    Stream outputStream;
-        //    string outputPath = (mRunnerContext.OutputPath == null) ? string.Empty : mRunnerContext.OutputPath;
-        //    bool areResourcesWritten = false;
-
-        //    // Remove any filename from the path
-        //    if (!string.IsNullOrEmpty(outputPath))
-        //    {
-        //        outputPath = Path.GetDirectoryName(outputPath);
-        //    }
-
-        //    using (Stream outputXmlReport = mStreamFactory.GetMemoryStream())
-        //    {
-        //        using (var writer = mReportWriterFactory.GetTextWriter(outputXmlReport, Encoding.UTF8))
-        //        {
-        //            writer.WriteStartDocument();
-
-        //            // Process aggregated urls
-        //            foreach (var url in urls)
-        //            {
-        //                string fileName = Path.Combine(outputPath, mFileNameGenerator.GenerateFileName(url, "html"));
-        //                using (outputStream = mStreamFactory.GetFileStream(fileName, FileMode.Create, FileAccess.Write))
-        //                {
-        //                    report = mValidator.ValidateUrl(url, outputStream, OutputFormat.Html);
-        //                }
-
-        //                report.FileName = Path.GetFileName(fileName);
-        //                writer.WriteUrlElement(report);
-
-        //                if (!areResourcesWritten)
-        //                {
-        //                    mResourceCopier.CopyResources(outputPath);
-        //                    areResourcesWritten = true;
-        //                }
-
-        //                if (mValidator.IsDefaultValidatorUrl())
-        //                {
-        //                    Thread.Sleep(1000);
-        //                }
-        //            }
-
-        //            writer.WriteEndDocument();
-        //            writer.Flush();
-
-        //            // If Html output, process xml report using Xslt here
-        //            outputXmlReport.Position = 0;
-
-        //            var xslFilePath = "ContinuousSeo.W3cValidation.Runner.HtmlValidatorIndex.xsl";
-        //            using (Stream xsl = Assembly.GetExecutingAssembly().GetManifestResourceStream(xslFilePath))
-        //            {
-        //                mXslTransformer.Transform(outputXmlReport, xsl, Path.Combine(outputPath, "index.html"));
-        //            }
-
-        //        }
-        //    }
-        //}
-
         private void ProcessHtmlOutput(IEnumerable<string> urls)
         {
-            
-
             using (Stream outputXmlReport = mStreamFactory.GetMemoryStream())
             {
-                //using (var writer = mReportWriterFactory.GetTextWriter(outputXmlReport, Encoding.UTF8))
-                //{
-                //    writer.WriteStartDocument();
-
-                //    // Process aggregated urls
-                //    foreach (var url in urls)
-                //    {
-                //        string fileName = Path.Combine(outputPath, mFileNameGenerator.GenerateFileName(url, "html"));
-                //        using (outputStream = mStreamFactory.GetFileStream(fileName, FileMode.Create, FileAccess.Write))
-                //        {
-                //            report = mValidator.ValidateUrl(url, outputStream, OutputFormat.Html);
-                //        }
-
-                //        report.FileName = Path.GetFileName(fileName);
-                //        writer.WriteUrlElement(report);
-
-                //        if (!areResourcesWritten)
-                //        {
-                //            mResourceCopier.CopyResources(outputPath);
-                //            areResourcesWritten = true;
-                //        }
-
-                //        if (mValidator.IsDefaultValidatorUrl())
-                //        {
-                //            Thread.Sleep(1000);
-                //        }
-                //    }
-
-                //    writer.WriteEndDocument();
-                //    writer.Flush();
-
-                //    // If Html output, process xml report using Xslt here
-                //    outputXmlReport.Position = 0;
-
-                //    var xslFilePath = "ContinuousSeo.W3cValidation.Runner.HtmlValidatorIndex.xsl";
-                //    using (Stream xsl = Assembly.GetExecutingAssembly().GetManifestResourceStream(xslFilePath))
-                //    {
-                //        mXslTransformer.Transform(outputXmlReport, xsl, Path.Combine(outputPath, "index.html"));
-                //    }
-
-                //}
-
                 WriteXmlReportForHtmlOutput(outputXmlReport, urls);
-                
             }
         }
 
@@ -228,39 +115,16 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             {
                 writer.WriteStartDocument();
 
-                //// Process aggregated urls
-                //foreach (var url in urls)
-                //{
-                //    string fileName = Path.Combine(outputPath, mFileNameGenerator.GenerateFileName(url, "html"));
-                //    using (outputStream = mStreamFactory.GetFileStream(fileName, FileMode.Create, FileAccess.Write))
-                //    {
-                //        report = mValidator.ValidateUrl(url, outputStream, OutputFormat.Html);
-                //    }
-
-                //    report.FileName = Path.GetFileName(fileName);
-                //    writer.WriteUrlElement(report);
-
-                //    if (!areResourcesWritten)
-                //    {
-                //        mResourceCopier.CopyResources(outputPath);
-                //        areResourcesWritten = true;
-                //    }
-
-                //    if (mValidator.IsDefaultValidatorUrl())
-                //    {
-                //        Thread.Sleep(1000);
-                //    }
-                //}
-
                 ValidateUrlsForHtmlOutput(writer, outputPath, urls);
 
                 writer.WriteEndDocument();
                 writer.Flush();
 
                 // If Html output, process xml report using Xslt here
+                // This must be done before the writer is closed, or the
+                // stream will also be closed.
                 outputXmlReport.Position = 0;
                 WriteHtmlIndexFile(outputXmlReport, outputPath);
-
             }
         }
 
@@ -286,35 +150,15 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         private void ValidateUrlsForHtmlOutput(IValidatorReportTextWriter writer, string outputPath, IEnumerable<string> urls)
         {
-
             if (urls.Count() > 0)
             {
+                // Copy the images and CSS files for the HTML documents
                 mResourceCopier.CopyResources(outputPath);
             }
 
-            // Process aggregated urls
+            // Process urls
             foreach (var url in urls)
             {
-                //string fileName = Path.Combine(outputPath, mFileNameGenerator.GenerateFileName(url, "html"));
-                //using (var outputStream = mStreamFactory.GetFileStream(fileName, FileMode.Create, FileAccess.Write))
-                //{
-                //    report = mValidator.ValidateUrl(url, outputStream, OutputFormat.Html);
-                //}
-
-                //report.FileName = Path.GetFileName(fileName);
-                //writer.WriteUrlElement(report);
-
-                //if (!areResourcesWritten)
-                //{
-                //    mResourceCopier.CopyResources(outputPath);
-                //    areResourcesWritten = true;
-                //}
-
-                //if (mValidator.IsDefaultValidatorUrl())
-                //{
-                //    Thread.Sleep(1000);
-                //}
-
                 ValidateUrlForHtmlOutput(writer, outputPath, url);
             }
         }
@@ -346,11 +190,24 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         private void ProcessXmlOutput(IEnumerable<string> urls)
         {
             // Use entire output path (should be the complete path to xml file).
-            string outputPath = (mRunnerContext.OutputPath == null) ? string.Empty : mRunnerContext.OutputPath;
+            string outputPath = GetOutputPathForXmlOutput();
+
             using (Stream outputXmlReport = mStreamFactory.GetFileStream(outputPath, FileMode.Create, FileAccess.Write))
             {
                 WriteXmlReportForXmlOutput(outputXmlReport, urls);
             }
+        }
+
+        private string GetOutputPathForXmlOutput()
+        {
+            var outputPath = (mRunnerContext.OutputPath == null) ? string.Empty : mRunnerContext.OutputPath;
+
+            // Add default filename to output path if it was not provided.
+            if (String.IsNullOrEmpty(Path.GetFileName(outputPath)))
+            {
+                outputPath = Path.Combine(outputPath, "report.xml");
+            }
+            return outputPath;
         }
 
         private void WriteXmlReportForXmlOutput(Stream outputXmlReport, IEnumerable<string> urls)
@@ -365,7 +222,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         private void ValidateUrlsForXmlOutput(IValidatorReportTextWriter writer, IEnumerable<string> urls)
         {
-            // Process aggregated urls
+            // Process urls
             foreach (var url in urls)
             {
                 ValidateUrlForXmlOutput(writer, url);
@@ -388,9 +245,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         }
 
         #endregion
-
-      
-
 
         #endregion
 

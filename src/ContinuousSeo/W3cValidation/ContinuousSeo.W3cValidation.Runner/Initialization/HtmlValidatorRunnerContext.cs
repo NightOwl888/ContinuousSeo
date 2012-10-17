@@ -15,12 +15,15 @@ namespace ContinuousSeo.W3cValidation.Runner.Initialization
     /// </summary>
     public class HtmlValidatorRunnerContext : IValidatorRunnerContext, IHtmlValidatorSettings
     {
+
+        public virtual IEnumerable<string> TargetSitemapsFiles { get; set; }
+
+
         #region IValidatorRunnerContext Members
 
         public virtual IEnumerable<string> TargetUrls { get; set; }
         public virtual IEnumerable<string> TargetUrlFiles { get; set; }
         public virtual IEnumerable<string> UrlReplacementArgs { get; set; }
-        public virtual IEnumerable<string> TargetSitemapsFiles { get; set; }
         public virtual string OutputPath { get; set; } // Directory to write output files
         public virtual string OutputFormat { get; set; } // Currently only accepts Html
         public virtual string ValidatorUrl { get; set; }
@@ -35,6 +38,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Initialization
         public virtual bool Debug { get; set; }
         public virtual bool ShowSource { get; set; }
         public virtual bool Outline { get; set; }
+        public virtual bool GroupErrors { get; set; }
+        public virtual bool UseHtmlTidy { get; set; }
 
         #endregion
     }
