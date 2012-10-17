@@ -19,9 +19,12 @@ namespace ContinuousSeo.MSBuild
         public static string[] ToStringArray(this ITaskItem[] taskitems)
         {
             var result = new List<string>();
-            foreach (ITaskItem item in taskitems)
+            if (taskitems != null)
             {
-                result.Add(item.ItemSpec);
+                foreach (ITaskItem item in taskitems)
+                {
+                    result.Add(item.ItemSpec);
+                }
             }
             return result.ToArray();
         }

@@ -190,10 +190,11 @@ namespace ContinuousSeo.MSBuild
 
         public override bool Execute()
         {
-            if (TargetSitemapsFiles.Length == 0 && TargetProjectFiles.Length == 0 && TargetUrls.Length == 0)
+            if (TargetSitemapsFiles == null && TargetProjectFiles == null && TargetUrls == null)
             {
                 Log.LogError("You must specify at least 1 url in order to run the task. " + 
                     "The urls can be provided through TargetUrls, TargetProjectFiles, or TargetSitemapFiles.");
+                return false;
             }
 
             // Setup configuration of DI container
@@ -203,6 +204,7 @@ namespace ContinuousSeo.MSBuild
 
             // Add the current parameters to context
             Log.LogMessage("Creating Context");
+
             var context = new HtmlValidatorRunnerContext()
             {
                 TargetSitemapsFiles = this.TargetSitemapsFiles.ToStringArray(),
@@ -228,11 +230,23 @@ namespace ContinuousSeo.MSBuild
 
             var runner = container.GetInstance<IValidatorRunner>();
 
-            // get output information (errors, warnings)
-            var report = runner.Execute();
+            Log.LogMessage("Starting Validation");
 
-            this.TotalErrors = report.TotalErrors;
-            this.TotalWarnings = report.TotalWarnings;
+            try
+            {
+                // get output information (errors, warnings)
+                var report = runner.Execute();
+
+                this.TotalErrors = report.TotalErrors;
+                this.TotalWarnings = report.TotalWarnings;
+
+                Log.LogMessage("Validation completed with {0} error(s) and {1} warning(s).", report.TotalErrors, report.TotalWarnings);
+            }
+            catch (Exception ex)
+            {
+                Log.LogError("While executing validation the following error was encountered: {0}, {1}", ex.Message, ex.StackTrace);
+                return false;
+            }
 
             return true;
         }
