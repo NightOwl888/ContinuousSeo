@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="HtmlValidationRunnerTests.cs" />
     <Compile Include="Output\FileNameGeneratorTests.cs" />
-    <Compile Include="Output\HtmlValidatorIndexFileCreatorTests.cs" />
     <Compile Include="Processors\HtmlValidatorWrapperTests.cs" />
     <Compile Include="Processors\UrlAggregatorTests.cs" />
     <Compile Include="Parsers\UrlFileParserTests.cs" />
