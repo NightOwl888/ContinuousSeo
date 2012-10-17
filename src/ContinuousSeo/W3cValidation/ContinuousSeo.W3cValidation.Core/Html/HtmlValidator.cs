@@ -27,14 +27,14 @@ namespace ContinuousSeo.W3cValidation.Core.Html
         private readonly IHttpClient mHttpClient;
         private readonly IStreamFactory mStreamFactory;
         private readonly ResourceCopier mResourceCopier;
-        private readonly IValidatorSoap12ResponseParser mResponseParser;
+        private readonly IValidatorSoap12ResponseParser mSoapResponseParser;
 
         public HtmlValidator() :
             this(new HttpClient(), new StreamFactory(), new HtmlValidatorResourceCopier(), new HtmlValidatorSoap12ResponseParser())
         {
         }
 
-        public HtmlValidator(IHttpClient httpClient, IStreamFactory streamFactory, ResourceCopier resourceCopier, IValidatorSoap12ResponseParser responseParser)
+        public HtmlValidator(IHttpClient httpClient, IStreamFactory streamFactory, ResourceCopier resourceCopier, IValidatorSoap12ResponseParser soapResponseParser)
         {
             if (httpClient == null)
                 throw new ArgumentNullException("httpClient");
@@ -42,13 +42,13 @@ namespace ContinuousSeo.W3cValidation.Core.Html
                 throw new ArgumentNullException("streamFactory");
             if (resourceCopier == null)
                 throw new ArgumentNullException("resourceCopier");
-            if (responseParser == null)
-                throw new ArgumentNullException("responseParser");
+            if (soapResponseParser == null)
+                throw new ArgumentNullException("soapResponseParser");
 
             this.mHttpClient = httpClient;
             this.mStreamFactory = streamFactory;
             this.mResourceCopier = resourceCopier;
-            this.mResponseParser = responseParser;
+            this.mSoapResponseParser = soapResponseParser;
         }
 
         #region IsDefaultValidatorAddress
@@ -363,7 +363,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
             }
 
             checkStream.Position = 0;
-            var response = mResponseParser.ParseResponse(checkStream);
+            var response = mSoapResponseParser.ParseResponse(checkStream);
 
             var errors = response.Errors.Count();
             var warnings = response.Warnings.Count();

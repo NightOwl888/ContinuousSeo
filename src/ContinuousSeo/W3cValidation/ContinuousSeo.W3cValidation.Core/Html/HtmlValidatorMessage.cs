@@ -26,7 +26,6 @@ namespace ContinuousSeo.W3cValidation.Core.Html
 			this.Source = source;
 		}
 
-
         public long? Line { get; private set; }
         public long? Column { get; private set; }
         public string Message { get; private set; }
