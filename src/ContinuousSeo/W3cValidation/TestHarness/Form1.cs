@@ -127,14 +127,19 @@ namespace TestHarness
             var context = new HtmlValidatorRunnerContext()
             {
                 OutputPath = @"F:\TestW3C-4\",
-                OutputFormat = "xml",
-                TargetUrls = new List<string>() 
-                { 
-                    @"http://www.shuttercontractor.com/", 
-                    @"http://www.foldingchairdepot.com/", 
-                    @"http://www.articles-about-exterior-shutters.info", 
-                    @"http://www.articles-about-exterior-shutters.info/articles/different-types-of-exterior-window-shutters.aspx" 
+                OutputFormat = "html",
+                //TargetUrls = new List<string>() 
+                //{ 
+                //    @"http://www.shuttercontractor.com/", 
+                //    @"http://www.foldingchairdepot.com/", 
+                //    @"http://www.articles-about-exterior-shutters.info", 
+                //    @"http://www.articles-about-exterior-shutters.info/articles/different-types-of-exterior-window-shutters.aspx" 
+                //},
+                TargetUrls = new List<string>()
+                {
+                    @"http://www.dev.helloworld.com/"
                 },
+                DirectInputMode = true
             };
 
 

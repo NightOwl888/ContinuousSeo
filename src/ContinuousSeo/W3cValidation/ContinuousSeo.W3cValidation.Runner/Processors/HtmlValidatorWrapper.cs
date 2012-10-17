@@ -11,6 +11,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     using System.Linq;
     using System.Text;
     using System.IO;
+    using ContinuousSeo.Core.Net;
     using ContinuousSeo.W3cValidation.Core;
     using ContinuousSeo.W3cValidation.Core.Html;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
@@ -23,16 +24,20 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     {
         private readonly HtmlValidator mValidator;
         private readonly HtmlValidatorRunnerContext mContext;
+        private readonly IHttpClient mHttpClient;
 
-        public HtmlValidatorWrapper(HtmlValidator validator, HtmlValidatorRunnerContext context)
+        public HtmlValidatorWrapper(HtmlValidator validator, HtmlValidatorRunnerContext context, IHttpClient httpClient)
         {
             if (validator == null)
                 throw new ArgumentNullException("validator");
             if (context == null)
                 throw new ArgumentNullException("context");
+            if (httpClient == null)
+                throw new ArgumentNullException("httpClient");
 
             mValidator = validator;
             mContext = context;
+            mHttpClient = httpClient;
         }
 
         #region IValidator Members
@@ -44,12 +49,22 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
                 return ReportFailure(url, string.Empty, "The url is not in a valid format.");
             }
 
+            var validatorUrl = mContext.ValidatorUrl;
+            var input = url;
+            var inputFormat = InputFormat.Uri;
+            
             // wrap in try/catch so any error can be reported in the output
             try
             {
-                var validatorUrl = mContext.ValidatorUrl;
+                if (mContext.DirectInputMode)
+                {
+                    // Retrieve the text from the webserver and input it directly
+                    // to the W3C API
+                    inputFormat = InputFormat.Fragment;
+                    input = mHttpClient.GetResponseText(url);
+                }
 
-                var validatorResult = mValidator.Validate(output, outputFormat, url, InputFormat.Uri, mContext, validatorUrl);
+                var validatorResult = mValidator.Validate(output, outputFormat, input, inputFormat, mContext, validatorUrl);
 
                 return ReportSuccess(
                     url,

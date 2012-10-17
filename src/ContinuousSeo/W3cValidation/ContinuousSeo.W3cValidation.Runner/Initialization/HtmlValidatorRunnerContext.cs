@@ -27,6 +27,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Initialization
         public virtual string OutputPath { get; set; } // Directory to write output files
         public virtual string OutputFormat { get; set; } // Currently only accepts Html
         public virtual string ValidatorUrl { get; set; }
+        public virtual bool DirectInputMode { get; set; }
 
         #endregion
 

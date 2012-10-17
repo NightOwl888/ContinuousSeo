@@ -7,6 +7,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
     using System.IO;
     using NUnit.Framework;
     using Moq;
+    using ContinuousSeo.Core.Net;
     using ContinuousSeo.W3cValidation.Core;
     using ContinuousSeo.W3cValidation.Core.Html;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
@@ -17,17 +18,17 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
     {
         private Mock<HtmlValidator> mValidator = null;
         private Mock<HtmlValidatorRunnerContext> mContext = null;
+        private Mock<IHttpClient> mHttpClient = null;
         private int mTotalValidatorValidateCalls = 0;
 
         #region SetUp / TearDown
-
-        
 
         [SetUp]
         public void Init()
         {
             mValidator = new Mock<HtmlValidator>();
             mContext = new Mock<HtmlValidatorRunnerContext>();
+            mHttpClient = new Mock<IHttpClient>();
 
             mValidator
                 .Setup(x => x.IsDefaultValidatorAddress(It.IsAny<string>()))
@@ -43,12 +44,13 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         {
             mValidator = null;
             mContext = null;
+            mHttpClient = null;
             mTotalValidatorValidateCalls = 0;
         }
 
         private HtmlValidatorWrapper NewHtmlValidatorWrapperInstance()
         {
-            return new HtmlValidatorWrapper(mValidator.Object, mContext.Object);
+            return new HtmlValidatorWrapper(mValidator.Object, mContext.Object, mHttpClient.Object);
         }
 
         private void SetupValidValidatorValidateReturnStatusWith8Warnings()
@@ -91,7 +93,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         #region ValidateUrl Method
 
         [Test]
-        public void ValidateUrl_ValidUrl_ReturnsDomainName()
+        public void ValidateUrl_ValidUrl_ShouldReturnDomainName()
         {
             // arrange
             var url = "http://www.google.com/";
@@ -116,7 +118,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_ValidUrlWithNonStandardPort_ReturnsDomainNameAndPort()
+        public void ValidateUrl_ValidUrlWithNonStandardPort_ShouldReturnDomainNameAndPort()
         {
             // arrange
             var url = "http://www.google.com:9090/test.aspx";
@@ -139,7 +141,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_InvalidUrl_ReturnsValidFalse()
+        public void ValidateUrl_InvalidUrl_ShouldReturnValidFalse()
         {
             // arrange
             var url = "http:/www.google.com/test.aspx";
@@ -161,7 +163,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_InvalidUrl_ReturnsInvalidUrlExceptionMessage()
+        public void ValidateUrl_InvalidUrl_ShouldReturnInvalidUrlExceptionMessage()
         {
             // arrange
             var url = "http:/www.google.com/test.aspx";
@@ -183,7 +185,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_InvalidUrl_ReturnsUrl()
+        public void ValidateUrl_InvalidUrl_ShouldReturnUrl()
         {
             // arrange
             var url = "http:/www.google.com/test.aspx";
@@ -205,7 +207,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_ValidUrl_ReturnsUrl()
+        public void ValidateUrl_ValidUrl_ShouldReturnUrl()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -228,7 +230,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_HttpExceptionThrown_ReturnsUrl()
+        public void ValidateUrl_HttpExceptionThrown_ShouldReturnUrl()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -251,7 +253,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_ContextOutputFormatHtml_CallsValidatorValidateWithHtmlFormat()
+        public void ValidateUrl_ContextOutputFormatHtml_ShouldCallValidatorValidateWithHtmlFormat()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -283,7 +285,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_ContextOutputFormatXml_CallsValidatorValidateWithSoap12Format()
+        public void ValidateUrl_ContextOutputFormatXml_ShouldCallValidatorValidateWithSoap12Format()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -315,7 +317,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_ContextOutputFormatNull_CallsValidatorValidateWithHtmlFormat()
+        public void ValidateUrl_ContextOutputFormatNull_ShouldCallValidatorValidateWithHtmlFormat()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -347,7 +349,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_ContextValidatorUrlProvided_CallsValidatorValidateWithSameValidatorUrl()
+        public void ValidateUrl_ContextValidatorUrlProvided_ShouldCallValidatorValidateWithSameValidatorUrl()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -377,7 +379,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_ValidUrl_CallsValidatorValidateWithSameUrl()
+        public void ValidateUrl_ValidUrl_ShouldCallValidatorValidateWithSameUrl()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -407,7 +409,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_ValidatorValidateReturnsValidStatus_ReportsValidStatus()
+        public void ValidateUrl_ValidatorValidateReturnsValidStatus_ShouldReportValidStatus()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -431,7 +433,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_ValidatorValidateReturnsInvalidStatus_ReportsInvalidStatus()
+        public void ValidateUrl_ValidatorValidateReturnsInvalidStatus_ShouldReportInvalidStatus()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -455,7 +457,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_ValidatorValidateReturns8Warnings_Reports8Warnings()
+        public void ValidateUrl_ValidatorValidateReturns8Warnings_ShouldReport8Warnings()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -479,7 +481,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_ValidatorValidateReturns4Errors_Reports4Errors()
+        public void ValidateUrl_ValidatorValidateReturns4Errors_ShouldReport4Errors()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -503,7 +505,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         }
 
         [Test]
-        public void ValidateUrl_HttpExceptionThrown_ReportsInvalidStatus()
+        public void ValidateUrl_HttpExceptionThrown_ShouldReportInvalidStatus()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
@@ -524,6 +526,54 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             var expected = false;
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void ValidateUrl_ContextDirectInputModeTrue_ShouldCallHttpClientGetResponseText()
+        {
+            // arrange
+            var url = "http://www.google.com/test.aspx";
+            mContext
+                .Setup(x => x.DirectInputMode)
+                .Returns(true);
+
+            var target = NewHtmlValidatorWrapperInstance();
+
+            // act
+            IValidatorReportItem result;
+            using (var output = new MemoryStream())
+            {
+                result = target.ValidateUrl(url, output, OutputFormat.Html);
+            }
+
+            // assert
+            mHttpClient
+                .Verify(x => x.GetResponseText(url), 
+                Times.Once());
+        }
+
+        [Test]
+        public void ValidateUrl_ContextDirectInputModeFalse_ShouldNotCallHttpClientGetResponseText()
+        {
+            // arrange
+            var url = "http://www.google.com/test.aspx";
+            mContext
+                .Setup(x => x.DirectInputMode)
+                .Returns(false);
+
+            var target = NewHtmlValidatorWrapperInstance();
+
+            // act
+            IValidatorReportItem result;
+            using (var output = new MemoryStream())
+            {
+                result = target.ValidateUrl(url, output, OutputFormat.Html);
+            }
+
+            // assert
+            mHttpClient
+                .Verify(x => x.GetResponseText(url),
+                Times.Never());
         }
 
         #endregion

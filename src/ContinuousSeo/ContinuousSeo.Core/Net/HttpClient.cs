@@ -80,6 +80,31 @@ namespace ContinuousSeo.Core.Net
             }
         }
 
+        public string GetResponseText(string url)
+        {
+            //if (string.IsNullOrEmpty(url))
+            //{
+            //    throw new ArgumentNullException("url");
+            //}
+
+            //NameValueCollection result = new NameValueCollection();
+            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+            //using (WebResponse response = request.GetResponse())
+            //{
+            //    return response.GetResponseStream();
+            //}
+            string result = string.Empty;
+            using (var document = GetResponseStream(url))
+            {
+                using (var reader = new StreamReader(document))
+                {
+                    result = reader.ReadToEnd();
+                }
+            }
+            return result;
+        }
+
 
         private void SetRequestStream(HttpWebRequest request, string data)
         {
