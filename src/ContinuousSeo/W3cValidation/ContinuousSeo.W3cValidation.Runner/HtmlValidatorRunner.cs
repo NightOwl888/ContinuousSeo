@@ -48,12 +48,12 @@ namespace ContinuousSeo.W3cValidation.Runner
 
         #region IValidatorRunner Members
 
-        public void Execute()
+        public ValidationResult Execute()
         {
             Intialize();
 
             var urls = mUrlAggregator.AggregateUrls();
-            mProcessor.ProcessUrls(urls);
+            return mProcessor.ProcessUrls(urls);
         }
 
         #endregion

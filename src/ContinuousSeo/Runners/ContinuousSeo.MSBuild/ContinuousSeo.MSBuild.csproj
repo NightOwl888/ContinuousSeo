@@ -47,6 +47,10 @@
     <Compile Include="W3cHtmlValidator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\W3cValidation\ContinuousSeo.W3cValidation.Core\ContinuousSeo.W3cValidation.Core.csproj">
+      <Project>{916D4789-55E0-4588-A648-3BA18D9A4B7D}</Project>
+      <Name>ContinuousSeo.W3cValidation.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\W3cValidation\ContinuousSeo.W3cValidation.Runner\ContinuousSeo.W3cValidation.Runner.csproj">
       <Project>{D44CE491-B37A-4F8B-A416-14D33C1694F3}</Project>
       <Name>ContinuousSeo.W3cValidation.Runner</Name>

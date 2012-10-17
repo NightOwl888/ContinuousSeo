@@ -178,6 +178,12 @@ namespace ContinuousSeo.MSBuild
 
         public bool UseHtmlTidy { get; set; }
 
+        [Output]
+        public int TotalErrors { get; private set; }
+
+        [Output]
+        public int TotalWarnings { get; private set; }
+
         #endregion
 
         #region Execute
@@ -222,8 +228,12 @@ namespace ContinuousSeo.MSBuild
 
             var runner = container.GetInstance<IValidatorRunner>();
 
-            // TODO: get output information (errors, warnings, validity status)
-            runner.Execute();
+            // get output information (errors, warnings)
+            var report = runner.Execute();
+
+            this.TotalErrors = report.TotalErrors;
+            this.TotalWarnings = report.TotalWarnings;
+
             return true;
         }
 

@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IValidatorRunner.cs" company="">
+// <copyright file="ValidationResult.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -14,8 +14,9 @@ namespace ContinuousSeo.W3cValidation.Runner
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IValidatorRunner
+    public class ValidationResult
     {
-        ValidationResult Execute();
+        public int TotalErrors { get; internal set; }
+        public int TotalWarnings { get; internal set; }
     }
 }

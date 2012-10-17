@@ -79,17 +79,15 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         #region IUrlProcessor Members
 
-        public void ProcessUrls(IEnumerable<string> urls)
+        public ValidationResult ProcessUrls(IEnumerable<string> urls)
         {
             string outputFormat = (string.IsNullOrEmpty(mRunnerContext.OutputFormat)) ? string.Empty : mRunnerContext.OutputFormat.ToLowerInvariant();
             switch (outputFormat)
             {
                 case "xml":
-                    ProcessXmlOutput(urls);
-                    break;
+                    return ProcessXmlOutput(urls);
                 default:
-                    ProcessHtmlOutput(urls);
-                    break;
+                    return ProcessHtmlOutput(urls);
             }  
         }
 
@@ -99,23 +97,24 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         #region Html Output
 
-        private void ProcessHtmlOutput(IEnumerable<string> urls)
+        private ValidationResult ProcessHtmlOutput(IEnumerable<string> urls)
         {
             using (Stream outputXmlReport = mStreamFactory.GetMemoryStream())
             {
-                WriteXmlReportForHtmlOutput(outputXmlReport, urls);
+                return WriteXmlReportForHtmlOutput(outputXmlReport, urls);
             }
         }
 
-        private void WriteXmlReportForHtmlOutput(Stream outputXmlReport, IEnumerable<string> urls)
+        private ValidationResult WriteXmlReportForHtmlOutput(Stream outputXmlReport, IEnumerable<string> urls)
         {
+            var result = new ValidationResult();
             var outputPath = GetOutputPathForHtmlOutput();
 
             using (var writer = mReportWriterFactory.GetTextWriter(outputXmlReport, Encoding.UTF8))
             {
                 writer.WriteStartDocument();
 
-                ValidateUrlsForHtmlOutput(writer, outputPath, urls);
+                result = ValidateUrlsForHtmlOutput(writer, outputPath, urls);
 
                 writer.WriteEndDocument();
                 writer.Flush();
@@ -126,6 +125,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
                 outputXmlReport.Position = 0;
                 WriteHtmlIndexFile(outputXmlReport, outputPath);
             }
+            return result;
         }
 
         private void WriteHtmlIndexFile(Stream outputXmlReport, string outputPath)
@@ -148,8 +148,11 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             return outputPath;
         }
 
-        private void ValidateUrlsForHtmlOutput(IValidatorReportTextWriter writer, string outputPath, IEnumerable<string> urls)
+        private ValidationResult ValidateUrlsForHtmlOutput(IValidatorReportTextWriter writer, string outputPath, IEnumerable<string> urls)
         {
+            var result = new ValidationResult();
+            bool first = true;
+
             if (urls.Count() > 0)
             {
                 // Copy the images and CSS files for the HTML documents
@@ -159,42 +162,41 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             // Process urls
             foreach (var url in urls)
             {
-                ValidateUrlForHtmlOutput(writer, outputPath, url);
+                first = PauseIteration(first);
+                AddResultTotals(result, ValidateUrlForHtmlOutput(writer, outputPath, url));
             }
+            return result;
         }
 
-        private void ValidateUrlForHtmlOutput(IValidatorReportTextWriter writer, string outputPath, string url)
+        private IValidatorReportItem ValidateUrlForHtmlOutput(IValidatorReportTextWriter writer, string outputPath, string url)
         {
-            IValidatorReportItem report;
+            IValidatorReportItem result = new ValidatorReportItem();
             string fileName = Path.Combine(outputPath, mFileNameGenerator.GenerateFileName(url, "html"));
 
             using (var outputStream = mStreamFactory.GetFileStream(fileName, FileMode.Create, FileAccess.Write))
             {
-                report = mValidator.ValidateUrl(url, outputStream, OutputFormat.Html);
+                result = mValidator.ValidateUrl(url, outputStream, OutputFormat.Html);
             }
 
             // Write the filename to the report
-            report.FileName = Path.GetFileName(fileName);
-            writer.WriteUrlElement(report);
+            result.FileName = Path.GetFileName(fileName);
+            writer.WriteUrlElement(result);
 
-            if (mValidator.IsDefaultValidatorUrl())
-            {
-                Thread.Sleep(1000);
-            }
+            return result;
         }
 
         #endregion
 
         #region Xml Output
 
-        private void ProcessXmlOutput(IEnumerable<string> urls)
+        private ValidationResult ProcessXmlOutput(IEnumerable<string> urls)
         {
             // Use entire output path (should be the complete path to xml file).
             string outputPath = GetOutputPathForXmlOutput();
 
             using (Stream outputXmlReport = mStreamFactory.GetFileStream(outputPath, FileMode.Create, FileAccess.Write))
             {
-                WriteXmlReportForXmlOutput(outputXmlReport, urls);
+               return WriteXmlReportForXmlOutput(outputXmlReport, urls);
             }
         }
 
@@ -210,41 +212,60 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             return outputPath;
         }
 
-        private void WriteXmlReportForXmlOutput(Stream outputXmlReport, IEnumerable<string> urls)
+        private ValidationResult WriteXmlReportForXmlOutput(Stream outputXmlReport, IEnumerable<string> urls)
         {
+            var result = new ValidationResult();
             using (var writer = mReportWriterFactory.GetTextWriter(outputXmlReport, Encoding.UTF8))
             {
                 writer.WriteStartDocument();
-                ValidateUrlsForXmlOutput(writer, urls);
+                result = ValidateUrlsForXmlOutput(writer, urls);
                 writer.WriteEndDocument();
             }
+            return result;
         }
 
-        private void ValidateUrlsForXmlOutput(IValidatorReportTextWriter writer, IEnumerable<string> urls)
+        private ValidationResult ValidateUrlsForXmlOutput(IValidatorReportTextWriter writer, IEnumerable<string> urls)
         {
+            var result = new ValidationResult();
+            bool first = true;
+
             // Process urls
             foreach (var url in urls)
             {
-                ValidateUrlForXmlOutput(writer, url);
+                first = PauseIteration(first);
+                AddResultTotals(result, ValidateUrlForXmlOutput(writer, url));
             }
+            return result;
         }
 
-        private void ValidateUrlForXmlOutput(IValidatorReportTextWriter writer, string url)
+        private IValidatorReportItem ValidateUrlForXmlOutput(IValidatorReportTextWriter writer, string url)
         {
+            IValidatorReportItem result = new ValidatorReportItem();
             using (var outputStream = mStreamFactory.GetMemoryStream())
             {
-                var report = mValidator.ValidateUrl(url, outputStream, OutputFormat.Soap12);
+                result = mValidator.ValidateUrl(url, outputStream, OutputFormat.Soap12);
                 outputStream.Position = 0;
-                writer.WriteUrlElement(report, outputStream);
+                writer.WriteUrlElement(result, outputStream);
             }
-
-            if (mValidator.IsDefaultValidatorUrl())
-            {
-                Thread.Sleep(1000);
-            }
+            return result;
         }
 
         #endregion
+
+        private void AddResultTotals(ValidationResult totals, IValidatorReportItem report)
+        {
+            totals.TotalErrors += report.Errors;
+            totals.TotalWarnings += report.Warnings;
+        }
+
+        private bool PauseIteration(bool first)
+        {
+            if (!first && mValidator.IsDefaultValidatorUrl())
+            {
+                Thread.Sleep(1000);
+            }
+            return false;
+        }
 
         #endregion
 

@@ -110,18 +110,18 @@ namespace TestHarness
             {
                 OutputPath = @"F:\TestW3C-4\",
                 OutputFormat = "html",
-                //TargetUrls = new List<string>() 
-                //{ 
-                //    @"http://www.shuttercontractor.com/", 
-                //    @"http://www.foldingchairdepot.com/", 
-                //    @"http://www.articles-about-exterior-shutters.info", 
-                //    @"http://www.articles-about-exterior-shutters.info/articles/different-types-of-exterior-window-shutters.aspx" 
-                //},
-                TargetUrls = new List<string>()
-                {
-                    @"http://www.dev.helloworld.com/"
+                TargetUrls = new List<string>() 
+                { 
+                    @"http://www.shuttercontractor.com/", 
+                    @"http://www.foldingchairdepot.com/", 
+                    @"http://www.articles-about-exterior-shutters.info", 
+                    @"http://www.articles-about-exterior-shutters.info/articles/different-types-of-exterior-window-shutters.aspx" 
                 },
-                DirectInputMode = true
+                //TargetUrls = new List<string>()
+                //{
+                //    @"http://www.dev.helloworld.com/"
+                //},
+                DirectInputMode = false
             };
 
 
@@ -137,7 +137,8 @@ namespace TestHarness
 
             var runner = container.GetInstance<IValidatorRunner>();
 
-            runner.Execute();
+            var report = runner.Execute();
+
         }
     }
 }
