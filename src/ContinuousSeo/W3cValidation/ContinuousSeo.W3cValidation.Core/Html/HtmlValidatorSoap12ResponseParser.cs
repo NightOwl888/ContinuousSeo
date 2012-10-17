@@ -15,7 +15,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
     using ContinuousSeo.W3cValidation.Core;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Parses the response from the W3C HTML Validator.
     /// </summary>
     public class HtmlValidatorSoap12ResponseParser : IValidatorSoap12ResponseParser
     {

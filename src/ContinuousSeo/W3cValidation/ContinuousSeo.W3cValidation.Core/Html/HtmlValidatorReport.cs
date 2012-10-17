@@ -12,7 +12,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
     using System.Text;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Represents detailed report information from the W3C HTML Validator.
     /// </summary>
     public class HtmlValidatorReport : IValidatorReport
     {
