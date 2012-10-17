@@ -30,6 +30,8 @@ namespace ContinuousSeo.W3cValidation.Core.Html
         public bool Debug { get; set; }
         public bool ShowSource { get; set; }
         public bool Outline { get; set; }
+        public bool GroupErrors { get; set; }
+        public bool UseHtmlTidy { get; set; }
 
     }
 }

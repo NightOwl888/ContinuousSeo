@@ -22,6 +22,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
         bool Debug { get; set; }
         bool ShowSource { get; set; }
         bool Outline { get; set; }
-
+        bool GroupErrors { get; set; }
+        bool UseHtmlTidy { get; set; }
     }
 }

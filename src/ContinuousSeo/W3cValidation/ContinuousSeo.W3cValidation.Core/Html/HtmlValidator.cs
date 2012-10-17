@@ -9,6 +9,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
     using System;
     using System.IO;
     using System.Text;
+    using System.Linq;
     using System.Web;
     using System.Collections.Specialized;
     using ContinuousSeo.Core.Net;
@@ -206,19 +207,87 @@ namespace ContinuousSeo.W3cValidation.Core.Html
             if (string.IsNullOrEmpty(validatorAddress))
                 validatorAddress = defaultValidatorAddress;
 
-            string data = GetFormData(input, inputFormat, outputFormat, settings);
+            
             NameValueCollection headers;
 
-            if (inputFormat == InputFormat.Fragment)
-            {
-                headers = this.httpClient.Post(output, validatorAddress, data);
-            }
-            else
-            {
-                headers = this.httpClient.Get(output, validatorAddress + "?" + data);
-            }
+            //int tryCount = 0;
+            //do
+            //{
+            //    if (tryCount > 0)
+            //    {
+            //        if (IsDefaultValidatorAddress(validatorAddress))
+            //        {
+            //            System.Threading.Thread.Sleep(1000);
+            //        }
+
+            //        // Clear the stream from the last loop or we will
+            //        // double the stream content.
+            //        output.SetLength(0);
+            //    }
+
+                string data = GetFormData(input, inputFormat, outputFormat, settings);
+
+                if (inputFormat == InputFormat.Fragment)
+                {
+                    headers = this.httpClient.Post(output, validatorAddress, data);
+                }
+                else
+                {
+                    headers = this.httpClient.Get(output, validatorAddress + "?" + data);
+                }
+
+            //    // W3C API BUG: for some reason it doesn't return headers every time
+            //    // it is accessed. Connecting a second time seems to usually work, so we will try
+            //    // again up to 4 times.
+            //    tryCount++;
+            //} while (headers["X-W3C-Validator-Status"] == null && tryCount <= 4 && outputFormat == OutputFormat.Html);
 
             HtmlValidatorResult result = ParseResult(headers);
+
+            // Check if any headers were returned
+            if (string.IsNullOrEmpty(result.Status))
+            {
+                result = FixBrokenHeaders(output, outputFormat, input, inputFormat, settings, validatorAddress);
+
+                //Stream checkStream = null;
+                //if (outputFormat == OutputFormat.Html || output.CanRead == false)
+                //{
+                //    if (IsDefaultValidatorAddress(validatorAddress))
+                //    {
+                //        System.Threading.Thread.Sleep(1000);
+                //    }
+
+                //    // Headers failed, so we will get the report again in Soap 1.2 format in 
+                //    // an in memory stream
+                //    checkStream = new MemoryStream();
+                //    string checkData = GetFormData(input, inputFormat, OutputFormat.Soap12, settings);
+
+                //    // This time, ignore headers.
+                //    if (inputFormat == InputFormat.Fragment)
+                //    {
+                //        this.httpClient.Post(checkStream, validatorAddress, data);
+                //    }
+                //    else
+                //    {
+                //        this.httpClient.Get(checkStream, validatorAddress + "?" + data);
+                //    }
+                //}
+                //else
+                //{
+                //    output.Position = 0;
+                //    output.CopyTo(checkStream);
+                //}
+
+                //var parser = new HtmlValidatorSoap12ResponseParser();
+                //var response = parser.ParseResponse(checkStream);
+
+                //var errors = response.Errors.Count();
+                //var warnings = response.Warnings.Count();
+                //var status = response.Validity ? "Valid" : "Invalid";
+                //var recursion = 1;
+
+                //result = new HtmlValidatorResult(status, errors, warnings, recursion);
+            }
 
             return result;
         }
@@ -264,6 +333,12 @@ namespace ContinuousSeo.W3cValidation.Core.Html
             if (settings.Outline)
                 data += "&outline=1";
 
+            if (settings.GroupErrors)
+                data += "&group=1";
+
+            if (settings.UseHtmlTidy)
+                data += "&st=1";
+
             return data;
         }
 
@@ -303,6 +378,50 @@ namespace ContinuousSeo.W3cValidation.Core.Html
 
             return input;
         }
+
+        private HtmlValidatorResult FixBrokenHeaders(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, IHtmlValidatorSettings settings, string validatorAddress)
+        {
+            Stream checkStream = new MemoryStream();
+            if (outputFormat == OutputFormat.Html || output.CanRead == false)
+            {
+                if (IsDefaultValidatorAddress(validatorAddress))
+                {
+                    System.Threading.Thread.Sleep(1000);
+                }
+
+                // Headers failed, so we will get the report again in Soap 1.2 format in 
+                // an in memory stream
+                string checkData = GetFormData(input, inputFormat, OutputFormat.Soap12, settings);
+
+                // This time, ignore headers.
+                if (inputFormat == InputFormat.Fragment)
+                {
+                    this.httpClient.Post(checkStream, validatorAddress, checkData);
+                }
+                else
+                {
+                    this.httpClient.Get(checkStream, validatorAddress + "?" + checkData);
+                }
+            }
+            else
+            {
+                output.Position = 0;
+                output.CopyTo(checkStream);
+            }
+
+            checkStream.Position = 0;
+            var parser = new HtmlValidatorSoap12ResponseParser();
+            var response = parser.ParseResponse(checkStream);
+
+            var errors = response.Errors.Count();
+            var warnings = response.Warnings.Count();
+            var status = response.Validity ? "Valid" : "Invalid";
+            var recursion = 1;
+
+            var result = new HtmlValidatorResult(status, errors, warnings, recursion);
+            return result;
+        }
+
 
         #endregion
 
