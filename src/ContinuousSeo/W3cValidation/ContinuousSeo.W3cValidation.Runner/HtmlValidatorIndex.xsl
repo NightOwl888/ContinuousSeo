@@ -60,6 +60,7 @@
 			</div>
 			<div id="results_container">
 	
+				<!-- Jump Bar -->
 				<ul class="navbar" id="jumpbar">
 					<li>
 						<strong>Jump To:</strong>
@@ -68,8 +69,9 @@
 						<xsl:sort select="@domainName"/>
 					</xsl:apply-templates>
 				</ul>
+				<!-- End Jump Bar -->
 	  
-				
+				<!-- Header -->
 				<xsl:choose>
 					<xsl:when test="$batchErrors = 0">
 						<h2 id="results" class="valid">All documents were successfully checked!</h2>
@@ -109,6 +111,7 @@
 						<td colspan="2"><xsl:value-of select="count(validationResult[generate-id()=generate-id(key('validationResult-by-domain', @domainName)[1])])"/></td>
 					</tr>
 				</table>
+				<!-- End Header -->
 				
 				<div id="don_program">&nbsp;</div>
 				<script type="text/javascript" src="http://www.w3.org/QA/Tools/don_prog.js">&nbsp;</script>
@@ -116,15 +119,13 @@
 				<p class="backtop"><a href="#jumpbar">&uarr; Top</a></p>
 			
 				<!-- Groups -->
-				<!--<xsl:copy>-->
 				<div id="result">
 					<xsl:apply-templates mode="group" select="validationResult[generate-id()=generate-id(key('validationResult-by-domain', @domainName)[1])]">
 						<xsl:sort select="@domainName"/>
 					</xsl:apply-templates>
 				</div>
-					
-				<!--</xsl:copy>-->
 				<!-- End Groups -->
+				
 			</div>
 			<!-- Footer -->
 			<div id="footer">
@@ -238,79 +239,63 @@
 			</table>
 		</div>
 		
-		<!--</xsl:for-each>-->
-		<!--</xsl:copy>-->
 	</xsl:template>
 	
 	<xsl:template mode="group" match="validationResult">
+		
 		<xsl:variable name="var_group_errors">
-			<!--<xsl:copy>
-				<sum>-->
-					<xsl:value-of select="sum(key('validationResult-by-domain', @domainName)/@errors)"/>
-				<!--</sum>
-			</xsl:copy>-->
+			<xsl:value-of select="sum(key('validationResult-by-domain', @domainName)/@errors)"/>
 		</xsl:variable>
 		
-		<!--<div class="group_container">
-			<xsl:attribute name="id">domain<xsl:value-of select="position()"/></xsl:attribute>-->
+		<xsl:choose>
+			<xsl:when test="$var_group_errors = 0">
+				<h2 id="results" class="valid">
+					<xsl:attribute name="id">domain<xsl:value-of select="position()"/></xsl:attribute>
+					Domain [<xsl:value-of select="@domainName"/>]: All documents were successfully checked!
+				</h2>
+			</xsl:when>
+			<xsl:otherwise>
+				<h2 id="results" class="invalid">
+					<xsl:attribute name="id">domain<xsl:value-of select="position()"/></xsl:attribute>
+					Domain [<xsl:value-of select="@domainName"/>]: Errors found while checking these documents!
+				</h2>
+			</xsl:otherwise>
+		</xsl:choose>
+			
+		<table class="header">
+			<tr>
+				<th>Result:</th>
+				<xsl:choose>
+					<xsl:when test="$var_group_errors = 0">
+						<td colspan="2" style="width:70%;" class="valid">Passed</td>
+					</xsl:when>
+					<xsl:otherwise>
+						<td colspan="2" style="width:70%;" class="invalid">Failed</td>
+					</xsl:otherwise>
+				</xsl:choose>
+			</tr>
+			<tr>
+				<th>Total Errors:</th>
+				<td colspan="2"><xsl:value-of select="$var_group_errors"/></td>
+			</tr>
+			<tr>
+				<th>Total Warnings:</th>
+				<td colspan="2"><xsl:value-of select="sum(key('validationResult-by-domain', @domainName)/@warnings)"/></td>
+			</tr>
+			<tr>
+				<th>Number of Documents:</th>
+				<td colspan="2"><xsl:value-of select="count(key('validationResult-by-domain', @domainName))" /></td>
+			</tr>
+		</table>
+			
+		<p class="backtop"><a href="#jumpbar">&uarr; Top</a></p>
+			
+		<!-- Group Details -->
+		<xsl:apply-templates select="."/>
+		<!-- End Group Details -->
+			
+		<p class="backtop"><a href="#jumpbar">&uarr; Top</a></p>
 		
-			<xsl:choose>
-				<xsl:when test="$var_group_errors = 0">
-					<h2 id="results" class="valid">
-						<xsl:attribute name="id">domain<xsl:value-of select="position()"/></xsl:attribute>
-						Domain [<xsl:value-of select="@domainName"/>]: All documents were successfully checked!
-					</h2>
-				</xsl:when>
-				<xsl:otherwise>
-					<h2 id="results" class="invalid">
-						<xsl:attribute name="id">domain<xsl:value-of select="position()"/></xsl:attribute>
-						Domain [<xsl:value-of select="@domainName"/>]: Errors found while checking these documents!
-					</h2>
-				</xsl:otherwise>
-			</xsl:choose>
-			
-			<table class="header">
-				<tr>
-					<th>Result:</th>
-					<xsl:choose>
-						<xsl:when test="$var_group_errors = 0">
-							<td colspan="2" style="width:70%;" class="valid">Passed</td>
-						</xsl:when>
-						<xsl:otherwise>
-							<td colspan="2" style="width:70%;" class="invalid">Failed</td>
-						</xsl:otherwise>
-					</xsl:choose>
-				</tr>
-				<tr>
-					<th>Total Errors:</th>
-					<td colspan="2"><xsl:value-of select="$var_group_errors"/></td>
-				</tr>
-				
-				<!--<xsl:copy>-->
-					<tr>
-						<th>Total Warnings:</th>
-						<td colspan="2"><xsl:value-of select="sum(key('validationResult-by-domain', @domainName)/@warnings)"/></td>
-					</tr>
-					<tr>
-						<th>Number of Documents:</th>
-						<td colspan="2"><xsl:value-of select="count(key('validationResult-by-domain', @domainName))" /></td>
-					</tr>
-				<!--</xsl:copy>-->
-			</table>
-			
-			<p class="backtop"><a href="#jumpbar">&uarr; Top</a></p>
-			
-			<!-- Group Details -->
-			
-				
-					<!--<xsl:copy>-->
-						<xsl:apply-templates select="."/>
-					<!--</xsl:copy>-->
-				
-			
-			<p class="backtop"><a href="#jumpbar">&uarr; Top</a></p>
-		
-		<!--</div>-->
 	</xsl:template>
 
 	<xsl:template mode="toc" match="validationResult">
@@ -322,8 +307,5 @@
 			</a>
 		</li>
 	</xsl:template>
-	
-
-	
 	
 </xsl:stylesheet>
