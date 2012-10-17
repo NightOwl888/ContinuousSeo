@@ -96,7 +96,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         #region ProcessUrls Method
 
         [Test]
-        public void ProcessUrls_NoUrlsProvided_CallsValidatorValidate0Times()
+        public void ProcessUrls_NoUrlsProvided_ShouldCallValidatorValidate0Times()
         {
             // arrange
             var urls = new List<string>() { };

@@ -93,7 +93,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         #region AggregateUrls Method
 
         [Test]
-        public void AggregateUrls_ContextTargetSitemapFiles3Provided_CallsSitemapsParserProcessFile3Times()
+        public void AggregateUrls_ContextTargetSitemapFiles3Provided_ShouldCallSitemapsParserProcessFile3Times()
         {
             // arrange
             mContext.Setup(x => x.TargetSitemapsFiles).Returns(new List<string>() {
@@ -116,7 +116,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         }
 
         [Test]
-        public void AggregateUrls_ContextTargetSitemapFiles2ProvidedWithReplacableTokens_ReplacesBothTokens()
+        public void AggregateUrls_ContextTargetSitemapFiles2ProvidedWithReplacableTokens_ShouldReplaceBothTokens()
         {
             // arrange
             var targetSitemapsFiles = new List<string>() 
@@ -151,7 +151,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         }
 
         [Test]
-        public void AggregateUrls_ContextTargetUrls2Provided_ReturnsSameUrls()
+        public void AggregateUrls_ContextTargetUrls2Provided_ShouldReturnSameUrls()
         {
             // arrange
             var targetUrls = new List<string>() 
@@ -178,7 +178,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         }
 
         [Test]
-        public void AggregateUrls_ContextTargetUrls2ProvidedWithReplacableTokens_ReplacesBothTokens()
+        public void AggregateUrls_ContextTargetUrls2ProvidedWithReplacableTokens_ShouldReplaceBothTokens()
         {
             // arrange
             var targetUrls = new List<string>() 
@@ -212,7 +212,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         }
 
         [Test]
-        public void AggregateUrls_ContextTargetUrlFileWith4SingleUrls_CallsUrlFileParserParseFile1Time()
+        public void AggregateUrls_ContextTargetUrlFileWith4SingleUrls_ShouldCallUrlFileParserParseFile1Time()
         {
             // arrange
             var targetUrlFiles = new List<string>() { @"C:\Testing\Test.txt" };
@@ -233,7 +233,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         }
 
         [Test]
-        public void AggregateUrls_ContextTargetUrlFileWith4SingleUrls_Returns4Urls()
+        public void AggregateUrls_ContextTargetUrlFileWith4SingleUrls_ShouldReturn4Urls()
         {
             // arrange
             var targetUrlFiles = new List<string>() { @"C:\Testing\Test.txt" };

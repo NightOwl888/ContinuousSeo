@@ -47,7 +47,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         #region Execute Method
 
         [Test]
-        public void Execute_Called_CallsProcessorProcessUrls1Time()
+        public void Execute_Called_ShouldCallProcessorProcessUrls1Time()
         {
             // arrange
             var target = NewHtmlValidationRunnerInstance();

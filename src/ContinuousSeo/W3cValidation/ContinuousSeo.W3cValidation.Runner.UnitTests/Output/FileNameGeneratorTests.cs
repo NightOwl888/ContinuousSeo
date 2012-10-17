@@ -24,7 +24,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Output
         #region GenerateFileName Method
 
         [Test]
-        public void GenerateFileName_ValidUrlAndExtension_ReturnsGuidAndExtension()
+        public void GenerateFileName_ValidUrlAndExtension_ShouldReturnGuidAndExtension()
         {
             // arrange
             var url = "http://www.google.com/test.aspx";
