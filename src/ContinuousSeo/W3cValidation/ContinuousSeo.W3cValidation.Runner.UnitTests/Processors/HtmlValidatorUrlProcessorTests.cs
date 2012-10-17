@@ -20,7 +20,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
     {
         private Mock<IValidatorWrapper> mValidator = null;
         private Mock<HtmlValidatorRunnerContext> mContext = null;
-        private Mock<IUrlAggregator> mAggregator = null;
         private Mock<IFileNameGenerator> mFileNameGenerator = null;
         private TestResourceCopier mResourceCopier = null;
         private Mock<IValidatorReportWriterFactory> mReportWriterFactory = null;
@@ -34,7 +33,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         {
             mValidator = new Mock<IValidatorWrapper>();
             mContext = new Mock<HtmlValidatorRunnerContext>();
-            mAggregator  = new Mock<IUrlAggregator>();
             mFileNameGenerator = new Mock<IFileNameGenerator>();
             mResourceCopier = new TestResourceCopier();
             mReportWriterFactory = new Mock<IValidatorReportWriterFactory>();
@@ -68,7 +66,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         {
             mValidator = null;
             mContext = null;
-            mAggregator = null;
             mFileNameGenerator = null;
             mTotalValidatorValidateUrlCalls = 0;
         }
@@ -78,7 +75,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             return new HtmlValidatorUrlProcessor(
                 mValidator.Object,
                 mContext.Object,
-                mAggregator.Object,
                 mFileNameGenerator.Object,
                 mResourceCopier,
                 mReportWriterFactory.Object,
@@ -100,15 +96,16 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         #region ProcessUrls Method
 
         [Test]
-        public void ProcessUrls_NoTargetUrlsOrTargetFileProvided_CallsValidatorValidate0Times()
+        public void ProcessUrls_NoUrlsProvided_CallsValidatorValidate0Times()
         {
             // arrange
+            var urls = new List<string>() { };
             SetupValidatorValidateToTrackNumberOfCallsToAllValidOverloads();
 
             HtmlValidatorUrlProcessor target = NewHtmlValidatorUrlProcessorInstance();
 
             // act
-            target.ProcessUrls();
+            target.ProcessUrls(urls);
 
             // assert
             var actual = mTotalValidatorValidateUrlCalls;

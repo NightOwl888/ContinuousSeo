@@ -15,6 +15,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     /// </summary>
     public interface IUrlProcessor
     {
-        void ProcessUrls();
+        void ProcessUrls(IEnumerable<string> urls);
     }
 }

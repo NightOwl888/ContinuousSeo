@@ -21,16 +21,20 @@ namespace ContinuousSeo.W3cValidation.Runner
     public class HtmlValidatorRunner : IValidatorRunner
     {
         private readonly HtmlValidatorRunnerContext mContext;
+        protected IUrlAggregator mUrlAggregator;
         protected IUrlProcessor mProcessor;
 
-        public HtmlValidatorRunner(HtmlValidatorRunnerContext context, IUrlProcessor processor)
+        public HtmlValidatorRunner(HtmlValidatorRunnerContext context, IUrlAggregator urlAggregator, IUrlProcessor processor)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
+            if (urlAggregator == null)
+                throw new ArgumentNullException("urlAggregator");
             if (processor == null)
                 throw new ArgumentNullException("processor");
 
             mContext = context;
+            mUrlAggregator = urlAggregator;
             mProcessor = processor;
         }
 
@@ -48,7 +52,8 @@ namespace ContinuousSeo.W3cValidation.Runner
         {
             Intialize();
 
-            mProcessor.ProcessUrls();
+            var urls = mUrlAggregator.AggregateUrls();
+            mProcessor.ProcessUrls(urls);
         }
 
         #endregion

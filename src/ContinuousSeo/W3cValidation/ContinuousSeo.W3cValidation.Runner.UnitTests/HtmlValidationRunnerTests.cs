@@ -15,12 +15,14 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         #region SetUp / TearDown
 
         private Mock<HtmlValidatorRunnerContext> mContext;
+        private Mock<IUrlAggregator> mUrlAggregator;
         private Mock<IUrlProcessor> mProcessor;
 
         [SetUp]
         public void Init()
         {
             mContext = new Mock<HtmlValidatorRunnerContext>();
+            mUrlAggregator = new Mock<IUrlAggregator>();
             mProcessor = new Mock<IUrlProcessor>();
         }
 
@@ -28,12 +30,16 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         public void Dispose()
         {
             mContext = null;
+            mUrlAggregator = null;
             mProcessor = null;
         }
 
         private HtmlValidatorRunner NewHtmlValidationRunnerInstance()
         {
-            return new HtmlValidatorRunner(mContext.Object, mProcessor.Object);
+            return new HtmlValidatorRunner(
+                mContext.Object, 
+                mUrlAggregator.Object, 
+                mProcessor.Object);
         }
 
         #endregion
@@ -51,7 +57,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
             // assert
             mProcessor
-                .Verify(x => x.ProcessUrls(), 
+                .Verify(x => x.ProcessUrls(It.IsAny<IEnumerable<string>>()), 
                 Times.Once());
 
         }
