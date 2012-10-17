@@ -1,0 +1,32 @@
+﻿<!-- Change the default targets to run specific tasks to debug -->
+<Project DefaultTargets="W3cHtmlValidator" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<UsingTask AssemblyFile="bin\Debug\ContinuousSeo.MSBuild.dll"
+		TaskName="ContinuousSeo.MSBuild.W3cHtmlValidator" />
+
+	<Target Name="W3cHtmlValidator">
+		<ItemGroup>
+			<TargetUrls Include="http://www.shuttercontractor.com/"/>
+			<TargetUrls Include="http://www.foldingchairdepot.com/"/>
+			<TargetUrls Include="http://www.foldingchairdepot.com/c/Folding-Chairs/PlasticBlow-Molded-Folding-Chairs.aspx"/>
+		</ItemGroup>
+
+		<ItemGroup>
+			<TargetSitemapsFiles Include="http://www.articles-about-exterior-shutters.info/sitemaps.aspx"/>
+		</ItemGroup>
+
+		<W3cHtmlValidator
+			TargetUrls="@(TargetUrls)"
+			TargetSitemapsFiles="@(TargetSitemapsFiles)"
+			OutputPath="F:\TestW3C-5\"
+			OutputFormat="html">
+
+			<Output TaskParameter="TotalErrors" PropertyName="ValidatorErrors"/>
+			<Output TaskParameter="TotalWarnings" PropertyName="ValidatorWarnings"/>
+		</W3cHtmlValidator>
+
+		<Error Condition="$(TotalErrors) > 0" Text="W3C HTML Validator found $(TotalErrors) error(s)."/>
+		
+	</Target>
+	
+</Project>
