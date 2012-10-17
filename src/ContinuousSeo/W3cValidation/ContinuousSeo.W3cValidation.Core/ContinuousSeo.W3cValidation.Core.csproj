@@ -41,9 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Css\CssValidator.cs" />
+    <Compile Include="Css\CssValidatorMessage.cs" />
+    <Compile Include="Css\CssValidatorReport.cs" />
     <Compile Include="Css\CssValidatorResourceCopier.cs" />
     <Compile Include="Css\CssValidatorResult.cs" />
     <Compile Include="Css\CssValidatorSettings.cs" />
+    <Compile Include="Css\CssValidatorSoap12ResponseParser.cs" />
+    <Compile Include="Css\ICssValidatorSettings.cs" />
     <Compile Include="Html\HtmlValidatorMessage.cs" />
     <Compile Include="Html\HtmlValidatorReport.cs" />
     <Compile Include="Html\HtmlValidatorResourceCopier.cs" />

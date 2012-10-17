@@ -15,7 +15,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
     /// Advanced settings to be passed in to the CSS W3C validator API. These
     /// settings are documented at http://jigsaw.w3.org/css-validator/manual.html#requestformat.
     /// </summary>
-    public class CssValidatorSettings
+    public class CssValidatorSettings : ICssValidatorSettings
     {
         //public CssValidatorSettings()
         //{
