@@ -8,9 +8,11 @@ namespace ContinuousSeo.W3cValidation.Core.Css
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Web;
     using System.Collections.Specialized;
     using ContinuousSeo.Core.Net;
+    using ContinuousSeo.Core.IO;
 
     /// <summary>
     /// Class that contains methods that wrap the W3C CSS Validation API at 
@@ -20,20 +22,32 @@ namespace ContinuousSeo.W3cValidation.Core.Css
     /// </summary>
     public class CssValidator
     {
-
         const string defaultValidatorAddress = "http://jigsaw.w3.org/css-validator/validator";
-        private IHttpClient httpClient;
-        private ResourceCopier resourceCopier;
+        private IHttpClient mHttpClient;
+        private IStreamFactory mStreamFactory;
+        private ResourceCopier mResourceCopier;
+        private IValidatorSoap12ResponseParser mSoapResponseParser;
 
         public CssValidator() :
-            this(new HttpClient(), new CssValidatorResourceCopier())
+            this(new HttpClient(), new StreamFactory(), new CssValidatorResourceCopier(), new CssValidatorSoap12ResponseParser())
         {
         }
 
-        public CssValidator(IHttpClient httpClient, ResourceCopier resourceCopier)
+        public CssValidator(IHttpClient httpClient, IStreamFactory streamFactory, ResourceCopier resourceCopier, IValidatorSoap12ResponseParser soapResponseParser)
         {
-            this.httpClient = httpClient;
-            this.resourceCopier = resourceCopier;
+            if (httpClient == null)
+                throw new ArgumentNullException("httpClient");
+            if (streamFactory == null)
+                throw new ArgumentNullException("streamFactory");
+            if (resourceCopier == null)
+                throw new ArgumentNullException("resourceCopier");
+            if (soapResponseParser == null)
+                throw new ArgumentNullException("soapResponseParser");
+
+            this.mHttpClient = httpClient;
+            this.mStreamFactory = streamFactory;
+            this.mResourceCopier = resourceCopier;
+            this.mSoapResponseParser = soapResponseParser;
         }
 
         #region IsDefaultValidatorAddress
@@ -52,7 +66,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, new CssValidatorSettings(), defaultValidatorAddress);
         }
 
-        public CssValidatorResult Validate(string input, CssValidatorSettings settings)
+        public CssValidatorResult Validate(string input, ICssValidatorSettings settings)
         {
             return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, settings, defaultValidatorAddress);
         }
@@ -62,7 +76,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, new CssValidatorSettings(), defaultValidatorAddress);
         }
 
-        public CssValidatorResult Validate(string input, InputFormat inputFormat, CssValidatorSettings settings)
+        public CssValidatorResult Validate(string input, InputFormat inputFormat, ICssValidatorSettings settings)
         {
             return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, settings, defaultValidatorAddress);
         }
@@ -72,7 +86,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
         //    return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, new CssValidatorSettings(), validatorAddress);
         //}
 
-        public CssValidatorResult Validate(string input, CssValidatorSettings settings, string validatorAddress)
+        public CssValidatorResult Validate(string input, ICssValidatorSettings settings, string validatorAddress)
         {
             return Validate((Stream)null, OutputFormat.Soap12, input, InputFormat.Uri, settings, validatorAddress);
         }
@@ -82,7 +96,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, new CssValidatorSettings(), validatorAddress);
         }
 
-        public CssValidatorResult Validate(string input, InputFormat inputFormat, CssValidatorSettings settings, string validatorAddress)
+        public CssValidatorResult Validate(string input, InputFormat inputFormat, ICssValidatorSettings settings, string validatorAddress)
         {
             return Validate((Stream)null, OutputFormat.Soap12, input, inputFormat, settings, validatorAddress);
         }
@@ -96,7 +110,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             return Validate(filename, OutputFormat.Html, input, InputFormat.Uri, new CssValidatorSettings(), defaultValidatorAddress);
         }
 
-        public CssValidatorResult Validate(string filename, string input, CssValidatorSettings settings)
+        public CssValidatorResult Validate(string filename, string input, ICssValidatorSettings settings)
         {
             return Validate(filename, OutputFormat.Html, input, InputFormat.Uri, settings, defaultValidatorAddress);
         }
@@ -106,7 +120,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             return Validate(filename, outputFormat, input, inputFormat, new CssValidatorSettings(), defaultValidatorAddress);
         }
 
-        public CssValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat, CssValidatorSettings settings)
+        public CssValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat, ICssValidatorSettings settings)
         {
             return Validate(filename, outputFormat, input, inputFormat, settings, defaultValidatorAddress);
         }
@@ -116,7 +130,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             return Validate(filename, OutputFormat.Html, input, InputFormat.Uri, new CssValidatorSettings(), validatorAddress);
         }
 
-        public CssValidatorResult Validate(string filename, string input, CssValidatorSettings settings, string validatorAddress)
+        public CssValidatorResult Validate(string filename, string input, ICssValidatorSettings settings, string validatorAddress)
         {
             return Validate(filename, OutputFormat.Html, input, InputFormat.Uri, settings, validatorAddress);
         }
@@ -126,7 +140,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             return Validate(filename, outputFormat, input, inputFormat, new CssValidatorSettings(), validatorAddress);
         }
 
-        public CssValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat, CssValidatorSettings settings, string validatorAddress)
+        public CssValidatorResult Validate(string filename, OutputFormat outputFormat, string input, InputFormat inputFormat, ICssValidatorSettings settings, string validatorAddress)
         {
             CssValidatorResult result = null;
 
@@ -141,7 +155,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             {
                 // Copy the resources to the output directory if they don't already exist.
                 // This is to ensure all dependencies of the HTML document are there.
-                resourceCopier.CopyResources(directory);
+                mResourceCopier.CopyResources(directory);
             }
 
             using (FileStream output = new FileStream(filename, FileMode.Create))
@@ -161,7 +175,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             return Validate(output, OutputFormat.Html, input, InputFormat.Uri, new CssValidatorSettings(), defaultValidatorAddress);
         }
 
-        public CssValidatorResult Validate(Stream output, string input, CssValidatorSettings settings)
+        public CssValidatorResult Validate(Stream output, string input, ICssValidatorSettings settings)
         {
             return Validate(output, OutputFormat.Html, input, InputFormat.Uri, settings, defaultValidatorAddress);
         }
@@ -171,7 +185,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             return Validate(output, outputFormat, input, inputFormat, new CssValidatorSettings(), defaultValidatorAddress);
         }
 
-        public CssValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, CssValidatorSettings settings)
+        public CssValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, ICssValidatorSettings settings)
         {
             return Validate(output, outputFormat, input, inputFormat, settings, defaultValidatorAddress);
         }
@@ -181,7 +195,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             return Validate(output, OutputFormat.Html, input, InputFormat.Uri, new CssValidatorSettings(), validatorAddress);
         }
 
-        public CssValidatorResult Validate(Stream output, string input, CssValidatorSettings settings, string validatorAddress)
+        public CssValidatorResult Validate(Stream output, string input, ICssValidatorSettings settings, string validatorAddress)
         {
             return Validate(output, OutputFormat.Html, input, InputFormat.Uri, settings, validatorAddress);
         }
@@ -191,7 +205,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             return Validate(output, outputFormat, input, inputFormat, new CssValidatorSettings(), validatorAddress);
         }
 
-        public CssValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, CssValidatorSettings settings, string validatorAddress)
+        public CssValidatorResult Validate(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, ICssValidatorSettings settings, string validatorAddress)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -209,9 +223,14 @@ namespace ContinuousSeo.W3cValidation.Core.Css
             string data = GetFormData(input, inputFormat, outputFormat, settings);
             NameValueCollection headers;
 
-            headers = this.httpClient.Get(output, validatorAddress + "?" + data);
+            headers = this.mHttpClient.Get(output, validatorAddress + "?" + data);
 
             CssValidatorResult result = ParseResult(headers);
+
+            if (string.IsNullOrEmpty(result.Status))
+            {
+                result = FixBrokenHeaders(output, outputFormat, input, inputFormat, settings, validatorAddress);
+            }
 
             return result;
         }
@@ -220,7 +239,7 @@ namespace ContinuousSeo.W3cValidation.Core.Css
 
         #region IO Handling
 
-        private string GetFormData(string input, InputFormat inputFormat, OutputFormat outputFormat, CssValidatorSettings settings)
+        private string GetFormData(string input, InputFormat inputFormat, OutputFormat outputFormat, ICssValidatorSettings settings)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -262,6 +281,46 @@ namespace ContinuousSeo.W3cValidation.Core.Css
 
             CssValidatorResult result = new CssValidatorResult(status, errors);
 
+            return result;
+        }
+
+        private CssValidatorResult FixBrokenHeaders(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, ICssValidatorSettings settings, string validatorAddress)
+        {
+            Stream checkStream = mStreamFactory.GetMemoryStream();
+            if (outputFormat != OutputFormat.Soap12 || output.CanRead == false)
+            {
+                if (IsDefaultValidatorAddress(validatorAddress))
+                {
+                    System.Threading.Thread.Sleep(1000);
+                }
+
+                // Headers failed, so we will get the report again in Soap 1.2 format in 
+                // an in memory stream
+                string checkData = GetFormData(input, inputFormat, OutputFormat.Soap12, settings);
+
+                // This time, ignore headers.
+                if (inputFormat == InputFormat.Fragment)
+                {
+                    this.mHttpClient.Post(checkStream, validatorAddress, checkData);
+                }
+                else
+                {
+                    this.mHttpClient.Get(checkStream, validatorAddress + "?" + checkData);
+                }
+            }
+            else
+            {
+                output.Position = 0;
+                output.CopyTo(checkStream);
+            }
+
+            checkStream.Position = 0;
+            var response = mSoapResponseParser.ParseResponse(checkStream);
+
+            var errors = response.Errors.Count();
+            var status = response.Validity ? "Valid" : "Invalid";
+
+            var result = new CssValidatorResult(status, errors);
             return result;
         }
 
