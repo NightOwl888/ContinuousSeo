@@ -13,6 +13,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
     using System.Web;
     using System.Collections.Specialized;
     using ContinuousSeo.Core.Net;
+    using ContinuousSeo.Core.IO;
 
     /// <summary>
     /// Class that contains methods that wrap the W3C HTML Validation API at 
@@ -23,18 +24,31 @@ namespace ContinuousSeo.W3cValidation.Core.Html
     public class HtmlValidator
     {
         const string defaultValidatorAddress = "http://validator.w3.org/check";
-        private IHttpClient httpClient;
-        private ResourceCopier resourceCopier;
+        private readonly IHttpClient mHttpClient;
+        private readonly IStreamFactory mStreamFactory;
+        private readonly ResourceCopier mResourceCopier;
+        private readonly IValidatorSoap12ResponseParser mResponseParser;
 
         public HtmlValidator() :
-            this(new HttpClient(), new HtmlValidatorResourceCopier())
+            this(new HttpClient(), new StreamFactory(), new HtmlValidatorResourceCopier(), new HtmlValidatorSoap12ResponseParser())
         {
         }
 
-        public HtmlValidator(IHttpClient httpClient, ResourceCopier resourceCopier)
+        public HtmlValidator(IHttpClient httpClient, IStreamFactory streamFactory, ResourceCopier resourceCopier, IValidatorSoap12ResponseParser responseParser)
         {
-            this.httpClient = httpClient;
-            this.resourceCopier = resourceCopier;
+            if (httpClient == null)
+                throw new ArgumentNullException("httpClient");
+            if (streamFactory == null)
+                throw new ArgumentNullException("streamFactory");
+            if (resourceCopier == null)
+                throw new ArgumentNullException("resourceCopier");
+            if (responseParser == null)
+                throw new ArgumentNullException("responseParser");
+
+            this.mHttpClient = httpClient;
+            this.mStreamFactory = streamFactory;
+            this.mResourceCopier = resourceCopier;
+            this.mResponseParser = responseParser;
         }
 
         #region IsDefaultValidatorAddress
@@ -142,7 +156,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
             {
                 // Copy the resources to the output directory if they don't already exist.
                 // This is to ensure all dependencies of the HTML document are there.
-                resourceCopier.CopyResources(directory);
+                mResourceCopier.CopyResources(directory);
             }
 
             using (FileStream output = new FileStream(filename, FileMode.Create))
@@ -212,11 +226,11 @@ namespace ContinuousSeo.W3cValidation.Core.Html
 
             if (inputFormat == InputFormat.Fragment)
             {
-                headers = this.httpClient.Post(output, validatorAddress, data);
+                headers = this.mHttpClient.Post(output, validatorAddress, data);
             }
             else
             {
-                headers = this.httpClient.Get(output, validatorAddress + "?" + data);
+                headers = this.mHttpClient.Get(output, validatorAddress + "?" + data);
             }
 
             HtmlValidatorResult result = ParseResult(headers);
@@ -320,7 +334,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
 
         private HtmlValidatorResult FixBrokenHeaders(Stream output, OutputFormat outputFormat, string input, InputFormat inputFormat, IHtmlValidatorSettings settings, string validatorAddress)
         {
-            Stream checkStream = new MemoryStream();
+            Stream checkStream = mStreamFactory.GetMemoryStream();
             if (outputFormat != OutputFormat.Soap12 || output.CanRead == false)
             {
                 if (IsDefaultValidatorAddress(validatorAddress))
@@ -335,11 +349,11 @@ namespace ContinuousSeo.W3cValidation.Core.Html
                 // This time, ignore headers.
                 if (inputFormat == InputFormat.Fragment)
                 {
-                    this.httpClient.Post(checkStream, validatorAddress, checkData);
+                    this.mHttpClient.Post(checkStream, validatorAddress, checkData);
                 }
                 else
                 {
-                    this.httpClient.Get(checkStream, validatorAddress + "?" + checkData);
+                    this.mHttpClient.Get(checkStream, validatorAddress + "?" + checkData);
                 }
             }
             else
@@ -349,8 +363,7 @@ namespace ContinuousSeo.W3cValidation.Core.Html
             }
 
             checkStream.Position = 0;
-            var parser = new HtmlValidatorSoap12ResponseParser();
-            var response = parser.ParseResponse(checkStream);
+            var response = mResponseParser.ParseResponse(checkStream);
 
             var errors = response.Errors.Count();
             var warnings = response.Warnings.Count();
