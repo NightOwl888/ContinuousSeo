@@ -85,6 +85,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         private void AddTargetUrls(IEnumerable<string> targetUrls, List<string> urls, string[] args)
         {
+            if (targetUrls == null) return;
+
             // Add urls passed in directly from context
             foreach (var url in targetUrls)
             {
