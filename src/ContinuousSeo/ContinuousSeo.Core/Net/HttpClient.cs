@@ -82,27 +82,26 @@ namespace ContinuousSeo.Core.Net
 
         public string GetResponseText(string url)
         {
-            //if (string.IsNullOrEmpty(url))
-            //{
-            //    throw new ArgumentNullException("url");
-            //}
-
-            //NameValueCollection result = new NameValueCollection();
-            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-
-            //using (WebResponse response = request.GetResponse())
-            //{
-            //    return response.GetResponseStream();
-            //}
             string result = string.Empty;
-            using (var document = GetResponseStream(url))
+            using (var client = new WebClient())
             {
-                using (var reader = new StreamReader(document))
-                {
-                    result = reader.ReadToEnd();
-                }
+                // Gets the encoding from the HTTP header information automatically
+                // and falls back to byte order mark if header not supplied.
+                result = client.DownloadString(url);
             }
             return result;
+
+            //string result = string.Empty;
+            //using (var document = new MemoryStream())
+            //{
+            //    Get(document, url);
+            //    document.Position = 0;
+            //    using (var reader = new StreamReader(document))
+            //    {
+            //        result = reader.ReadToEnd();
+            //    }
+            //}
+            //return result;
         }
 
 
