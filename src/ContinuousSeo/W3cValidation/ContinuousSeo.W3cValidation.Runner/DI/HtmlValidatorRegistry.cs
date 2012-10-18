@@ -33,7 +33,7 @@ namespace ContinuousSeo.W3cValidation.Runner.DI
             this.Scan(x =>
                 {
                     x.LookForRegistries();
-                    x.AssemblyContainingType<ContinuousSeo.Core.DefaultGuidProvider>();
+                    x.AssemblyContainingType<ContinuousSeo.Core.DefaultTimeProvider>();
                     x.AssemblyContainingType<ContinuousSeo.W3cValidation.Core.ResourceCopier>();
                 });
 

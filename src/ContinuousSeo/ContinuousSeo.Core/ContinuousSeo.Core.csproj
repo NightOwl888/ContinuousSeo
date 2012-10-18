@@ -43,16 +43,10 @@
     <Compile Include="Announcers\Announcer.cs" />
     <Compile Include="Announcers\ConsoleAnnouncer.cs" />
     <Compile Include="Announcers\IAnnouncer.cs" />
-    <Compile Include="DefaultGuidProvider.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="Diagnostics\DefaultStopwatchProvider.cs" />
-    <Compile Include="Diagnostics\IStopwatch.cs" />
-    <Compile Include="Diagnostics\IStopwatchFactory.cs" />
-    <Compile Include="Diagnostics\Stopwatch.cs" />
-    <Compile Include="Diagnostics\StopwatchFactory.cs" />
     <Compile Include="Diagnostics\StopwatchProvider.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="GuidProvider.cs" />
     <Compile Include="IO\IStreamFactory.cs" />
     <Compile Include="IO\StreamExtensions.cs" />
     <Compile Include="IO\StreamFactory.cs" />
