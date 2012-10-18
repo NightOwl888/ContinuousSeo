@@ -9,7 +9,7 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:key name="validationResult-by-domain" match="validationResult" use="@domainName" />
-	<xsl:output method="html" encoding="utf-8" indent="yes"/>
+	<xsl:output method="xml" encoding="utf-8" indent="yes" omit-xml-declaration="yes"/>
 	
 	<xsl:template match="w3cValidatorResults">
 		<xsl:variable name="batchErrors">
@@ -31,8 +31,6 @@
 					<link rel="icon" href="data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%10%00%00%00%10%08%02%00%00%00%90%91h6%00%00%00%19IDAT(%91c%BCd%AB%C2%40%0A%60%22I%F5%A8%86Q%0DCJ%03%00%DE%B5%01S%07%88%8FG%00%00%00%00IEND%AEB%60%82" type="image/png" />
 				</xsl:otherwise>
 			</xsl:choose>
-			<link rev="made" href="mailto:ww-validator@w3.org" />
-			<link rev="start" href="./" title="Home Page" />
 			<style type="text/css" media="all">
 				@import "./style/base"; 
 				@import "./style/results";
@@ -126,21 +124,6 @@
 					</tr>
 				</table>
 				<!-- End Header -->
-
-				
-				
-				<!--
-				<h1>Local Start Time: 
-					<xsl:variable name="test_date">2005-03-06T21:13:52.8533114+07:00</xsl:variable>
-				
-					<xsl:call-template name="formatdateandtime">
-						<xsl:with-param name="datestr" select="$test_date"/>
-					</xsl:call-template>
-				</h1>
-				-->
-				
-				
-				
 				
 				<div id="don_program">&nbsp;</div>
 				<script type="text/javascript" src="http://www.w3.org/QA/Tools/don_prog.js">&nbsp;</script>

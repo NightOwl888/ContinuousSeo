@@ -111,7 +111,7 @@ namespace TestHarness
             var context = new HtmlValidatorRunnerContext(new ConsoleAnnouncer())
             {
                 OutputPath = @"F:\TestW3C-4\",
-                OutputFormat = "xml",
+                OutputFormat = "html",
                 TargetUrls = new List<string>() 
                 { 
                     @"http://www.shuttercontractor.com/", 
