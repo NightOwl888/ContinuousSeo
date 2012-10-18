@@ -23,10 +23,10 @@ namespace ContinuousSeo.W3cValidation.Core.Css
     public class CssValidator
     {
         const string defaultValidatorAddress = "http://jigsaw.w3.org/css-validator/validator";
-        private IHttpClient mHttpClient;
-        private IStreamFactory mStreamFactory;
-        private ResourceCopier mResourceCopier;
-        private IValidatorSoap12ResponseParser mSoapResponseParser;
+        private readonly IHttpClient mHttpClient;
+        private readonly IStreamFactory mStreamFactory;
+        private readonly ResourceCopier mResourceCopier;
+        private readonly IValidatorSoap12ResponseParser mSoapResponseParser;
 
         public CssValidator() :
             this(new HttpClient(), new StreamFactory(), new CssValidatorResourceCopier(), new CssValidatorSoap12ResponseParser())

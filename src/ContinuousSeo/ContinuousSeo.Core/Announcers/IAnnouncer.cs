@@ -1,10 +1,10 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ValidationResult.cs" company="">
+// <copyright file="IAnnouncer.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner
+namespace ContinuousSeo.Core.Announcers
 {
     using System;
     using System.Collections.Generic;
@@ -14,10 +14,12 @@ namespace ContinuousSeo.W3cValidation.Runner
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class ValidationResult
+    public interface IAnnouncer
     {
-        public int TotalErrors { get; internal set; }
-        public int TotalWarnings { get; internal set; }
-        public string TotalElapsedTime { get; internal set; }
+        void Heading(string message);
+        void Say(string message);
+        void ElapsedTime(TimeSpan timeSpan);
+        void Error(string message);
+        void Write(string message, bool escaped);
     }
 }

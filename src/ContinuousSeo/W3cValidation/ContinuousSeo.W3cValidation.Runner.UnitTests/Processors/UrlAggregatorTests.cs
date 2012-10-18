@@ -5,8 +5,10 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
     using System.Linq;
     using System.Text;
     using System.IO;
+    using System.Diagnostics;
     using Moq;
     using NUnit.Framework;
+    using ContinuousSeo.Core.Announcers;
     using ContinuousSeo.W3cValidation.Runner.Parsers;
     using ContinuousSeo.W3cValidation.Runner.Processors;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
@@ -16,7 +18,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
     {
         #region SetUp / TearDown
 
-        private Mock<HtmlValidatorRunnerContext> mContext = null;
+        private Mock<IHtmlValidatorRunnerContext> mContext = null;
         private Mock<IProjectFileParser> mProjectFileParser = null;
         private Mock<ISitemapsParser> mSitemapsParser = null;
         private int mTotalProjectFileParserParseFileCalls = 0;
@@ -26,9 +28,16 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         [SetUp]
         public void Init()
         {
-            mContext = new Mock<HtmlValidatorRunnerContext>();
+            mContext = new Mock<IHtmlValidatorRunnerContext>();
             mProjectFileParser = new Mock<IProjectFileParser>();
             mSitemapsParser = new Mock<ISitemapsParser>();
+
+            mContext
+                .Setup(x => x.Announcer)
+                .Returns(new Mock<IAnnouncer>().Object);
+            mContext
+                .Setup(x => x.TotalTimeStopwatch)
+                .Returns(new Mock<Stopwatch>().Object);
         }
 
         [TearDown]

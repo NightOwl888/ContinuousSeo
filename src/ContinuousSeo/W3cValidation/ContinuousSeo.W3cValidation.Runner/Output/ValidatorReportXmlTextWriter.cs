@@ -63,17 +63,42 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
             mWriter.WriteEndDocument();
         }
 
-        public void WriteUrlElement(IValidatorReportItem urlReport)
+        public void WriteUrlElement(IValidatorReportItem report)
         {
-            WriteStartUrlElement(urlReport);
+            WriteStartUrlElement(report);
+            WriteElapsedTime(report);
             WriteEndUrlElement();
         }
 
-        public void WriteUrlElement(IValidatorReportItem urlReport, Stream response)
+        public void WriteUrlElement(IValidatorReportItem report, Stream response)
         {
-            WriteStartUrlElement(urlReport);
+            WriteStartUrlElement(report);
+            WriteElapsedTime(report);
             WriteUrlElementValue(response);
             WriteEndUrlElement();
+        }
+
+        public void WriteElapsedTime(IValidatorReportTimes times)
+        {
+            mWriter.WriteStartElement("localStartTime");
+            mWriter.WriteValue(times.LocalStartTime);
+            mWriter.WriteEndElement();
+
+            mWriter.WriteStartElement("localEndTime");
+            mWriter.WriteValue(times.LocalEndTime);
+            mWriter.WriteEndElement();
+
+            mWriter.WriteStartElement("utcStartTime");
+            mWriter.WriteValue(times.UtcStartTime);
+            mWriter.WriteEndElement();
+
+            mWriter.WriteStartElement("utcEndTime");
+            mWriter.WriteValue(times.UtcEndTime);
+            mWriter.WriteEndElement();
+
+            mWriter.WriteStartElement("elapsedTime");
+            mWriter.WriteValue(times.ElapsedTime);
+            mWriter.WriteEndElement();
         }
 
         public void Flush()
@@ -107,19 +132,22 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
             mWriter.WriteValue(urlReport.Warnings);
             mWriter.WriteEndAttribute();
 
-            if (!string.IsNullOrEmpty(urlReport.ErrorMessage))
-            {
-                mWriter.WriteStartAttribute("errorMessage");
-                mWriter.WriteValue(urlReport.ErrorMessage);
-                mWriter.WriteEndAttribute();
-            }
-
             if (!string.IsNullOrEmpty(urlReport.FileName))
             {
                 mWriter.WriteStartAttribute("fileName");
                 mWriter.WriteValue(urlReport.FileName);
                 mWriter.WriteEndAttribute();
             }
+
+            // NOTE: This is an element, not an attribute
+            if (!string.IsNullOrEmpty(urlReport.ErrorMessage))
+            {
+                mWriter.WriteStartElement("errorMessage");
+                mWriter.WriteCData(urlReport.ErrorMessage);
+                mWriter.WriteEndElement();
+            }
+
+            
         }
 
         private void WriteEndUrlElement()
@@ -129,6 +157,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
 
         private void WriteUrlElementValue(Stream response)
         {
+            if (response.Length == 0) return;
+
             IValidatorReport report = mParser.ParseResponse(response);
 
             mWriter.WriteStartElement("errors");

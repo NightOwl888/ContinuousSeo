@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.IO;
 using StructureMap;
 //using StructureMap.Configuration.DSL;
+
+using ContinuousSeo.Core.Announcers;
 using ContinuousSeo.W3cValidation.Core;
 using ContinuousSeo.W3cValidation.Core.Html;
 using ContinuousSeo.W3cValidation.Core.Css;
@@ -106,10 +108,10 @@ namespace TestHarness
             container.Configure(r => r.AddRegistry<HtmlValidatorRegistry>());
 
 
-            var context = new HtmlValidatorRunnerContext()
+            var context = new HtmlValidatorRunnerContext(new ConsoleAnnouncer())
             {
                 OutputPath = @"F:\TestW3C-4\",
-                OutputFormat = "html",
+                OutputFormat = "xml",
                 TargetUrls = new List<string>() 
                 { 
                     @"http://www.shuttercontractor.com/", 
@@ -127,7 +129,7 @@ namespace TestHarness
 
             //container.Configure(r => r.For<IUrlProcessor>().Use<HtmlValidatorUrlProcessor>());
 
-            container.Configure(r => r.For<HtmlValidatorRunnerContext>().Singleton().Use(x => context));
+            container.Configure(r => r.For<IHtmlValidatorRunnerContext>().Singleton().Use(x => context));
 
 
             //var parser = container.GetInstance<IProjectFileParser>();

@@ -7,14 +7,11 @@
 namespace ContinuousSeo.W3cValidation.Runner.Processors
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IValidatorReportItem
+    public interface IValidatorReportItem : IValidatorReportTimes
     {
         string DomainName { get; set; }
         string Url { get; set; }

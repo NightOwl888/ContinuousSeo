@@ -10,6 +10,7 @@ namespace ContinuousSeo.MSBuild
     using System.Collections.Generic;
     using Microsoft.Build.Framework;
     using Microsoft.Build.Utilities;
+    using ContinuousSeo.Core.Announcers;
     using ContinuousSeo.W3cValidation.Runner;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
     using ContinuousSeo.W3cValidation.Runner.DI;
@@ -205,7 +206,7 @@ namespace ContinuousSeo.MSBuild
             // Add the current parameters to context
             Log.LogMessage("Creating Context");
 
-            var context = new HtmlValidatorRunnerContext()
+            var context = new HtmlValidatorRunnerContext(new ConsoleAnnouncer())
             {
                 TargetSitemapsFiles = this.TargetSitemapsFiles.ToStringArray(),
                 TargetUrls = this.TargetUrls.ToStringArray(),
@@ -226,7 +227,7 @@ namespace ContinuousSeo.MSBuild
             };
 
             // Setup the container to use the context as a singleton so it is available everywhere.
-            container.Configure(r => r.For<HtmlValidatorRunnerContext>().Singleton().Use(x => context));
+            container.Configure(r => r.For<IHtmlValidatorRunnerContext>().Singleton().Use(x => context));
 
             var runner = container.GetInstance<IValidatorRunner>();
 

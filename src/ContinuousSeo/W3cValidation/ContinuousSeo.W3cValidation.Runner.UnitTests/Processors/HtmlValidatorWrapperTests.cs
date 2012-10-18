@@ -17,7 +17,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
     public class HtmlValidatorWrapperTests
     {
         private Mock<HtmlValidator> mValidator = null;
-        private Mock<HtmlValidatorRunnerContext> mContext = null;
+        private Mock<IHtmlValidatorRunnerContext> mContext = null;
         private Mock<IHttpClient> mHttpClient = null;
         private int mTotalValidatorValidateCalls = 0;
 
@@ -27,7 +27,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         public void Init()
         {
             mValidator = new Mock<HtmlValidator>();
-            mContext = new Mock<HtmlValidatorRunnerContext>();
+            mContext = new Mock<IHtmlValidatorRunnerContext>();
             mHttpClient = new Mock<IHttpClient>();
 
             mValidator

@@ -14,6 +14,7 @@ namespace ContinuousSeo.W3cValidation.Runner.DI
     using ContinuousSeo.Core;
     using ContinuousSeo.Core.IO;
     using ContinuousSeo.Core.Net;
+    using ContinuousSeo.Core.Announcers;
     using ContinuousSeo.W3cValidation.Core;
     using ContinuousSeo.W3cValidation.Core.Html;
     using ContinuousSeo.W3cValidation.Runner.Processors;
@@ -36,15 +37,18 @@ namespace ContinuousSeo.W3cValidation.Runner.DI
                     x.AssemblyContainingType<ContinuousSeo.W3cValidation.Core.ResourceCopier>();
                 });
 
+            // HtmlValidationRunnerContext
+            this.For<IAnnouncer>().Use(x => x.GetInstance<ConsoleAnnouncer>());
+
             this.For<IValidatorRunner>().Use(x => x.GetInstance<HtmlValidatorRunner>());
 
             // HtmlValidationRunner
-            this.For<HtmlValidatorRunnerContext>().Use(x => x.GetInstance<HtmlValidatorRunnerContext>());
+            //this.For<IHtmlValidatorRunnerContext>().Use(x => x.GetInstance<HtmlValidatorRunnerContext>());
             this.For<IUrlProcessor>().Use(x => x.GetInstance<HtmlValidatorUrlProcessor>());
 
             // HtmlValidationUrlProcessor
             this.For<IValidatorWrapper>().Use(x => x.GetInstance<HtmlValidatorWrapper>());
-            //this.For<HtmlValidatorRunnerContext>().Use(x => x.GetInstance<HtmlValidatorRunnerContext>()); // TODO: make singleton scope
+            //this.For<IHtmlValidatorRunnerContext>().Use(x => x.GetInstance<HtmlValidatorRunnerContext>()); // TODO: make singleton scope
             this.For<IUrlAggregator>().Use(x => x.GetInstance<UrlAggregator>());
             this.For<IFileNameGenerator>().Use(x => x.GetInstance<FileNameGenerator>());
             this.For<ResourceCopier>().Use(x => x.GetInstance<HtmlValidatorResourceCopier>()); // From validation.core
@@ -62,7 +66,7 @@ namespace ContinuousSeo.W3cValidation.Runner.DI
 
             // FileNameGenerator
             //this.For<GuidProvider>().Use(x => x.GetInstance<GuidProvider>());
-            this.For<GuidProvider>().Use(x => GuidProvider.Current);
+            //this.For<GuidProvider>().Use(x => GuidProvider.Current);
 
             // ValidatorReportWriterFactory
             this.For<IValidatorSoap12ResponseParser>().Use(x => x.GetInstance<HtmlValidatorSoap12ResponseParser>());

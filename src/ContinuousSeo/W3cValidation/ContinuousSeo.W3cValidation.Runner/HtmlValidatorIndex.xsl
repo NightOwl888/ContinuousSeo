@@ -226,10 +226,10 @@
 						</td>
 					</tr>
 					
-					<xsl:if test="@errorMessage">
+					<xsl:if test="errorMessage">
 						<tr>
 							<td colspan="5" class="invalid">
-								<xsl:value-of select="@errorMessage"/>
+								<xsl:value-of select="errorMessage"/>
 							</td>
 						</tr>
 					</xsl:if>

@@ -1,10 +1,10 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ValidationResult.cs" company="">
+// <copyright file="DefaultTimeProvider.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner
+namespace ContinuousSeo.Core
 {
     using System;
     using System.Collections.Generic;
@@ -14,10 +14,11 @@ namespace ContinuousSeo.W3cValidation.Runner
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class ValidationResult
+    public class DefaultTimeProvider : TimeProvider
     {
-        public int TotalErrors { get; internal set; }
-        public int TotalWarnings { get; internal set; }
-        public string TotalElapsedTime { get; internal set; }
+        public override DateTime UtcNow
+        {
+            get { return DateTime.UtcNow; }
+        }
     }
 }

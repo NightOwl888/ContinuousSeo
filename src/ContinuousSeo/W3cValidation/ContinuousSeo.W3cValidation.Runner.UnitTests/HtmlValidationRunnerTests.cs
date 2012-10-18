@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using NUnit.Framework;
 using Moq;
 using ContinuousSeo.W3cValidation.Runner.Initialization;
@@ -14,16 +15,20 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
     {
         #region SetUp / TearDown
 
-        private Mock<HtmlValidatorRunnerContext> mContext;
+        private Mock<IHtmlValidatorRunnerContext> mContext;
         private Mock<IUrlAggregator> mUrlAggregator;
         private Mock<IUrlProcessor> mProcessor;
 
         [SetUp]
         public void Init()
         {
-            mContext = new Mock<HtmlValidatorRunnerContext>();
+            mContext = new Mock<IHtmlValidatorRunnerContext>();
             mUrlAggregator = new Mock<IUrlAggregator>();
             mProcessor = new Mock<IUrlProcessor>();
+
+            mContext
+                .Setup(x => x.TotalTimeStopwatch)
+                .Returns(new Mock<Stopwatch>().Object);
         }
 
         [TearDown]
@@ -63,5 +68,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         }
 
         #endregion
+
     }
 }

@@ -9,7 +9,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
+    using System.Diagnostics;
+    using ContinuousSeo.Core.Diagnostics;
     using ContinuousSeo.W3cValidation.Runner.Parsers;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
 
@@ -18,13 +19,14 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     /// </summary>
     public class UrlAggregator : IUrlAggregator
     {
-        private readonly HtmlValidatorRunnerContext mContext;
+        private readonly IHtmlValidatorRunnerContext mContext;
         private readonly ISitemapsParser mSitemapsParser;
         private readonly IProjectFileParser mProjectFileParser;
+        private readonly Stopwatch mStopwatch = StopwatchProvider.Current.NewStopwatch();
 
         #region Constructor
 
-        public UrlAggregator(HtmlValidatorRunnerContext context, IProjectFileParser projectFileParser, ISitemapsParser sitemapsParser)
+        public UrlAggregator(IHtmlValidatorRunnerContext context, IProjectFileParser projectFileParser, ISitemapsParser sitemapsParser)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -48,10 +50,14 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             var lines = new List<IProjectFileLineInfo>();
             string[] args = (mContext.UrlReplacementArgs == null) ? new string[0] : mContext.UrlReplacementArgs.ToArray();
 
+            OutputStartProcess("aggregating target URLs");
+
             AddTargetUrls(mContext.TargetUrls, urls, args);
             AddLinesFromTargetSitemapsFiles(mContext.TargetSitemapsFiles, lines, args);
             AddLinesFromTargetProjectFiles(mContext.TargetProjectFiles, lines, args);
             AddUrlsFromProcessedLines(lines, urls);
+
+            OutputEndProcess("aggregating target URLs");
 
             return urls;
         }
@@ -123,6 +129,20 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             {
                 urls.AddRange(ProcessLine(line));
             }
+        }
+
+        private void OutputStartProcess(string processName)
+        {
+            mContext.Announcer.Say(string.Format("Starting {0}...", processName));
+            mStopwatch.Reset();
+            mStopwatch.Start();
+        }
+
+        private void OutputEndProcess(string processName)
+        {
+            mStopwatch.Stop();
+            mContext.Announcer.Say(string.Format("Completed {0}.", processName));
+            mContext.Announcer.ElapsedTime(mStopwatch.Elapsed);
         }
 
         #endregion

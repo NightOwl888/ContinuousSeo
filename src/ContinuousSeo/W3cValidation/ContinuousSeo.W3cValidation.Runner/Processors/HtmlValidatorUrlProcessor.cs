@@ -13,8 +13,11 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     using System.Text;
     using System.Collections.Generic;
     using System.Reflection;
-    using ContinuousSeo.W3cValidation.Core;
+    using System.Diagnostics;
+    using ContinuousSeo.Core;
     using ContinuousSeo.Core.IO;
+    using ContinuousSeo.Core.Diagnostics;
+    using ContinuousSeo.W3cValidation.Core;
     using ContinuousSeo.W3cValidation.Core.Html;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
     using ContinuousSeo.W3cValidation.Runner.Parsers;
@@ -27,16 +30,14 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     {
         #region Private Members
 
-        // validation
         private readonly IValidatorWrapper mValidator;
-        private readonly HtmlValidatorRunnerContext mRunnerContext;
-
-        // output
+        private readonly IHtmlValidatorRunnerContext mContext;
         private readonly IFileNameGenerator mFileNameGenerator; // HTML only
         private readonly ResourceCopier mResourceCopier; // HTML only
         private readonly IValidatorReportWriterFactory mReportWriterFactory;
         private readonly IStreamFactory mStreamFactory;
         private readonly IXslTransformer mXslTransformer; // HTML only
+        private readonly Stopwatch mStopwatch = StopwatchProvider.Current.NewStopwatch();
 
         #endregion
 
@@ -44,7 +45,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         public HtmlValidatorUrlProcessor(
             IValidatorWrapper validator, 
-            HtmlValidatorRunnerContext runnerContext, 
+            IHtmlValidatorRunnerContext context, 
             IFileNameGenerator fileNameGenerator,
             ResourceCopier resourceCopier,
             IValidatorReportWriterFactory reportWriterFactory,
@@ -53,8 +54,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         {
             if (validator == null)
                 throw new ArgumentNullException("validator");
-            if (runnerContext == null)
-                throw new ArgumentNullException("runnerContext");
+            if (context == null)
+                throw new ArgumentNullException("context");
             if (fileNameGenerator == null)
                 throw new ArgumentNullException("fileNameGenerator");
             if (resourceCopier == null)
@@ -67,7 +68,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
                 throw new ArgumentNullException("xslTransformer");
 
             this.mValidator = validator;
-            this.mRunnerContext = runnerContext;
+            this.mContext = context;
             this.mFileNameGenerator = fileNameGenerator;
             this.mResourceCopier = resourceCopier;
             this.mReportWriterFactory = reportWriterFactory;
@@ -81,14 +82,25 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         public ValidationResult ProcessUrls(IEnumerable<string> urls)
         {
-            string outputFormat = (string.IsNullOrEmpty(mRunnerContext.OutputFormat)) ? string.Empty : mRunnerContext.OutputFormat.ToLowerInvariant();
+            ValidationResult result = new ValidationResult();
+            string outputFormat = (string.IsNullOrEmpty(mContext.OutputFormat)) ? string.Empty : mContext.OutputFormat.ToLowerInvariant();
             switch (outputFormat)
             {
                 case "xml":
-                    return ProcessXmlOutput(urls);
+                    mContext.Announcer.Heading("Beginning processing with XML output");
+                    result= ProcessXmlOutput(urls);
+                    mContext.Announcer.Heading("Completed processing with XML output");
+                    break;
                 default:
-                    return ProcessHtmlOutput(urls);
-            }  
+                    mContext.Announcer.Heading("Beginning processing with HTML output");
+                    result= ProcessHtmlOutput(urls);
+                    mContext.Announcer.Heading("Completed processing with HTML output");
+                    break;
+            }
+            mContext.Announcer.Say("Total Elapsed Time:");
+            mContext.Announcer.ElapsedTime(mContext.TotalTimeStopwatch.Elapsed);
+
+            return result;
         }
 
         #endregion
@@ -116,6 +128,9 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
                 result = ValidateUrlsForHtmlOutput(writer, outputPath, urls);
 
+                // report total elapsed time
+                ReportTotalElapsedTime(writer);
+
                 writer.WriteEndDocument();
                 writer.Flush();
 
@@ -139,7 +154,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         private string GetOutputPathForHtmlOutput()
         {
-            string outputPath = (mRunnerContext.OutputPath == null) ? string.Empty : mRunnerContext.OutputPath;
+            string outputPath = (mContext.OutputPath == null) ? string.Empty : mContext.OutputPath;
             // Remove any filename from the path
             if (!string.IsNullOrEmpty(outputPath))
             {
@@ -171,8 +186,12 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         private IValidatorReportItem ValidateUrlForHtmlOutput(IValidatorReportTextWriter writer, string outputPath, string url)
         {
             IValidatorReportItem result = new ValidatorReportItem();
-            string fileName = Path.Combine(outputPath, mFileNameGenerator.GenerateFileName(url, "html"));
 
+            // start stopwatch
+            string processName = string.Format("validation for '{0}'", url);
+            this.OutputStartProcess(processName);
+
+            string fileName = Path.Combine(outputPath, mFileNameGenerator.GenerateFileName(url, "html"));
             using (var outputStream = mStreamFactory.GetFileStream(fileName, FileMode.Create, FileAccess.Write))
             {
                 result = mValidator.ValidateUrl(url, outputStream, OutputFormat.Html);
@@ -180,6 +199,11 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
             // Write the filename to the report
             result.FileName = Path.GetFileName(fileName);
+
+            // report times to the report
+            this.OutputEndProcess(processName);
+            this.ReportElapsedTime(result, mStopwatch.Elapsed);
+
             writer.WriteUrlElement(result);
 
             return result;
@@ -202,7 +226,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         private string GetOutputPathForXmlOutput()
         {
-            var outputPath = (mRunnerContext.OutputPath == null) ? string.Empty : mRunnerContext.OutputPath;
+            var outputPath = (mContext.OutputPath == null) ? string.Empty : mContext.OutputPath;
 
             // Add default filename to output path if it was not provided.
             if (String.IsNullOrEmpty(Path.GetFileName(outputPath)))
@@ -219,6 +243,10 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             {
                 writer.WriteStartDocument();
                 result = ValidateUrlsForXmlOutput(writer, urls);
+
+                // report total elapsed time
+                ReportTotalElapsedTime(writer);
+
                 writer.WriteEndDocument();
             }
             return result;
@@ -241,12 +269,24 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         private IValidatorReportItem ValidateUrlForXmlOutput(IValidatorReportTextWriter writer, string url)
         {
             IValidatorReportItem result = new ValidatorReportItem();
+
             using (var outputStream = mStreamFactory.GetMemoryStream())
             {
+                // Start stopwatch
+                string processName = string.Format("validation for '{0}'", url);
+                this.OutputStartProcess(processName);
+
+
                 result = mValidator.ValidateUrl(url, outputStream, OutputFormat.Soap12);
+
+                // Report times to the report
+                this.OutputEndProcess(processName);
+                this.ReportElapsedTime(result, mStopwatch.Elapsed);
+
                 outputStream.Position = 0;
                 writer.WriteUrlElement(result, outputStream);
             }
+
             return result;
         }
 
@@ -265,6 +305,45 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
                 Thread.Sleep(1000);
             }
             return false;
+        }
+
+        private void OutputStartProcess(string processName)
+        {
+            mContext.Announcer.Say(string.Format("Starting {0}...", processName));
+            mStopwatch.Reset();
+            mStopwatch.Start();
+        }
+
+        private void OutputEndProcess(string processName)
+        {
+            mStopwatch.Stop();
+            mContext.Announcer.Say(string.Format("Completed {0}.", processName));
+            mContext.Announcer.ElapsedTime(mStopwatch.Elapsed);
+        }
+
+        private IValidatorReportTimes ReportElapsedTime(TimeSpan elapsed)
+        {
+            var result = new ValidatorReportTimes();
+            this.ReportElapsedTime(result, elapsed);
+            return result;
+        }
+
+        private void ReportElapsedTime(IValidatorReportTimes report, TimeSpan elapsed)
+        {
+            DateTime utcNow = TimeProvider.Current.UtcNow;
+            DateTime now = System.TimeZone.CurrentTimeZone.ToLocalTime(utcNow);
+            report.LocalStartTime = now.Subtract(elapsed);
+            report.LocalEndTime = now;
+            report.UtcStartTime = utcNow.Subtract(elapsed);
+            report.UtcEndTime = utcNow;
+            report.ElapsedTime = string.Format("{0:00}:{1:00}:{2:00}", elapsed.Hours, elapsed.Minutes, elapsed.Seconds);
+        }
+
+        private void ReportTotalElapsedTime(IValidatorReportTextWriter writer)
+        {
+            mContext.TotalTimeStopwatch.Stop();
+            var elapsed = ReportElapsedTime(mContext.TotalTimeStopwatch.Elapsed);
+            writer.WriteElapsedTime(elapsed);
         }
 
         #endregion

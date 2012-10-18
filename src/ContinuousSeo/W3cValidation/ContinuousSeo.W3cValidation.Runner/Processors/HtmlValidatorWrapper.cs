@@ -23,10 +23,10 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     public class HtmlValidatorWrapper : IValidatorWrapper
     {
         private readonly HtmlValidator mValidator;
-        private readonly HtmlValidatorRunnerContext mContext;
+        private readonly IHtmlValidatorRunnerContext mContext;
         private readonly IHttpClient mHttpClient;
 
-        public HtmlValidatorWrapper(HtmlValidator validator, HtmlValidatorRunnerContext context, IHttpClient httpClient)
+        public HtmlValidatorWrapper(HtmlValidator validator, IHtmlValidatorRunnerContext context, IHttpClient httpClient)
         {
             if (validator == null)
                 throw new ArgumentNullException("validator");

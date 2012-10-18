@@ -5,9 +5,11 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
     using System.Linq;
     using System.Text;
     using System.IO;
+    using System.Diagnostics;
     using NUnit.Framework;
     using Moq;
     using ContinuousSeo.Core.IO;
+    using ContinuousSeo.Core.Announcers;
     using ContinuousSeo.W3cValidation.Core;
     using ContinuousSeo.W3cValidation.Core.Html;
     using ContinuousSeo.W3cValidation.Runner.Processors;
@@ -19,7 +21,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
     public class HtmlValidatorUrlProcessorTests
     {
         private Mock<IValidatorWrapper> mValidator = null;
-        private Mock<HtmlValidatorRunnerContext> mContext = null;
+        private Mock<IHtmlValidatorRunnerContext> mContext = null;
         private Mock<IFileNameGenerator> mFileNameGenerator = null;
         private TestResourceCopier mResourceCopier = null;
         private Mock<IValidatorReportWriterFactory> mReportWriterFactory = null;
@@ -32,7 +34,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         public void Init()
         {
             mValidator = new Mock<IValidatorWrapper>();
-            mContext = new Mock<HtmlValidatorRunnerContext>();
+            mContext = new Mock<IHtmlValidatorRunnerContext>();
             mFileNameGenerator = new Mock<IFileNameGenerator>();
             mResourceCopier = new TestResourceCopier();
             mReportWriterFactory = new Mock<IValidatorReportWriterFactory>();
@@ -47,6 +49,12 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             mContext
                 .Setup(x => x.ValidatorUrl)
                 .Returns("http://www.whereever.com/validator");
+            mContext
+                .Setup(x => x.Announcer)
+                .Returns(new Mock<IAnnouncer>().Object);
+            mContext
+                .Setup(x => x.TotalTimeStopwatch)
+                .Returns(new Mock<Stopwatch>().Object);
 
             mReportWriterFactory
                 .Setup(x => x.GetTextWriter(It.IsAny<Stream>(), It.IsAny<Encoding>()))

@@ -10,6 +10,7 @@ namespace ContinuousSeo.W3cValidation.Runner
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using ContinuousSeo.Core.Diagnostics;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
     using ContinuousSeo.W3cValidation.Runner.Processors;
     using ContinuousSeo.W3cValidation.Runner.DI;
@@ -20,11 +21,12 @@ namespace ContinuousSeo.W3cValidation.Runner
     /// </summary>
     public class HtmlValidatorRunner : IValidatorRunner
     {
-        private readonly HtmlValidatorRunnerContext mContext;
+        private readonly IHtmlValidatorRunnerContext mContext;
         protected IUrlAggregator mUrlAggregator;
         protected IUrlProcessor mProcessor;
+        //protected IStopwatch mStopwatch;
 
-        public HtmlValidatorRunner(HtmlValidatorRunnerContext context, IUrlAggregator urlAggregator, IUrlProcessor processor)
+        public HtmlValidatorRunner(IHtmlValidatorRunnerContext context, IUrlAggregator urlAggregator, IUrlProcessor processor) //, IStopwatch stopwatch
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -32,10 +34,13 @@ namespace ContinuousSeo.W3cValidation.Runner
                 throw new ArgumentNullException("urlAggregator");
             if (processor == null)
                 throw new ArgumentNullException("processor");
+            //if (stopwatch == null)
+            //    throw new ArgumentNullException("stopwatch");
 
-            mContext = context;
-            mUrlAggregator = urlAggregator;
-            mProcessor = processor;
+            this.mContext = context;
+            this.mUrlAggregator = urlAggregator;
+            this.mProcessor = processor;
+            //this.mStopwatch = stopwatch;
         }
 
         protected virtual void Intialize()
@@ -52,8 +57,13 @@ namespace ContinuousSeo.W3cValidation.Runner
         {
             Intialize();
 
+            // Keep track of how long this takes
+            mContext.TotalTimeStopwatch.Start();
+
             var urls = mUrlAggregator.AggregateUrls();
-            return mProcessor.ProcessUrls(urls);
+            var result = mProcessor.ProcessUrls(urls);
+
+            return result;
         }
 
         #endregion
