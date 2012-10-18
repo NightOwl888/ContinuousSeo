@@ -177,8 +177,19 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             // Process urls
             foreach (var url in urls)
             {
+                // start stopwatch
+                string processName = string.Format("validation for '{0}'", url);
+                this.OutputStartProcess(processName);
+
                 first = PauseIteration(first);
-                AddResultTotals(result, ValidateUrlForHtmlOutput(writer, outputPath, url));
+                var report = ValidateUrlForHtmlOutput(writer, outputPath, url);
+                AddResultTotals(result, report);
+
+                // report times to the report
+                this.OutputEndProcess(processName);
+                this.ReportElapsedTime(report, mStopwatch.Elapsed);
+
+                writer.WriteUrlElement(report);
             }
             return result;
         }
@@ -186,10 +197,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         private IValidatorReportItem ValidateUrlForHtmlOutput(IValidatorReportTextWriter writer, string outputPath, string url)
         {
             IValidatorReportItem result = new ValidatorReportItem();
-
-            // start stopwatch
-            string processName = string.Format("validation for '{0}'", url);
-            this.OutputStartProcess(processName);
 
             string fileName = Path.Combine(outputPath, mFileNameGenerator.GenerateFileName(url, "html"));
             using (var outputStream = mStreamFactory.GetFileStream(fileName, FileMode.Create, FileAccess.Write))
@@ -199,12 +206,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
             // Write the filename to the report
             result.FileName = Path.GetFileName(fileName);
-
-            // report times to the report
-            this.OutputEndProcess(processName);
-            this.ReportElapsedTime(result, mStopwatch.Elapsed);
-
-            writer.WriteUrlElement(result);
 
             return result;
         }
@@ -260,8 +261,17 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             // Process urls
             foreach (var url in urls)
             {
+                // Start stopwatch
+                string processName = string.Format("validation for '{0}'", url);
+                this.OutputStartProcess(processName);
+
                 first = PauseIteration(first);
-                AddResultTotals(result, ValidateUrlForXmlOutput(writer, url));
+                var report = ValidateUrlForXmlOutput(writer, url);
+                AddResultTotals(result, report);
+
+                // Report times to the report
+                this.OutputEndProcess(processName);
+                this.ReportElapsedTime(report, mStopwatch.Elapsed);
             }
             return result;
         }
@@ -272,16 +282,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
             using (var outputStream = mStreamFactory.GetMemoryStream())
             {
-                // Start stopwatch
-                string processName = string.Format("validation for '{0}'", url);
-                this.OutputStartProcess(processName);
-
-
                 result = mValidator.ValidateUrl(url, outputStream, OutputFormat.Soap12);
-
-                // Report times to the report
-                this.OutputEndProcess(processName);
-                this.ReportElapsedTime(result, mStopwatch.Elapsed);
 
                 outputStream.Position = 0;
                 writer.WriteUrlElement(result, outputStream);
