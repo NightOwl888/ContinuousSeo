@@ -110,8 +110,37 @@
 						<th>Number of Domains:</th>
 						<td colspan="2"><xsl:value-of select="count(validationResult[generate-id()=generate-id(key('validationResult-by-domain', @domainName)[1])])"/></td>
 					</tr>
+					<tr>
+						<th>Started:</th>
+						<td colspan="2">
+							<xsl:call-template name="formatdateandtime">
+								<xsl:with-param name="datestr" select="localStartTime"/>
+							</xsl:call-template>
+						</td>
+					</tr>
+					<tr>
+						<th>Total Elapsed Time (HH:MM:SS):</th>
+						<td colspan="2">
+							<xsl:value-of select="elapsedTime"/>
+						</td>
+					</tr>
 				</table>
 				<!-- End Header -->
+
+				
+				
+				<!--
+				<h1>Local Start Time: 
+					<xsl:variable name="test_date">2005-03-06T21:13:52.8533114+07:00</xsl:variable>
+				
+					<xsl:call-template name="formatdateandtime">
+						<xsl:with-param name="datestr" select="$test_date"/>
+					</xsl:call-template>
+				</h1>
+				-->
+				
+				
+				
 				
 				<div id="don_program">&nbsp;</div>
 				<script type="text/javascript" src="http://www.w3.org/QA/Tools/don_prog.js">&nbsp;</script>
@@ -177,6 +206,7 @@
 				<tr>
 					<th></th>
 					<th>Document (Click for Details)</th>
+					<th>Elapsed Time</th>
 					<th>Errors</th>
 					<th>Warnings</th>
 					<th></th>
@@ -211,6 +241,9 @@
 								</xsl:if>
 								<xsl:value-of select="@url"/>
 							</a>
+						</td>
+						<td>
+							<xsl:value-of select="elapsedTime"/>
 						</td>
 						<td>
 							<xsl:value-of select="@errors"/>
@@ -306,6 +339,80 @@
 				<xsl:value-of select="@domainName"/>
 			</a>
 		</li>
+	</xsl:template>
+
+	<xsl:template name="formatdateandtime">
+		<xsl:param name="datestr"/>
+		<!-- input format yyyy-mm-ddThh:mm:ss.0000000TZ -->
+		<!-- output format MonthName dd, yyyy  h:mm AM/PM -->
+
+		<xsl:variable name="var_day_d">
+			<xsl:value-of select="substring($datestr,9,2) - 0"/>
+		</xsl:variable>
+		
+		<xsl:variable name="var_month_mm">
+			<xsl:value-of select="substring($datestr,6,2)"/>
+		</xsl:variable>
+
+		<xsl:variable name="var_year_yyyy">
+			<xsl:value-of select="substring($datestr,1,4)"/>
+		</xsl:variable>
+
+		<xsl:variable name="var_hour_hh">
+			<xsl:value-of select="substring($datestr,12,2)"/>
+		</xsl:variable>
+
+		<xsl:variable name="var_minute_mm">
+			<xsl:value-of select="substring($datestr,15,2)"/>
+		</xsl:variable>
+
+		<xsl:variable name="var_second_ss">
+			<xsl:value-of select="substring($datestr,18,2)"/>
+		</xsl:variable>
+
+		<xsl:variable name="var_ampm">
+			<xsl:choose>
+				<xsl:when test="$var_hour_hh > 12">PM</xsl:when>
+				<xsl:otherwise>AM</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+		<xsl:variable name="var_hour_12">
+			<xsl:choose>
+				<xsl:when test="$var_hour_hh > 12"><xsl:value-of select="$var_hour_hh - 12"/></xsl:when>
+				<xsl:otherwise><xsl:value-of select="$var_hour_hh - 0"/></xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+		<xsl:variable name="var_month_name">
+			<xsl:choose>
+				<xsl:when test="$var_month_mm = 01">January</xsl:when>
+				<xsl:when test="$var_month_mm = 02">February</xsl:when>
+				<xsl:when test="$var_month_mm = 03">March</xsl:when>
+				<xsl:when test="$var_month_mm = 04">April</xsl:when>
+				<xsl:when test="$var_month_mm = 05">May</xsl:when>
+				<xsl:when test="$var_month_mm = 06">June</xsl:when>
+				<xsl:when test="$var_month_mm = 07">July</xsl:when>
+				<xsl:when test="$var_month_mm = 08">August</xsl:when>
+				<xsl:when test="$var_month_mm = 09">September</xsl:when>
+				<xsl:when test="$var_month_mm = 10">October</xsl:when>
+				<xsl:when test="$var_month_mm = 11">November</xsl:when>
+				<xsl:when test="$var_month_mm = 12">December</xsl:when>
+			</xsl:choose>
+		</xsl:variable>
+		
+
+		<xsl:value-of select="$var_month_name"/>
+		<xsl:value-of select="' '"/>
+		<xsl:value-of select="$var_day_d"/>
+		<xsl:value-of select="', '"/>
+		<xsl:value-of select="$var_year_yyyy"/>
+		&nbsp;&nbsp;
+		<xsl:value-of select="$var_hour_12"/>
+		<xsl:value-of select="':'"/>
+		<xsl:value-of select="$var_minute_mm"/>
+		<xsl:value-of select="' '"/>
+		<xsl:value-of select="$var_ampm"/>
 	</xsl:template>
 	
 </xsl:stylesheet>
