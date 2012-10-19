@@ -110,6 +110,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             result.DomainName = domainName;
             result.ErrorMessage = errorMessage;
             result.IsValid = false;
+            mContext.Announcer.Error(errorMessage);
             return result;
         }
 
