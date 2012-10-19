@@ -24,9 +24,8 @@ namespace ContinuousSeo.W3cValidation.Runner
         private readonly IHtmlValidatorRunnerContext mContext;
         protected IUrlAggregator mUrlAggregator;
         protected IUrlProcessor mProcessor;
-        //protected IStopwatch mStopwatch;
 
-        public HtmlValidatorRunner(IHtmlValidatorRunnerContext context, IUrlAggregator urlAggregator, IUrlProcessor processor) //, IStopwatch stopwatch
+        public HtmlValidatorRunner(IHtmlValidatorRunnerContext context, IUrlAggregator urlAggregator, IUrlProcessor processor) 
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -34,21 +33,14 @@ namespace ContinuousSeo.W3cValidation.Runner
                 throw new ArgumentNullException("urlAggregator");
             if (processor == null)
                 throw new ArgumentNullException("processor");
-            //if (stopwatch == null)
-            //    throw new ArgumentNullException("stopwatch");
 
             this.mContext = context;
             this.mUrlAggregator = urlAggregator;
             this.mProcessor = processor;
-            //this.mStopwatch = stopwatch;
         }
 
         protected virtual void Intialize()
         {
-            //var container = new Container();
-
-            //// Setup configuration of DI
-            //container.Configure(r => r.AddRegistry<HtmlValidatorRegistry>());
         }
 
         #region IValidatorRunner Members
@@ -57,11 +49,15 @@ namespace ContinuousSeo.W3cValidation.Runner
         {
             Intialize();
 
+            mContext.Announcer.Header("W3C HTML Validator");
+
             // Keep track of how long this takes
             mContext.TotalTimeStopwatch.Start();
 
             var urls = mUrlAggregator.AggregateUrls();
             var result = mProcessor.ProcessUrls(urls);
+
+            mContext.Announcer.Header(string.Format("Validation completed with {0} error(s) and {1} warning(s).", result.TotalErrors, result.TotalWarnings));
 
             return result;
         }

@@ -16,27 +16,33 @@ namespace ContinuousSeo.Core.Announcers
     /// </summary>
     public abstract class Announcer : IAnnouncer
     {
+        public virtual void Header(string toolName)
+        {
+            WriteLine(toolName, true);
+        }
+        
         public virtual void Heading(string message)
         {
-            Write(message, true);
+            WriteLine(message, true);
         }
 
         public virtual void Say(string message)
         {
-            Write(message, true);
+            WriteLine(message, true);
         }
 
         public virtual void ElapsedTime(TimeSpan timeSpan)
         {
-            Write(string.Format("=> {0:00}:{1:00}:{2:00}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds), true);
+            WriteLine(string.Format("=> {0:00}:{1:00}:{2:00}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds), true);
         }
 
         public virtual void Error(string message)
         {
-            Write(string.Format("!!! {0}", message), true);
+            WriteLine(string.Format("!!! {0}", message), true);
         }
 
         public abstract void Write(string message, bool escaped);
+        public abstract void WriteLine(string message, bool escaped);
 
     }
 }

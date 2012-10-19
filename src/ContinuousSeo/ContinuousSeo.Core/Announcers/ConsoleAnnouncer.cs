@@ -16,30 +16,38 @@ namespace ContinuousSeo.Core.Announcers
     /// </summary>
     public class ConsoleAnnouncer : Announcer
     {
-        public void Header(string toolName)
+        public override void Header(string toolName)
         {
             if (string.IsNullOrEmpty(toolName))
                 throw new ArgumentNullException("toolName");
 
-            int headingLength = (toolName.Length + 2);
+            int headingLength = toolName.Length;
             int headingRemaining = 79 - headingLength;
             int headingRight = (int)Math.Round(((double)headingRemaining / (double)2), MidpointRounding.AwayFromZero);
             int headingLeft = headingRemaining - headingRight;
 
             Console.ForegroundColor = ConsoleColor.Green;
             HorizontalRule();
-            Write("=============================== Continuous SEO ================================");
-            Write(" ".PadLeft(headingLeft, '=') + toolName + (" ".PadRight(headingRight, '=')));
+            WriteLine("|                               Continuous SEO                                |");
+            WriteLine("|".PadRight(headingLeft, ' ') + toolName + ("|".PadLeft(headingRight, ' ')));
             HorizontalRule();
-            Write("Source Code:");
-            Write("  http://github.com/NightOwl888/continuousseo");
+            Write("|");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Write("  Source Code:                                                               ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            WriteLine("|");
+            Write("|");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Write("    http://github.com/NightOwl888/continuousseo                              ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            WriteLine("|");
             HorizontalRule();
             Console.ResetColor();
         }
 
         public void HorizontalRule()
         {
-            Write("".PadRight(79, '-'));
+            WriteLine("".PadRight(79, '-'));
         }
 
         public override void Heading(string message)
@@ -77,6 +85,16 @@ namespace ContinuousSeo.Core.Announcers
         }
 
         public override void Write(string message, bool escaped)
+        {
+            Console.Out.Write(message);
+        }
+
+        public void WriteLine(string message)
+        {
+            WriteLine(message, true);
+        }
+
+        public override void WriteLine(string message, bool escaped)
         {
             Console.Out.WriteLine(message);
         }

@@ -16,10 +16,12 @@ namespace ContinuousSeo.Core.Announcers
     /// </summary>
     public interface IAnnouncer
     {
+        void Header(string toolName);
         void Heading(string message);
         void Say(string message);
         void ElapsedTime(TimeSpan timeSpan);
         void Error(string message);
         void Write(string message, bool escaped);
+        void WriteLine(string message, bool escaped);
     }
 }
