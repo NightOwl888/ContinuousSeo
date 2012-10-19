@@ -199,12 +199,12 @@ namespace ContinuousSeo.MSBuild
             }
 
             // Setup configuration of DI container
-            Log.LogMessage("Composing Application");
+            Log.LogMessage(MessageImportance.Low, "Composing Application");
             var container = new StructureMap.Container();
             container.Configure(r => r.AddRegistry<HtmlValidatorRegistry>());
 
             // Add the current parameters to context
-            Log.LogMessage("Creating Context");
+            Log.LogMessage(MessageImportance.Low, "Creating Context");
 
             var context = new HtmlValidatorRunnerContext(new ConsoleAnnouncer())
             {
@@ -231,7 +231,7 @@ namespace ContinuousSeo.MSBuild
 
             var runner = container.GetInstance<IValidatorRunner>();
 
-            Log.LogMessage("Starting Validation");
+            Log.LogMessage(MessageImportance.Low, "Starting Runner");
 
             try
             {
@@ -240,8 +240,6 @@ namespace ContinuousSeo.MSBuild
 
                 this.TotalErrors = report.TotalErrors;
                 this.TotalWarnings = report.TotalWarnings;
-
-                Log.LogMessage("Validation completed with {0} error(s) and {1} warning(s).", report.TotalErrors, report.TotalWarnings);
             }
             catch (Exception ex)
             {
