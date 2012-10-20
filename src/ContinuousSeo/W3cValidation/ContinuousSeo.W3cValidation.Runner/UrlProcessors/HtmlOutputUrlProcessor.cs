@@ -27,7 +27,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
         protected IFileNameGenerator mFileNameGenerator; // HTML only
         protected ResourceCopier mResourceCopier; // HTML only
         protected IStreamFactory mStreamFactory;
-        protected IHtmlIndexFileWriter mHtmlIndexFileCreator;
+        protected IHtmlIndexFileWriter mHtmlIndexFileWriter;
 
 
         public override ValidationResult Process(IEnumerable<string> urls, string outputPath)
@@ -69,7 +69,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
                 // This must be done before the writer is closed, or the
                 // stream will also be closed.
                 outputXmlReport.Position = 0;
-                mHtmlIndexFileCreator.CreateIndexFile(outputXmlReport, outputPath);
+                mHtmlIndexFileWriter.CreateIndexFile(outputXmlReport, outputPath);
             }
             return result;
         }

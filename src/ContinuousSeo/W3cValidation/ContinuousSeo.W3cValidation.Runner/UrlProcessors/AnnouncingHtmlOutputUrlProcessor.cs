@@ -29,7 +29,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
             ResourceCopier resourceCopier,
             IValidatorReportWriterFactory reportWriterFactory,
             IStreamFactory streamFactory,
-            IHtmlIndexFileWriter htmlIndexFileCreator)
+            IHtmlIndexFileWriter htmlIndexFileWriter)
         {
             if (validator == null)
                 throw new ArgumentNullException("validator");
@@ -43,8 +43,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
                 throw new ArgumentNullException("reportWriterFactory");
             if (streamFactory == null)
                 throw new ArgumentNullException("streamFactory");
-            if (htmlIndexFileCreator == null)
-                throw new ArgumentNullException("htmlIndexFileCreator");
+            if (htmlIndexFileWriter == null)
+                throw new ArgumentNullException("htmlIndexFileWriter");
 
             this.mValidator = validator;
             this.mContext = context;
@@ -52,7 +52,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
             this.mResourceCopier = resourceCopier;
             this.mReportWriterFactory = reportWriterFactory;
             this.mStreamFactory = streamFactory;
-            this.mHtmlIndexFileCreator = htmlIndexFileCreator;
+            this.mHtmlIndexFileWriter = htmlIndexFileWriter;
         }
 
         public override ValidationResult Process(IEnumerable<string> urls, string outputPath)
