@@ -1,8 +1,11 @@
 ﻿<!-- Change the default targets to run specific tasks to debug -->
-<Project DefaultTargets="W3cHtmlValidator" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="W3cCssValidator" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<UsingTask AssemblyFile="bin\Debug\ContinuousSeo.MSBuild.dll"
 		TaskName="ContinuousSeo.MSBuild.W3cHtmlValidator" />
+	<UsingTask AssemblyFile="bin\Debug\ContinuousSeo.MSBuild.dll"
+		TaskName="ContinuousSeo.MSBuild.W3cCssValidator" />
+
 
 	<Target Name="W3cHtmlValidator">
 		<ItemGroup>
@@ -26,14 +29,38 @@
 			TargetSitemapsFiles="@(TargetSitemapsFiles)"
 			TargetProjectFiles="@(TargetProjectFiles)"
 			OutputPath="Temp\"
-			OutputFormat="xml">
+			OutputFormat="html">
 
-			<Output TaskParameter="TotalErrors" PropertyName="ValidatorErrors"/>
-			<Output TaskParameter="TotalWarnings" PropertyName="ValidatorWarnings"/>
+			<Output TaskParameter="TotalErrors" PropertyName="HtmlValidatorErrors"/>
+			<Output TaskParameter="TotalWarnings" PropertyName="HtmlValidatorWarnings"/>
 		</W3cHtmlValidator>
 
-		<Error Condition="$(TotalErrors) > 0" Text="W3C HTML Validator found $(TotalErrors) error(s)."/>
+		<Error Condition="$(HtmlValidatorErrors) > 0" Text="W3C HTML Validator found $(HtmlValidatorErrors) error(s)."/>
 		
+	</Target>
+
+	<Target Name="W3cCssValidator">
+		<ItemGroup>
+			<TargetUrls Include="http://www.foldingchairpros.com/foldingchairpros_com/Default.css"/>
+			<TargetUrls Include="http://www.window-shutters.us/window-shutters_us/Default.css"/>
+			<TargetUrls Include="http://www.foldingchairdepot.com/c/Folding-Chairs/PlasticBlow-Molded-Folding-Chairs.aspx"/>
+		</ItemGroup>
+
+		<!--<ItemGroup>
+			<TargetProjectFiles Include="W3cHtmlValidator.project"/>
+		</ItemGroup>-->
+
+		<W3cCssValidator
+			TargetUrls="@(TargetUrls)"
+			TargetProjectFiles="@(TargetProjectFiles)"
+			OutputPath="Temp\"
+			OutputFormat="html">
+
+			<Output TaskParameter="TotalErrors" PropertyName="CssValidatorErrors"/>
+		</W3cCssValidator>
+
+		<Error Condition="$(CssValidatorErrors) > 0" Text="W3C CSS Validator found $(CssValidatorErrors) error(s)."/>
+
 	</Target>
 	
 </Project>

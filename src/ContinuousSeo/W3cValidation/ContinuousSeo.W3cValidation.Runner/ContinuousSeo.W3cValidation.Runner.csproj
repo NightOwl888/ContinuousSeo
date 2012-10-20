@@ -41,8 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CssValidatorRunner.cs" />
+    <Compile Include="DI\CssValidatorRegistry.cs" />
     <Compile Include="DI\HtmlValidatorRegistry.cs" />
+    <Compile Include="DI\ValidatorRegistry.cs" />
     <Compile Include="HtmlValidatorRunner.cs" />
+    <Compile Include="Initialization\CssValidatorRunnerContext.cs" />
+    <Compile Include="Initialization\ICssValidatorRunnerContext.cs" />
     <Compile Include="Initialization\IHtmlValidatorRunnerContext.cs" />
     <Compile Include="Initialization\IRunnerContext.cs" />
     <Compile Include="IValidatorRunner.cs" />
@@ -52,16 +57,19 @@
     <Compile Include="Initialization\IValidatorRunnerContext.cs" />
     <Compile Include="Output\IValidatorReportTextWriter.cs" />
     <Compile Include="Output\IValidatorReportWriterFactory.cs" />
-    <Compile Include="Output\IXslTransformer.cs" />
+    <Compile Include="Xsl\IXslTransformer.cs" />
     <Compile Include="Output\ValidatorReportWriterFactory.cs" />
     <Compile Include="Output\ValidatorReportXmlTextWriter.cs" />
-    <Compile Include="Output\XslTransformer.cs" />
+    <Compile Include="Xsl\XslTransformer.cs" />
     <Compile Include="Parsers\IProjectFileLineInfo.cs" />
     <Compile Include="Parsers\ProjectFileLineInfo.cs" />
     <Compile Include="Parsers\ProjectFileParser.cs" />
     <Compile Include="Parsers\IProjectFileParser.cs" />
+    <Compile Include="Processors\AnnouncingUrlAggregator.cs" />
     <Compile Include="Processors\AnnouncingXmlOutputUrlProcessor.cs" />
+    <Compile Include="Processors\CssValidatorWrapper.cs" />
     <Compile Include="Processors\IUrlProcessorFactory.cs" />
+    <Compile Include="Processors\TimingUrlAggregator.cs" />
     <Compile Include="Processors\TimingXmlOutputUrlProcessor.cs" />
     <Compile Include="Processors\UrlProcessorFactory.cs" />
     <Compile Include="Processors\XmlOutputUrlProcessor.cs" />
@@ -81,9 +89,12 @@
     <Compile Include="Parsers\ISitemapsParser.cs" />
     <Compile Include="Parsers\SitemapsParser.cs" />
     <Compile Include="ValidationResult.cs" />
+    <Compile Include="Xsl\CssXsltResourceProvider.cs" />
+    <Compile Include="Xsl\HtmlXsltResourceProvider.cs" />
+    <Compile Include="Xsl\IXsltResourceProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="HtmlValidatorIndex.xsl" />
+    <EmbeddedResource Include="Xsl\HtmlValidatorIndex.xsl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ContinuousSeo.Core\ContinuousSeo.Core.csproj">
@@ -95,6 +106,10 @@
       <Name>ContinuousSeo.W3cValidation.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Xsl\CssValidatorIndex.xsl" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

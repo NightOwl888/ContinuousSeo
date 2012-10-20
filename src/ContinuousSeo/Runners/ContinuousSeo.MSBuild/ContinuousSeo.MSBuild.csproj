@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ITaskItemExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="W3cCssValidator.cs" />
     <Compile Include="W3cHtmlValidator.cs" />
   </ItemGroup>
   <ItemGroup>
