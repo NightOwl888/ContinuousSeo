@@ -1,16 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-using NUnit.Framework;
-using Moq;
-using ContinuousSeo.Core.Announcers;
-using ContinuousSeo.W3cValidation.Runner.Initialization;
-using ContinuousSeo.W3cValidation.Runner.Processors;
-
 namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Diagnostics;
+    using NUnit.Framework;
+    using Moq;
+    using ContinuousSeo.Core.Announcers;
+    using ContinuousSeo.W3cValidation.Runner.Initialization;
+    using ContinuousSeo.W3cValidation.Runner.Processors;
+    using ContinuousSeo.W3cValidation.Runner.UrlAggregators;
+
     [TestFixture]
     public class HtmlValidatorRunnerTests
     {

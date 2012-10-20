@@ -12,6 +12,7 @@ namespace ContinuousSeo.W3cValidation.Runner
     using ContinuousSeo.W3cValidation.Runner.Initialization;
     using ContinuousSeo.W3cValidation.Runner.Processors;
     using ContinuousSeo.W3cValidation.Runner.DI;
+    using ContinuousSeo.W3cValidation.Runner.UrlAggregators;
 
     /// <summary>
     /// TODO: Update summary.

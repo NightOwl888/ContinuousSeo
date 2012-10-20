@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Processors
+namespace ContinuousSeo.W3cValidation.Runner.UrlAggregators
 {
     using System;
     using System.Collections.Generic;
@@ -22,25 +22,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         protected IValidatorRunnerContext mContext;
         protected ISitemapsParser mSitemapsParser;
         protected IProjectFileParser mProjectFileParser;
-        //private readonly Stopwatch mStopwatch = StopwatchProvider.Current.NewStopwatch();
-
-        #region Constructor
-
-        //public UrlAggregator(IValidatorRunnerContext context, IProjectFileParser projectFileParser, ISitemapsParser sitemapsParser)
-        //{
-        //    if (context == null)
-        //        throw new ArgumentNullException("context");
-        //    if (projectFileParser == null)
-        //        throw new ArgumentNullException("projectFileParser");
-        //    if (sitemapsParser == null)
-        //        throw new ArgumentNullException("sitemapsParser");
-
-        //    this.mContext = context;
-        //    this.mProjectFileParser = projectFileParser;
-        //    this.mSitemapsParser = sitemapsParser;
-        //}
-
-        #endregion
 
         #region IUrlAggregator Members
 
@@ -50,14 +31,10 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             var lines = new List<IProjectFileLineInfo>();
             string[] args = (mContext.UrlReplacementArgs == null) ? new string[0] : mContext.UrlReplacementArgs.ToArray();
 
-            //OutputStartProcess("aggregating target URLs");
-
             AddTargetUrls(mContext.TargetUrls, urls, args);
             AddLinesFromTargetSitemapsFiles(mContext.TargetSitemapsFiles, lines, args);
             AddLinesFromTargetProjectFiles(mContext.TargetProjectFiles, lines, args);
             AddUrlsFromProcessedLines(lines, urls);
-
-            //OutputEndProcess("aggregating target URLs");
 
             return urls;
         }
@@ -89,7 +66,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             return result;
         }
 
-        private void AddTargetUrls(IEnumerable<string> targetUrls, List<string> urls, string[] args)
+        protected void AddTargetUrls(IEnumerable<string> targetUrls, List<string> urls, string[] args)
         {
             if (targetUrls == null) return;
 
@@ -100,7 +77,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             }
         }
 
-        private void AddLinesFromTargetSitemapsFiles(IEnumerable<string> targetSitemapsFiles, List<IProjectFileLineInfo> lines, string[] args)
+        protected void AddLinesFromTargetSitemapsFiles(IEnumerable<string> targetSitemapsFiles, List<IProjectFileLineInfo> lines, string[] args)
         {
             if (targetSitemapsFiles == null) return;
 
@@ -112,7 +89,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             }
         }
 
-        private void AddLinesFromTargetProjectFiles(IEnumerable<string> targetProjectFiles, List<IProjectFileLineInfo> lines, string[] args)
+        protected void AddLinesFromTargetProjectFiles(IEnumerable<string> targetProjectFiles, List<IProjectFileLineInfo> lines, string[] args)
         {
             if (targetProjectFiles == null) return;
 
@@ -122,7 +99,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             }
         }
 
-        private void AddUrlsFromProcessedLines(IEnumerable<IProjectFileLineInfo> lines, List<string> urls)
+        protected void AddUrlsFromProcessedLines(IEnumerable<IProjectFileLineInfo> lines, List<string> urls)
         {
             // Process lines in file/passed in
             foreach (var line in lines)
