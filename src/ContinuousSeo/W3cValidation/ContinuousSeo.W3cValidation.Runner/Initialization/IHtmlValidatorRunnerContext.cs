@@ -8,14 +8,12 @@ namespace ContinuousSeo.W3cValidation.Runner.Initialization
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using ContinuousSeo.Core.Announcers;
     using ContinuousSeo.W3cValidation.Core.Html;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IHtmlValidatorRunnerContext : IHtmlValidatorSettings, IRunnerContext
+    public interface IHtmlValidatorRunnerContext : IHtmlValidatorSettings, IValidatorRunnerContext
     {
         IEnumerable<string> TargetSitemapsFiles { get; set; }
         IEnumerable<string> TargetUrls { get; set; }
