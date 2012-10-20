@@ -96,9 +96,12 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
             mWriter.WriteValue(times.UtcEndTime);
             mWriter.WriteEndElement();
 
-            mWriter.WriteStartElement("elapsedTime");
-            mWriter.WriteValue(times.ElapsedTime);
-            mWriter.WriteEndElement();
+            if (!string.IsNullOrEmpty(times.ElapsedTime))
+            {
+                mWriter.WriteStartElement("elapsedTime");
+                mWriter.WriteValue(times.ElapsedTime);
+                mWriter.WriteEndElement();
+            }
         }
 
         public void Flush()

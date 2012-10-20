@@ -56,6 +56,23 @@ namespace ContinuousSeo.W3cValidation.Runner.DI
             this.For<IStreamFactory>().Use(x => x.GetInstance<StreamFactory>()); // from core
             this.For<IXslTransformer>().Use(x => x.GetInstance<XslTransformer>());
 
+            // AnnouncingHtmlOutputUrlProcessor
+            
+
+            // 
+            //private readonly AnnouncingXmlOutputUrlProcessor mXmlProcessor;
+        //private readonly AnnouncingHtmlOutputUrlProcessor mHtmlProcessor;
+            this.For<AnnouncingXmlOutputUrlProcessor>().Use(x => x.GetInstance<AnnouncingXmlOutputUrlProcessor>());
+            this.For<AnnouncingHtmlOutputUrlProcessor>().Use(x => x.GetInstance<AnnouncingHtmlOutputUrlProcessor>());
+
+            //this.For<UrlProcessor>().Use<UrlProcessor>()
+            //    .Ctor<UrlProcessor>
+
+            this.For<IUrlProcessorFactory>().Use<UrlProcessorFactory>()
+                .Ctor<UrlProcessor>("xmlProcessor").Is<AnnouncingXmlOutputUrlProcessor>()
+                .Ctor<UrlProcessor>("htmlProcessor").Is<AnnouncingHtmlOutputUrlProcessor>();
+                
+
             // HtmlValidationWrapper
             //this.For<HtmlValidator>().Use(x => x.GetInstance<HtmlValidator>()); // from validation.core
             this.For<HtmlValidator>().Use(x => new HtmlValidator());

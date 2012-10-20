@@ -23,24 +23,28 @@ namespace ContinuousSeo.W3cValidation.Runner
     {
         private readonly IHtmlValidatorRunnerContext mContext;
         protected IUrlAggregator mUrlAggregator;
-        protected IUrlProcessor mProcessor;
+        protected IUrlProcessorFactory mUrlProcessorFactory;
 
-        public HtmlValidatorRunner(IHtmlValidatorRunnerContext context, IUrlAggregator urlAggregator, IUrlProcessor processor) 
+        public HtmlValidatorRunner(IHtmlValidatorRunnerContext context, IUrlAggregator urlAggregator, IUrlProcessorFactory urlProcessorFactory) 
         {
             if (context == null)
                 throw new ArgumentNullException("context");
             if (urlAggregator == null)
                 throw new ArgumentNullException("urlAggregator");
-            if (processor == null)
-                throw new ArgumentNullException("processor");
+            if (urlProcessorFactory == null)
+                throw new ArgumentNullException("urlProcessorFactory");
 
             this.mContext = context;
             this.mUrlAggregator = urlAggregator;
-            this.mProcessor = processor;
+            this.mUrlProcessorFactory = urlProcessorFactory;
         }
 
         protected virtual void Intialize()
         {
+            mContext.Announcer.Header("W3C HTML Validator");
+
+            // Keep track of how long this takes
+            mContext.TotalTimeStopwatch.Start();
         }
 
         #region IValidatorRunner Members
@@ -49,15 +53,9 @@ namespace ContinuousSeo.W3cValidation.Runner
         {
             Intialize();
 
-            mContext.Announcer.Header("W3C HTML Validator");
-
-            // Keep track of how long this takes
-            mContext.TotalTimeStopwatch.Start();
-
             var urls = mUrlAggregator.AggregateUrls();
-            var result = mProcessor.ProcessUrls(urls);
-
-            mContext.Announcer.Header(string.Format("Validation completed with {0} error(s) and {1} warning(s).", result.TotalErrors, result.TotalWarnings));
+            var processor = mUrlProcessorFactory.GetUrlProcessor(mContext.OutputFormat);
+            var result = processor.Process(urls, mContext.OutputPath);
 
             return result;
         }

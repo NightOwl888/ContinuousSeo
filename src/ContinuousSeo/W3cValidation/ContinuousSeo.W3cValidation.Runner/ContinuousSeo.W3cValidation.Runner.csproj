@@ -44,6 +44,7 @@
     <Compile Include="DI\HtmlValidatorRegistry.cs" />
     <Compile Include="HtmlValidatorRunner.cs" />
     <Compile Include="Initialization\IHtmlValidatorRunnerContext.cs" />
+    <Compile Include="Initialization\IRunnerContext.cs" />
     <Compile Include="IValidatorRunner.cs" />
     <Compile Include="Output\FileNameGenerator.cs" />
     <Compile Include="Output\IFileNameGenerator.cs" />
@@ -59,6 +60,11 @@
     <Compile Include="Parsers\ProjectFileLineInfo.cs" />
     <Compile Include="Parsers\ProjectFileParser.cs" />
     <Compile Include="Parsers\IProjectFileParser.cs" />
+    <Compile Include="Processors\AnnouncingXmlOutputUrlProcessor.cs" />
+    <Compile Include="Processors\IUrlProcessorFactory.cs" />
+    <Compile Include="Processors\TimingXmlOutputUrlProcessor.cs" />
+    <Compile Include="Processors\UrlProcessorFactory.cs" />
+    <Compile Include="Processors\XmlOutputUrlProcessor.cs" />
     <Compile Include="Processors\HtmlValidatorWrapper.cs" />
     <Compile Include="Processors\HtmlValidatorUrlProcessor.cs" />
     <Compile Include="Processors\IUrlAggregator.cs" />
@@ -66,7 +72,12 @@
     <Compile Include="Processors\IValidatorReportTimes.cs" />
     <Compile Include="Processors\IValidatorWrapper.cs" />
     <Compile Include="Processors\IValidatorReportItem.cs" />
+    <Compile Include="Processors\AnnouncingHtmlOutputUrlProcessor.cs" />
+    <Compile Include="Processors\TimingHtmlOutputUrlProcessor.cs" />
+    <Compile Include="Processors\TimingUrlProcessor.cs" />
     <Compile Include="Processors\UrlAggregator.cs" />
+    <Compile Include="Processors\UrlProcessor.cs" />
+    <Compile Include="Processors\HtmlOutputUrlProcessor.cs" />
     <Compile Include="Processors\ValidatorReportItem.cs" />
     <Compile Include="Processors\ValidatorReportTimes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

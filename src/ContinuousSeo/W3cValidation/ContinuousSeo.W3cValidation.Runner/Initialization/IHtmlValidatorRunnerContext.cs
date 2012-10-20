@@ -15,7 +15,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Initialization
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IHtmlValidatorRunnerContext : IHtmlValidatorSettings
+    public interface IHtmlValidatorRunnerContext : IHtmlValidatorSettings, IRunnerContext
     {
         IEnumerable<string> TargetSitemapsFiles { get; set; }
         IEnumerable<string> TargetUrls { get; set; }
@@ -25,9 +25,5 @@ namespace ContinuousSeo.W3cValidation.Runner.Initialization
         string OutputFormat { get; set; }
         string ValidatorUrl { get; set; }
         bool DirectInputMode { get; set; }
-
-        IAnnouncer Announcer { get; }
-        Stopwatch TotalTimeStopwatch { get; }
-
     }
 }

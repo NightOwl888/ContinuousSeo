@@ -18,6 +18,12 @@ namespace ContinuousSeo.Core.IO
 
         public System.IO.Stream GetFileStream(string path, FileMode fileMode, FileAccess fileAccess)
         {
+            var directory = Path.GetDirectoryName(path);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
             return new FileStream(path, fileMode, fileAccess);
         }
 

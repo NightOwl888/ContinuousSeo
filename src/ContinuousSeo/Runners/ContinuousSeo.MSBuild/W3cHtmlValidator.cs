@@ -228,6 +228,7 @@ namespace ContinuousSeo.MSBuild
 
             // Setup the container to use the context as a singleton so it is available everywhere.
             container.Configure(r => r.For<IHtmlValidatorRunnerContext>().Singleton().Use(x => context));
+            container.Configure(r => r.For<IRunnerContext>().Singleton().Use(x => context));
 
             var runner = container.GetInstance<IValidatorRunner>();
 

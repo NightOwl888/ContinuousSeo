@@ -17,14 +17,14 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
         private Mock<IHtmlValidatorRunnerContext> mContext;
         private Mock<IUrlAggregator> mUrlAggregator;
-        private Mock<IUrlProcessor> mProcessor;
+        private Mock<IUrlProcessorFactory> mProcessorFactory;
 
         [SetUp]
         public void Init()
         {
             mContext = new Mock<IHtmlValidatorRunnerContext>();
             mUrlAggregator = new Mock<IUrlAggregator>();
-            mProcessor = new Mock<IUrlProcessor>();
+            mProcessorFactory = new Mock<IUrlProcessorFactory>();
 
             mContext
                 .Setup(x => x.TotalTimeStopwatch)
@@ -36,15 +36,15 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         {
             mContext = null;
             mUrlAggregator = null;
-            mProcessor = null;
+            mProcessorFactory = null;
         }
 
         private HtmlValidatorRunner NewHtmlValidationRunnerInstance()
         {
             return new HtmlValidatorRunner(
                 mContext.Object, 
-                mUrlAggregator.Object, 
-                mProcessor.Object);
+                mUrlAggregator.Object,
+                mProcessorFactory.Object);
         }
 
         #endregion
@@ -52,7 +52,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         #region Execute Method
 
         [Test]
-        public void Execute_Called_ShouldCallProcessorProcessUrls1Time()
+        public void Execute_Called_ShouldCallProcessorFactoryGetUrlProcessor1Time()
         {
             // arrange
             var target = NewHtmlValidationRunnerInstance();
@@ -61,10 +61,13 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
             target.Execute();
 
             // assert
-            mProcessor
-                .Verify(x => x.ProcessUrls(It.IsAny<IEnumerable<string>>()), 
-                Times.Once());
+            //mProcessor
+            //    .Verify(x => x.ProcessUrls(It.IsAny<IEnumerable<string>>()), 
+            //    Times.Once());
 
+            mProcessorFactory
+                .Verify(x => x.GetUrlProcessor(It.IsAny<string>()), 
+                Times.Once());
         }
 
         #endregion
