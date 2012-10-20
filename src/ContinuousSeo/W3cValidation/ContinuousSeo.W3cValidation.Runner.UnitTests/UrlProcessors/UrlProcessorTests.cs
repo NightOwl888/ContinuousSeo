@@ -1,4 +1,4 @@
-//namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
+//namespace ContinuousSeo.W3cValidation.Runner.UnitTests.UrlProcessors
 //{
 //    using System;
 //    using System.Collections.Generic;
@@ -18,7 +18,7 @@
 //    using ContinuousSeo.W3cValidation.Runner.Output;
 
 //    [TestFixture]
-//    public class HtmlValidatorUrlProcessorTests
+//    public class UrlProcessorTests
 //    {
 //        private Mock<IValidatorWrapper> mValidator = null;
 //        private Mock<IHtmlValidatorRunnerContext> mContext = null;

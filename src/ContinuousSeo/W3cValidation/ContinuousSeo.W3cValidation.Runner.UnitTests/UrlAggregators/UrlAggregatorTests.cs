@@ -1,4 +1,4 @@
-namespace ContinuousSeo.W3cValidation.Runner.UnitTests
+namespace ContinuousSeo.W3cValidation.Runner.UnitTests.UrlAggregators
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
     using NUnit.Framework;
     using ContinuousSeo.Core.Announcers;
     using ContinuousSeo.W3cValidation.Runner.Parsers;
-    //using ContinuousSeo.W3cValidation.Runner.Processors;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
     using ContinuousSeo.W3cValidation.Runner.UrlAggregators;
 

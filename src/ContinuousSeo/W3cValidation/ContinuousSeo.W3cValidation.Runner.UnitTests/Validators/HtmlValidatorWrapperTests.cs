@@ -1,4 +1,4 @@
-namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
+namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Validators
 {
     using System;
     using System.Collections.Generic;

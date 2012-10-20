@@ -48,12 +48,12 @@
   <ItemGroup>
     <Compile Include="HtmlValidatorRunnerTests.cs" />
     <Compile Include="Output\FileNameGeneratorTests.cs" />
-    <Compile Include="Processors\HtmlValidatorWrapperTests.cs" />
-    <Compile Include="Processors\UrlAggregatorTests.cs" />
+    <Compile Include="Validators\HtmlValidatorWrapperTests.cs" />
+    <Compile Include="UrlAggregators\UrlAggregatorTests.cs" />
     <Compile Include="Parsers\ProjectFileParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parsers\SitemapsParserTests.cs" />
-    <Compile Include="Processors\HtmlValidatorUrlProcessorTests.cs" />
+    <Compile Include="UrlProcessors\UrlProcessorTests.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
