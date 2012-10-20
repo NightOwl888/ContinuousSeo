@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Output
+namespace ContinuousSeo.W3cValidation.Runner.Xsl
 {
     using System;
     using System.Collections.Generic;
