@@ -5,30 +5,38 @@ using System.Text;
 using System.Diagnostics;
 using NUnit.Framework;
 using Moq;
+using ContinuousSeo.Core.Announcers;
 using ContinuousSeo.W3cValidation.Runner.Initialization;
 using ContinuousSeo.W3cValidation.Runner.Processors;
 
 namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 {
     [TestFixture]
-    public class HtmlValidationRunnerTests
+    public class HtmlValidatorRunnerTests
     {
         #region SetUp / TearDown
 
-        private Mock<IHtmlValidatorRunnerContext> mContext;
+        private Mock<IValidatorRunnerContext> mContext;
         private Mock<IUrlAggregator> mUrlAggregator;
         private Mock<IUrlProcessorFactory> mProcessorFactory;
 
         [SetUp]
         public void Init()
         {
-            mContext = new Mock<IHtmlValidatorRunnerContext>();
+            mContext = new Mock<IValidatorRunnerContext>();
             mUrlAggregator = new Mock<IUrlAggregator>();
             mProcessorFactory = new Mock<IUrlProcessorFactory>();
 
             mContext
                 .Setup(x => x.TotalTimeStopwatch)
                 .Returns(new Mock<Stopwatch>().Object);
+            mContext
+                .Setup(x => x.Announcer)
+                .Returns(new Mock<IAnnouncer>().Object);
+
+            mProcessorFactory
+                .Setup(x => x.GetUrlProcessor(It.IsAny<string>()))
+                .Returns(new Mock<UrlProcessor>().Object);
         }
 
         [TearDown]

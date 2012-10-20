@@ -8,6 +8,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
     using NUnit.Framework;
     using Moq;
     using ContinuousSeo.Core.Net;
+    using ContinuousSeo.Core.Announcers;
     using ContinuousSeo.W3cValidation.Core;
     using ContinuousSeo.W3cValidation.Core.Html;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
@@ -37,6 +38,10 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
             mContext
                 .Setup(x => x.ValidatorUrl)
                 .Returns("http://www.whereever.com/validator");
+
+            mContext
+                .Setup(x => x.Announcer)
+                .Returns(new Mock<IAnnouncer>().Object);
         }
 
         [TearDown]
@@ -56,21 +61,21 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
         private void SetupValidValidatorValidateReturnStatusWith8Warnings()
         {
             mValidator
-                .Setup(x => x.Validate(It.IsAny<Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), InputFormat.Uri, mContext.Object, It.IsAny<string>()))
+                .Setup(x => x.Validate(It.IsAny<Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), It.IsAny<InputFormat>(), mContext.Object, It.IsAny<string>()))
                 .Returns(new HtmlValidatorResult("Valid", 0, 8, 1));
         }
 
         private void SetupInalidValidatorValidateReturnStatusWith4ErrorsAnd11Warnings()
         {
             mValidator
-                .Setup(x => x.Validate(It.IsAny<Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), InputFormat.Uri, mContext.Object, It.IsAny<string>()))
+                .Setup(x => x.Validate(It.IsAny<Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), It.IsAny<InputFormat>(), mContext.Object, It.IsAny<string>()))
                 .Returns(new HtmlValidatorResult("Invalid", 4, 11, 1));
         }
 
         private void SetupValidatorValidateToThrowHttpException()
         {
             mValidator
-                .Setup(x => x.Validate(It.IsAny<Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), InputFormat.Uri, mContext.Object, It.IsAny<string>()))
+                .Setup(x => x.Validate(It.IsAny<Stream>(), It.IsAny<OutputFormat>(), It.IsAny<string>(), It.IsAny<InputFormat>(), mContext.Object, It.IsAny<string>()))
                 .Throws<System.Web.HttpException>();
         }
 

@@ -12,6 +12,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     using ContinuousSeo.Core.IO;
     using ContinuousSeo.W3cValidation.Runner.Output;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
+    using ContinuousSeo.W3cValidation.Runner.Xsl;
     using ContinuousSeo.W3cValidation.Core;
 
     /// <summary>
@@ -28,7 +29,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             ResourceCopier resourceCopier,
             IValidatorReportWriterFactory reportWriterFactory,
             IStreamFactory streamFactory,
-            IXslTransformer xslTransformer)
+            IXslTransformer xslTransformer,
+            IXslResourceProvider xslResourceProvider)
         {
             if (validator == null)
                 throw new ArgumentNullException("validator");
@@ -44,6 +46,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
                 throw new ArgumentNullException("streamFactory");
             if (xslTransformer == null)
                 throw new ArgumentNullException("xslTransformer");
+            if (xslResourceProvider == null)
+                throw new ArgumentNullException("xslResourceProvider");
 
             this.mValidator = validator;
             this.mContext = context;
@@ -52,6 +56,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             this.mReportWriterFactory = reportWriterFactory;
             this.mStreamFactory = streamFactory;
             this.mXslTransformer = xslTransformer;
+            this.mXslResourceProvider = xslResourceProvider;
         }
 
         public override ValidationResult Process(IEnumerable<string> urls, string outputPath)

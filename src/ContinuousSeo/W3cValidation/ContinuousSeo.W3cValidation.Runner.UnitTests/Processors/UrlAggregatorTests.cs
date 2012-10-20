@@ -18,7 +18,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
     {
         #region SetUp / TearDown
 
-        private Mock<IHtmlValidatorRunnerContext> mContext = null;
+        private Mock<IValidatorRunnerContext> mContext = null;
         private Mock<IProjectFileParser> mProjectFileParser = null;
         private Mock<ISitemapsParser> mSitemapsParser = null;
         private int mTotalProjectFileParserParseFileCalls = 0;
@@ -28,7 +28,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         [SetUp]
         public void Init()
         {
-            mContext = new Mock<IHtmlValidatorRunnerContext>();
+            mContext = new Mock<IValidatorRunnerContext>();
             mProjectFileParser = new Mock<IProjectFileParser>();
             mSitemapsParser = new Mock<ISitemapsParser>();
 
@@ -51,9 +51,9 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
         }
 
 
-        private IUrlAggregator NewUrlAggregatorInstance()
+        private MockUrlAggregator NewUrlAggregatorInstance()
         {
-            return new UrlAggregator(
+            return new MockUrlAggregator(
                 mContext.Object, 
                 mProjectFileParser.Object, 
                 mSitemapsParser.Object);
@@ -265,181 +265,191 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
 
         #endregion
 
-        //#region ProcessLine Method
+        #region ProcessLine Method
 
-        //[Test]
-        //public void ProcessLine_ValidFileLineInfoWithoutMode_ShouldReturnSameUrl()
-        //{
-        //    // arrange
-        //    IEnumerable<string> result;
-        //    var url = "http://www.google.com/test.aspx";
-        //    var info = new Mock<IProjectFileLineInfo>();
-        //    info.Setup(x => x.Url).Returns(url);
+        [Test]
+        public void ProcessLine_ValidFileLineInfoWithoutMode_ShouldReturnSameUrl()
+        {
+            // arrange
+            IEnumerable<string> result;
+            var url = "http://www.google.com/test.aspx";
+            var info = new Mock<IProjectFileLineInfo>();
+            info.Setup(x => x.Url).Returns(url);
 
-        //    var sitemapsParser = new Mock<ISitemapsParser>();
-            
-        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
+            var sitemapsParser = new Mock<ISitemapsParser>();
 
-        //    // act
-        //    result = target.ProcessLine(info.Object);
+            var target = NewUrlAggregatorInstance();
 
-        //    // assert
-        //    var actual = result.First();
-        //    var expected = url;
+            // act
+            result = target.ProcessLine(info.Object);
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            // assert
+            var actual = result.First();
+            var expected = url;
 
-        //[Test]
-        //public void ProcessLine_ValidFileLineInfoWithNullMode_ShouldReturnSameUrl()
-        //{
-        //    // arrange
-        //    IEnumerable<string> result;
-        //    var url = "http://www.google.com/test.aspx";
-        //    var info = new Mock<IProjectFileLineInfo>();
-        //    info.Setup(x => x.Url).Returns(url);
-        //    info.Setup(x => x.Mode).Returns((string)null);
+            Assert.AreEqual(expected, actual);
+        }
 
-        //    var sitemapsParser = new Mock<ISitemapsParser>();
+        [Test]
+        public void ProcessLine_ValidFileLineInfoWithNullMode_ShouldReturnSameUrl()
+        {
+            // arrange
+            IEnumerable<string> result;
+            var url = "http://www.google.com/test.aspx";
+            var info = new Mock<IProjectFileLineInfo>();
+            info.Setup(x => x.Url).Returns(url);
+            info.Setup(x => x.Mode).Returns((string)null);
 
-        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
+            var sitemapsParser = new Mock<ISitemapsParser>();
 
-        //    // act
-        //    result = target.ProcessLine(info.Object);
+            var target = NewUrlAggregatorInstance();
 
-        //    // assert
-        //    var actual = result.First();
-        //    var expected = url;
+            // act
+            result = target.ProcessLine(info.Object);
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            // assert
+            var actual = result.First();
+            var expected = url;
 
-        //[Test]
-        //public void ProcessLine_ValidFileLineInfoWithSingleMode_ShouldReturnSameUrl()
-        //{
-        //    // arrange
-        //    IEnumerable<string> result;
-        //    var url = "http://www.google.com/test.aspx";
-        //    var info = new Mock<IProjectFileLineInfo>();
-        //    info.Setup(x => x.Url).Returns(url);
-        //    info.Setup(x => x.Mode).Returns("single");
+            Assert.AreEqual(expected, actual);
+        }
 
-        //    var sitemapsParser = new Mock<ISitemapsParser>();
+        [Test]
+        public void ProcessLine_ValidFileLineInfoWithSingleMode_ShouldReturnSameUrl()
+        {
+            // arrange
+            IEnumerable<string> result;
+            var url = "http://www.google.com/test.aspx";
+            var info = new Mock<IProjectFileLineInfo>();
+            info.Setup(x => x.Url).Returns(url);
+            info.Setup(x => x.Mode).Returns("single");
 
-        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
+            var sitemapsParser = new Mock<ISitemapsParser>();
 
-        //    // act
-        //    result = target.ProcessLine(info.Object);
+            var target = NewUrlAggregatorInstance();
 
-        //    // assert
-        //    var actual = result.First();
-        //    var expected = url;
+            // act
+            result = target.ProcessLine(info.Object);
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            // assert
+            var actual = result.First();
+            var expected = url;
 
-        //[Test]
-        //public void ProcessLine_ValidFileLineInfoWithSitemapsModeAnd2Urls_ShouldReturn2Urls()
-        //{
-        //    // arrange
-        //    IEnumerable<string> result;
-        //    var url = "http://www.google.com/sitemaps.xml";
-        //    var info = new Mock<IProjectFileLineInfo>();
-        //    info.Setup(x => x.Url).Returns(url);
-        //    info.Setup(x => x.Mode).Returns("sitemaps");
+            Assert.AreEqual(expected, actual);
+        }
 
-        //    var urlList = new List<string>();
-        //    urlList.Add("http://www.google.com/");
-        //    urlList.Add("http://www.google.com/test1.aspx");
-        //    var sitemapsParser = new Mock<ISitemapsParser>();
-        //    sitemapsParser.Setup(x => x.ParseUrlsFromFile(url)).Returns(urlList);
+        [Test]
+        public void ProcessLine_ValidFileLineInfoWithSitemapsModeAnd2Urls_ShouldReturn2Urls()
+        {
+            // arrange
+            IEnumerable<string> result;
+            var url = "http://www.google.com/sitemaps.xml";
+            var info = new Mock<IProjectFileLineInfo>();
+            info.Setup(x => x.Url).Returns(url);
+            info.Setup(x => x.Mode).Returns("sitemaps");
 
-        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
+            var urlList = new List<string>();
+            urlList.Add("http://www.google.com/");
+            urlList.Add("http://www.google.com/test1.aspx");
+            mSitemapsParser.Setup(x => x.ParseUrlsFromFile(url)).Returns(urlList);
 
-        //    // act
-        //    result = target.ProcessLine(info.Object);
+            var target = NewUrlAggregatorInstance();
 
-        //    // assert
-        //    var actual = result.Count();
-        //    var expected = 2;
+            // act
+            result = target.ProcessLine(info.Object);
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            // assert
+            var actual = result.Count();
+            var expected = 2;
 
-        //[Test]
-        //public void ProcessLine_ValidFileLineInfoWithSitemapsModeAnd2Urls_ShouldMatch1stUrl()
-        //{
-        //    // arrange
-        //    IEnumerable<string> result;
-        //    var url = "http://www.google.com/sitemaps.xml";
-        //    var info = new Mock<IProjectFileLineInfo>();
-        //    info.Setup(x => x.Url).Returns(url);
-        //    info.Setup(x => x.Mode).Returns("sitemaps");
+            Assert.AreEqual(expected, actual);
+        }
 
-        //    var urlList = new List<string>();
-        //    urlList.Add("http://www.google.com/");
-        //    urlList.Add("http://www.google.com/test1.aspx");
-        //    var sitemapsParser = new Mock<ISitemapsParser>();
-        //    sitemapsParser.Setup(x => x.ParseUrlsFromFile(url)).Returns(urlList);
+        [Test]
+        public void ProcessLine_ValidFileLineInfoWithSitemapsModeAnd2Urls_ShouldMatch1stUrl()
+        {
+            // arrange
+            IEnumerable<string> result;
+            var url = "http://www.google.com/sitemaps.xml";
+            var info = new Mock<IProjectFileLineInfo>();
+            info.Setup(x => x.Url).Returns(url);
+            info.Setup(x => x.Mode).Returns("sitemaps");
 
-        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
+            var urlList = new List<string>();
+            urlList.Add("http://www.google.com/");
+            urlList.Add("http://www.google.com/test1.aspx");
+            mSitemapsParser.Setup(x => x.ParseUrlsFromFile(url)).Returns(urlList);
 
-        //    // act
-        //    result = target.ProcessLine(info.Object);
+            var target = NewUrlAggregatorInstance();
 
-        //    // assert
-        //    var actual = result.First();
-        //    var expected = "http://www.google.com/";
+            // act
+            result = target.ProcessLine(info.Object);
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            // assert
+            var actual = result.First();
+            var expected = "http://www.google.com/";
 
-        //[Test]
-        //public void ProcessLine_ValidFileLineInfoWithSitemapsModeAnd2Urls_ShouldMatch2ndUrl()
-        //{
-        //    // arrange
-        //    IEnumerable<string> result;
-        //    var url = "http://www.google.com/sitemaps.xml";
-        //    var info = new Mock<IProjectFileLineInfo>();
-        //    info.Setup(x => x.Url).Returns(url);
-        //    info.Setup(x => x.Mode).Returns("sitemaps");
+            Assert.AreEqual(expected, actual);
+        }
 
-        //    var urlList = new List<string>();
-        //    urlList.Add("http://www.google.com/");
-        //    urlList.Add("http://www.google.com/test1.aspx");
-        //    var sitemapsParser = new Mock<ISitemapsParser>();
-        //    sitemapsParser.Setup(x => x.ParseUrlsFromFile(url)).Returns(urlList);
+        [Test]
+        public void ProcessLine_ValidFileLineInfoWithSitemapsModeAnd2Urls_ShouldMatch2ndUrl()
+        {
+            // arrange
+            IEnumerable<string> result;
+            var url = "http://www.google.com/sitemaps.xml";
+            var info = new Mock<IProjectFileLineInfo>();
+            info.Setup(x => x.Url).Returns(url);
+            info.Setup(x => x.Mode).Returns("sitemaps");
 
-        //    mUrlAggregator target = new mUrlAggregator(sitemapsParser.Object);
+            var urlList = new List<string>();
+            urlList.Add("http://www.google.com/");
+            urlList.Add("http://www.google.com/test1.aspx");
+            mSitemapsParser.Setup(x => x.ParseUrlsFromFile(url)).Returns(urlList);
 
-        //    // act
-        //    result = target.ProcessLine(info.Object);
+            var target = NewUrlAggregatorInstance();
 
-        //    // assert
-        //    var actual = result.ElementAt(1);
-        //    var expected = "http://www.google.com/test1.aspx";
+            // act
+            result = target.ProcessLine(info.Object);
 
-        //    Assert.AreEqual(expected, actual);
-        //}
+            // assert
+            var actual = result.ElementAt(1);
+            var expected = "http://www.google.com/test1.aspx";
 
-        //#endregion
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
 
          #region Mock Classes
 
-        //private class MockUrlAggregator : mUrlAggregator
-        //{
-            
-        //    public MockUrlAggregator(IProjectFileParser projectFileParser, ISitemapsParser sitemapsParser) 
-        //        : base(projectFileParser, sitemapsParser)
-        //    {
-        //    }
+        private class MockUrlAggregator : UrlAggregator
+        {
 
+            public MockUrlAggregator(IValidatorRunnerContext context, IProjectFileParser projectFileParser, ISitemapsParser sitemapsParser)
+            {
+                if (context == null)
+                    throw new ArgumentNullException("context");
+                if (projectFileParser == null)
+                    throw new ArgumentNullException("projectFileParser");
+                if (sitemapsParser == null)
+                    throw new ArgumentNullException("sitemapsParser");
 
-        //    public override IEnumerable<string> ProcessLine(IProjectFileLineInfo urlInfo)
-        //    {
-        //        return base.ProcessLine(urlInfo);
-        //    }
-        //}
+                this.mContext = context;
+                this.mProjectFileParser = projectFileParser;
+                this.mSitemapsParser = sitemapsParser;
+            }
+
+            public override IEnumerable<string> AggregateUrls()
+            {
+                return base.AggregateUrls();
+            }
+
+            new public IEnumerable<string> ProcessLine(IProjectFileLineInfo urlInfo)
+            {
+                return base.ProcessLine(urlInfo);
+            }
+        }
 
         #endregion
 

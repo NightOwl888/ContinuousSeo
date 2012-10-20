@@ -16,6 +16,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     using ContinuousSeo.W3cValidation.Core;
     using ContinuousSeo.W3cValidation.Runner.Output;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
+    using ContinuousSeo.W3cValidation.Runner.Xsl;
 
     /// <summary>
     /// TODO: Update summary.
@@ -26,6 +27,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         protected ResourceCopier mResourceCopier; // HTML only
         protected IXslTransformer mXslTransformer; // HTML only
         protected IStreamFactory mStreamFactory;
+        protected IXslResourceProvider mXslResourceProvider;
 
         // This class does both output and validation
         // Separate into different classes?
@@ -55,8 +57,8 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         private void WriteHtmlIndexFile(Stream outputXmlReport, string outputPath)
         {
             // TODO: Make this string conditional depending on type of validation
-            var xslFilePath = "ContinuousSeo.W3cValidation.Runner.HtmlValidatorIndex.xsl";
-            using (Stream xsl = Assembly.GetExecutingAssembly().GetManifestResourceStream(xslFilePath))
+            //var xslFilePath = "ContinuousSeo.W3cValidation.Runner.HtmlValidatorIndex.xsl";
+            using (Stream xsl = Assembly.GetExecutingAssembly().GetManifestResourceStream(mXslResourceProvider.ResourceLocation))
             {
                 mXslTransformer.Transform(outputXmlReport, xsl, Path.Combine(outputPath, "index.html"));
             }

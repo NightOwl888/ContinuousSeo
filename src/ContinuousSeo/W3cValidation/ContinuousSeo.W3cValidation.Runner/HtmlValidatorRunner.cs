@@ -8,24 +8,21 @@ namespace ContinuousSeo.W3cValidation.Runner
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using ContinuousSeo.Core.Diagnostics;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
     using ContinuousSeo.W3cValidation.Runner.Processors;
     using ContinuousSeo.W3cValidation.Runner.DI;
-    using StructureMap;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class HtmlValidatorRunner : IValidatorRunner
     {
-        private readonly IHtmlValidatorRunnerContext mContext;
+        private readonly IValidatorRunnerContext mContext;
         protected IUrlAggregator mUrlAggregator;
         protected IUrlProcessorFactory mUrlProcessorFactory;
 
-        public HtmlValidatorRunner(IHtmlValidatorRunnerContext context, IUrlAggregator urlAggregator, IUrlProcessorFactory urlProcessorFactory) 
+        public HtmlValidatorRunner(IValidatorRunnerContext context, IUrlAggregator urlAggregator, IUrlProcessorFactory urlProcessorFactory) 
         {
             if (context == null)
                 throw new ArgumentNullException("context");

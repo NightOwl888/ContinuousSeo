@@ -130,6 +130,8 @@ namespace TestHarness
             //container.Configure(r => r.For<IUrlProcessor>().Use<HtmlValidatorUrlProcessor>());
 
             container.Configure(r => r.For<IHtmlValidatorRunnerContext>().Singleton().Use(x => context));
+            container.Configure(r => r.For<IValidatorRunnerContext>().Singleton().Use(x => context));
+            container.Configure(r => r.For<IRunnerContext>().Singleton().Use(x => context));
 
 
             //var parser = container.GetInstance<IProjectFileParser>();
@@ -141,6 +143,53 @@ namespace TestHarness
 
             var report = runner.Execute();
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var container = new StructureMap.Container();
+
+            // Setup configuration of DI
+            container.Configure(r => r.AddRegistry<CssValidatorRegistry>());
+
+
+            var context = new CssValidatorRunnerContext(new ConsoleAnnouncer())
+            {
+                OutputPath = @"F:\TestW3C-4\",
+                OutputFormat = "html",
+                TargetUrls = new List<string>() 
+                { 
+                    @"http://www.house-shutters.net/house-shutters_net/Default.css",
+                    "http://www.shuttercontractor.com/app_themes/Theme3/styles.css"
+
+                    //@"http://www.shuttercontractor.com/", 
+                    //@"http://www.foldingchairdepot.com/", 
+                    //@"http://www.articles-about-exterior-shutters.info", 
+                    //@"http://www.articles-about-exterior-shutters.info/articles/different-types-of-exterior-window-shutters.aspx" 
+                },
+                //TargetUrls = new List<string>()
+                //{
+                //    @"http://www.dev.helloworld.com/"
+                //},
+                DirectInputMode = false
+            };
+
+
+            //container.Configure(r => r.For<IUrlProcessor>().Use<HtmlValidatorUrlProcessor>());
+
+            container.Configure(r => r.For<ICssValidatorRunnerContext>().Singleton().Use(x => context));
+            container.Configure(r => r.For<IValidatorRunnerContext>().Singleton().Use(x => context));
+            container.Configure(r => r.For<IRunnerContext>().Singleton().Use(x => context));
+
+
+            //var parser = container.GetInstance<IProjectFileParser>();
+
+            //var validator = container.GetInstance<IValidatorWrapper>();
+
+
+            var runner = container.GetInstance<IValidatorRunner>();
+
+            var report = runner.Execute();
         }
     }
 }
