@@ -1,10 +1,10 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="TimingHtmlValidatorUrlProcessorForHtmlOutput.cs" company="">
+// <copyright file="TimingXmlOutputUrlProcessor.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Processors
+namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
 {
     using System;
     using System.Collections.Generic;
@@ -14,11 +14,12 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     using ContinuousSeo.Core.Diagnostics;
     using ContinuousSeo.W3cValidation.Runner.Output;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
+    using ContinuousSeo.W3cValidation.Runner.Processors;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public abstract class TimingHtmlOutputUrlProcessor : HtmlOutputUrlProcessor
+    public abstract class TimingXmlOutputUrlProcessor : XmlOutputUrlProcessor
     {
         protected readonly Stopwatch mStopwatch = StopwatchProvider.Current.NewStopwatch();
 
@@ -50,3 +51,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
         }
     }
 }
+
+
+

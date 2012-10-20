@@ -11,6 +11,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
     using ContinuousSeo.W3cValidation.Runner.Initialization;
     using ContinuousSeo.W3cValidation.Runner.Processors;
     using ContinuousSeo.W3cValidation.Runner.UrlAggregators;
+    using ContinuousSeo.W3cValidation.Runner.UrlProcessors;
 
     [TestFixture]
     public class HtmlValidatorRunnerTests

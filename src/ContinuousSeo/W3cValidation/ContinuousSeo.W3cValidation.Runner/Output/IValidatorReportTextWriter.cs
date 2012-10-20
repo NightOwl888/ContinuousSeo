@@ -11,6 +11,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
     using System.Linq;
     using System.Text;
     using System.IO;
+    using ContinuousSeo.W3cValidation.Runner.UrlProcessors;
     using ContinuousSeo.W3cValidation.Runner.Processors;
 
     /// <summary>

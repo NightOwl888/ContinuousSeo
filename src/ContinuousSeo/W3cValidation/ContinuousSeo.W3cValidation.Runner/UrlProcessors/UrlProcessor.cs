@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Processors
+namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
 {
     using System;
     using System.Collections.Generic;
@@ -15,6 +15,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     using ContinuousSeo.Core;
     using ContinuousSeo.W3cValidation.Runner.Output;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
+    using ContinuousSeo.W3cValidation.Runner.Processors;
 
     /// <summary>
     /// TODO: Update summary.

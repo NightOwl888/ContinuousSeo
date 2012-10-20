@@ -7,6 +7,7 @@
 namespace ContinuousSeo.W3cValidation.Runner.Processors
 {
     using System;
+    using ContinuousSeo.W3cValidation.Runner.UrlProcessors;
 
     /// <summary>
     /// TODO: Update summary.
