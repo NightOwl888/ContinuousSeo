@@ -13,7 +13,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Output
     using System.Xml;
     using System.IO;
     using ContinuousSeo.W3cValidation.Core;
-    using ContinuousSeo.W3cValidation.Runner.Processors;
+    using ContinuousSeo.W3cValidation.Runner.Validators;
     using ContinuousSeo.W3cValidation.Runner.UrlProcessors;
 
     /// <summary>

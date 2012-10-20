@@ -15,7 +15,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
     using ContinuousSeo.Core;
     using ContinuousSeo.W3cValidation.Runner.Output;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
-    using ContinuousSeo.W3cValidation.Runner.Processors;
+    using ContinuousSeo.W3cValidation.Runner.Validators;
 
     /// <summary>
     /// TODO: Update summary.

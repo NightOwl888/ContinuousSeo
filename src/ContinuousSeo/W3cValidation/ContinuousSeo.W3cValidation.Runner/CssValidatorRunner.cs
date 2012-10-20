@@ -10,7 +10,7 @@ namespace ContinuousSeo.W3cValidation.Runner
     using System.Collections.Generic;
     using ContinuousSeo.Core.Diagnostics;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
-    using ContinuousSeo.W3cValidation.Runner.Processors;
+    using ContinuousSeo.W3cValidation.Runner.Validators;
     using ContinuousSeo.W3cValidation.Runner.DI;
     using ContinuousSeo.W3cValidation.Runner.UrlAggregators;
     using ContinuousSeo.W3cValidation.Runner.UrlProcessors;

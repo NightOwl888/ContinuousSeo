@@ -12,7 +12,7 @@ namespace ContinuousSeo.W3cValidation.Runner.DI
     using StructureMap.Configuration.DSL;
     using ContinuousSeo.W3cValidation.Core;
     using ContinuousSeo.W3cValidation.Core.Html;
-    using ContinuousSeo.W3cValidation.Runner.Processors;
+    using ContinuousSeo.W3cValidation.Runner.Validators;
     using ContinuousSeo.W3cValidation.Runner.Xsl;
 
     /// <summary>

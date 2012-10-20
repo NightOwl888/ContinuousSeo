@@ -17,7 +17,7 @@ using ContinuousSeo.W3cValidation.Core.Css;
 
 using ContinuousSeo.W3cValidation.Runner;
 using ContinuousSeo.W3cValidation.Runner.Output;
-using ContinuousSeo.W3cValidation.Runner.Processors;
+using ContinuousSeo.W3cValidation.Runner.Validators;
 using ContinuousSeo.W3cValidation.Runner.Initialization;
 using ContinuousSeo.W3cValidation.Runner.DI;
 using ContinuousSeo.W3cValidation.Runner.Parsers;

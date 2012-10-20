@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ContinuousSeo.W3cValidation.Runner.Processors
+namespace ContinuousSeo.W3cValidation.Runner.Validators
 {
     using System;
     using ContinuousSeo.W3cValidation.Runner.UrlProcessors;

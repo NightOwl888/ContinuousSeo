@@ -12,7 +12,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests.Processors
     using ContinuousSeo.W3cValidation.Core;
     using ContinuousSeo.W3cValidation.Core.Html;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
-    using ContinuousSeo.W3cValidation.Runner.Processors;
+    using ContinuousSeo.W3cValidation.Runner.Validators;
 
     [TestFixture]
     public class HtmlValidatorWrapperTests

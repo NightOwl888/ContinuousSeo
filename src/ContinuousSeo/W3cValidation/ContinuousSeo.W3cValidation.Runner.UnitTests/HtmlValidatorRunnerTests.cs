@@ -9,7 +9,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UnitTests
     using Moq;
     using ContinuousSeo.Core.Announcers;
     using ContinuousSeo.W3cValidation.Runner.Initialization;
-    using ContinuousSeo.W3cValidation.Runner.Processors;
+    using ContinuousSeo.W3cValidation.Runner.Validators;
     using ContinuousSeo.W3cValidation.Runner.UrlAggregators;
     using ContinuousSeo.W3cValidation.Runner.UrlProcessors;
 

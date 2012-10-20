@@ -13,7 +13,6 @@ namespace ContinuousSeo.W3cValidation.Runner.DI
     using ContinuousSeo.Core.Announcers;
     using ContinuousSeo.Core.IO;
     using ContinuousSeo.Core.Net;
-    using ContinuousSeo.W3cValidation.Runner.Processors;
     using ContinuousSeo.W3cValidation.Runner.Output;
     using ContinuousSeo.W3cValidation.Runner.Parsers;
     using ContinuousSeo.W3cValidation.Runner.Xsl;
