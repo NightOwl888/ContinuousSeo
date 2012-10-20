@@ -58,13 +58,13 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         protected override IValidatorReportItem ValidateUrl(string url, IValidatorReportTextWriter writer, Stream outputStream)
         {
-            // start stopwatch
+            // Report process start
             string processName = string.Format("validation for '{0}'", url);
             this.OutputStartProcess(processName);
 
             var report = base.ValidateUrl(url, writer, outputStream);
 
-            // report times to the report
+            // Report process completed
             this.OutputEndProcess(processName);
 
             return report;

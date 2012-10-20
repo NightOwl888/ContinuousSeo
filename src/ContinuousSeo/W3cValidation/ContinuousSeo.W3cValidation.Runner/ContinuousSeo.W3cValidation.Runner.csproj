@@ -66,15 +66,12 @@
     <Compile Include="Processors\UrlProcessorFactory.cs" />
     <Compile Include="Processors\XmlOutputUrlProcessor.cs" />
     <Compile Include="Processors\HtmlValidatorWrapper.cs" />
-    <Compile Include="Processors\HtmlValidatorUrlProcessor.cs" />
     <Compile Include="Processors\IUrlAggregator.cs" />
-    <Compile Include="Processors\IUrlProcessor.cs" />
     <Compile Include="Processors\IValidatorReportTimes.cs" />
     <Compile Include="Processors\IValidatorWrapper.cs" />
     <Compile Include="Processors\IValidatorReportItem.cs" />
     <Compile Include="Processors\AnnouncingHtmlOutputUrlProcessor.cs" />
     <Compile Include="Processors\TimingHtmlOutputUrlProcessor.cs" />
-    <Compile Include="Processors\TimingUrlProcessor.cs" />
     <Compile Include="Processors\UrlAggregator.cs" />
     <Compile Include="Processors\UrlProcessor.cs" />
     <Compile Include="Processors\HtmlOutputUrlProcessor.cs" />

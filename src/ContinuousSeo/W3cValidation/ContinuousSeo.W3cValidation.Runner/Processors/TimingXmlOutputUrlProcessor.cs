@@ -35,6 +35,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         protected override IValidatorReportItem ValidateUrl(string url, IValidatorReportTextWriter writer, Stream outputStream)
         {
+            // Start stopwatch
             mStopwatch.Reset();
             mStopwatch.Start();
 
@@ -47,33 +48,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
             return result;
         }
-
-
-
-        protected IValidatorReportTimes GetReportedElapsedTime(TimeSpan elapsed)
-        {
-            var result = new ValidatorReportTimes();
-            this.ReportElapsedTime(result, elapsed);
-            return result;
-        }
-
-        protected void ReportElapsedTime(IValidatorReportTimes report, TimeSpan elapsed)
-        {
-            DateTime utcNow = TimeProvider.Current.UtcNow;
-            DateTime now = System.TimeZone.CurrentTimeZone.ToLocalTime(utcNow);
-            report.LocalStartTime = now.Subtract(elapsed);
-            report.LocalEndTime = now;
-            report.UtcStartTime = utcNow.Subtract(elapsed);
-            report.UtcEndTime = utcNow;
-            report.ElapsedTime = string.Format("{0:00}:{1:00}:{2:00}", elapsed.Hours, elapsed.Minutes, elapsed.Seconds);
-        }
-
-        protected void ReportTotalElapsedTime(IValidatorReportTextWriter writer, TimeSpan elapsed)
-        {
-            var times = GetReportedElapsedTime(elapsed);
-            writer.WriteElapsedTime(times);
-        }
-
     }
 }
 
