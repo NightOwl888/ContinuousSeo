@@ -17,47 +17,47 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class UrlAggregator : IUrlAggregator
+    public abstract class UrlAggregator : IUrlAggregator
     {
-        private readonly IHtmlValidatorRunnerContext mContext;
-        private readonly ISitemapsParser mSitemapsParser;
-        private readonly IProjectFileParser mProjectFileParser;
-        private readonly Stopwatch mStopwatch = StopwatchProvider.Current.NewStopwatch();
+        protected IValidatorRunnerContext mContext;
+        protected ISitemapsParser mSitemapsParser;
+        protected IProjectFileParser mProjectFileParser;
+        //private readonly Stopwatch mStopwatch = StopwatchProvider.Current.NewStopwatch();
 
         #region Constructor
 
-        public UrlAggregator(IHtmlValidatorRunnerContext context, IProjectFileParser projectFileParser, ISitemapsParser sitemapsParser)
-        {
-            if (context == null)
-                throw new ArgumentNullException("context");
-            if (projectFileParser == null)
-                throw new ArgumentNullException("projectFileParser");
-            if (sitemapsParser == null)
-                throw new ArgumentNullException("sitemapsParser");
+        //public UrlAggregator(IValidatorRunnerContext context, IProjectFileParser projectFileParser, ISitemapsParser sitemapsParser)
+        //{
+        //    if (context == null)
+        //        throw new ArgumentNullException("context");
+        //    if (projectFileParser == null)
+        //        throw new ArgumentNullException("projectFileParser");
+        //    if (sitemapsParser == null)
+        //        throw new ArgumentNullException("sitemapsParser");
 
-            this.mContext = context;
-            this.mProjectFileParser = projectFileParser;
-            this.mSitemapsParser = sitemapsParser;
-        }
+        //    this.mContext = context;
+        //    this.mProjectFileParser = projectFileParser;
+        //    this.mSitemapsParser = sitemapsParser;
+        //}
 
         #endregion
 
         #region IUrlAggregator Members
 
-        public IEnumerable<string> AggregateUrls()
+        public virtual IEnumerable<string> AggregateUrls()
         {
             var urls = new List<string>();
             var lines = new List<IProjectFileLineInfo>();
             string[] args = (mContext.UrlReplacementArgs == null) ? new string[0] : mContext.UrlReplacementArgs.ToArray();
 
-            OutputStartProcess("aggregating target URLs");
+            //OutputStartProcess("aggregating target URLs");
 
             AddTargetUrls(mContext.TargetUrls, urls, args);
             AddLinesFromTargetSitemapsFiles(mContext.TargetSitemapsFiles, lines, args);
             AddLinesFromTargetProjectFiles(mContext.TargetProjectFiles, lines, args);
             AddUrlsFromProcessedLines(lines, urls);
 
-            OutputEndProcess("aggregating target URLs");
+            //OutputEndProcess("aggregating target URLs");
 
             return urls;
         }
@@ -66,7 +66,7 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
 
         #region Private Members
 
-        private IEnumerable<string> ProcessLine(IProjectFileLineInfo urlInfo)
+        protected IEnumerable<string> ProcessLine(IProjectFileLineInfo urlInfo)
         {
             if (urlInfo == null)
                 throw new ArgumentNullException("urlInfo");
@@ -129,20 +129,6 @@ namespace ContinuousSeo.W3cValidation.Runner.Processors
             {
                 urls.AddRange(ProcessLine(line));
             }
-        }
-
-        private void OutputStartProcess(string processName)
-        {
-            mContext.Announcer.Say(string.Format("Starting {0}...", processName));
-            mStopwatch.Reset();
-            mStopwatch.Start();
-        }
-
-        private void OutputEndProcess(string processName)
-        {
-            mStopwatch.Stop();
-            mContext.Announcer.Say(string.Format("Completed {0}.", processName));
-            mContext.Announcer.ElapsedTime(mStopwatch.Elapsed);
         }
 
         #endregion
