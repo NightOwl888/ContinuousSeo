@@ -1,5 +1,5 @@
 ﻿<!-- Change the default targets to run specific tasks to debug -->
-<Project DefaultTargets="W3cCssValidator" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="W3cHtmlValidator" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<UsingTask AssemblyFile="bin\Debug\ContinuousSeo.MSBuild.dll"
 		TaskName="ContinuousSeo.MSBuild.W3cHtmlValidator" />

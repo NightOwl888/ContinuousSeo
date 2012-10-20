@@ -26,12 +26,9 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
     {
         protected IFileNameGenerator mFileNameGenerator; // HTML only
         protected ResourceCopier mResourceCopier; // HTML only
-        protected IXslTransformer mXslTransformer; // HTML only
         protected IStreamFactory mStreamFactory;
-        protected IXslResourceProvider mXslResourceProvider;
+        protected IHtmlIndexFileWriter mHtmlIndexFileCreator;
 
-        // This class does both output and validation
-        // Separate into different classes?
 
         public override ValidationResult Process(IEnumerable<string> urls, string outputPath)
         {
@@ -55,16 +52,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
             return outputPath;
         }
 
-        private void WriteHtmlIndexFile(Stream outputXmlReport, string outputPath)
-        {
-            // TODO: Make this string conditional depending on type of validation
-            //var xslFilePath = "ContinuousSeo.W3cValidation.Runner.HtmlValidatorIndex.xsl";
-            using (Stream xsl = Assembly.GetExecutingAssembly().GetManifestResourceStream(mXslResourceProvider.ResourceLocation))
-            {
-                mXslTransformer.Transform(outputXmlReport, xsl, Path.Combine(outputPath, "index.html"));
-            }
-        }
-
         protected override ValidationResult WriteXmlReport(IEnumerable<string> urls, Stream outputXmlReport, string outputPath)
         {
             var result = new ValidationResult();
@@ -82,7 +69,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
                 // This must be done before the writer is closed, or the
                 // stream will also be closed.
                 outputXmlReport.Position = 0;
-                WriteHtmlIndexFile(outputXmlReport, outputPath);
+                mHtmlIndexFileCreator.CreateIndexFile(outputXmlReport, outputPath);
             }
             return result;
         }

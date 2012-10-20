@@ -55,6 +55,8 @@
     <Compile Include="Output\IFileNameGenerator.cs" />
     <Compile Include="Initialization\HtmlValidatorRunnerContext.cs" />
     <Compile Include="Initialization\IValidatorRunnerContext.cs" />
+    <Compile Include="Output\IHtmlIndexFileWriter.cs" />
+    <Compile Include="Output\HtmlIndexFileWriter.cs" />
     <Compile Include="Output\IValidatorReportTextWriter.cs" />
     <Compile Include="Output\IValidatorReportWriterFactory.cs" />
     <Compile Include="Xsl\IXslTransformer.cs" />

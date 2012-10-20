@@ -48,6 +48,8 @@ namespace ContinuousSeo.W3cValidation.Runner.DI
 
             // Sitemaps Parser
             this.For<IHttpClient>().Use(x => x.GetInstance<HttpClient>());
+
+            this.For<IHtmlIndexFileWriter>().Use(x => x.GetInstance<HtmlIndexFileWriter>());
         }
     }
 }

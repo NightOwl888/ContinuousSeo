@@ -20,8 +20,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
     public class AnnouncingXmlOutputUrlProcessor : TimingXmlOutputUrlProcessor
     {
 
-        // TODO: Inject announcer?
-
         public AnnouncingXmlOutputUrlProcessor(
             IValidatorWrapper validator,
             IRunnerContext context,

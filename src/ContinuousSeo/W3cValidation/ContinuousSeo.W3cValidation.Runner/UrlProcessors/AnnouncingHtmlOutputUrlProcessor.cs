@@ -21,7 +21,6 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
     /// </summary>
     public class AnnouncingHtmlOutputUrlProcessor : TimingHtmlOutputUrlProcessor
     {
-        // TODO: Inject announcer?
 
         public AnnouncingHtmlOutputUrlProcessor(
             IValidatorWrapper validator,
@@ -30,8 +29,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
             ResourceCopier resourceCopier,
             IValidatorReportWriterFactory reportWriterFactory,
             IStreamFactory streamFactory,
-            IXslTransformer xslTransformer,
-            IXslResourceProvider xslResourceProvider)
+            IHtmlIndexFileWriter htmlIndexFileCreator)
         {
             if (validator == null)
                 throw new ArgumentNullException("validator");
@@ -45,10 +43,8 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
                 throw new ArgumentNullException("reportWriterFactory");
             if (streamFactory == null)
                 throw new ArgumentNullException("streamFactory");
-            if (xslTransformer == null)
-                throw new ArgumentNullException("xslTransformer");
-            if (xslResourceProvider == null)
-                throw new ArgumentNullException("xslResourceProvider");
+            if (htmlIndexFileCreator == null)
+                throw new ArgumentNullException("htmlIndexFileCreator");
 
             this.mValidator = validator;
             this.mContext = context;
@@ -56,8 +52,7 @@ namespace ContinuousSeo.W3cValidation.Runner.UrlProcessors
             this.mResourceCopier = resourceCopier;
             this.mReportWriterFactory = reportWriterFactory;
             this.mStreamFactory = streamFactory;
-            this.mXslTransformer = xslTransformer;
-            this.mXslResourceProvider = xslResourceProvider;
+            this.mHtmlIndexFileCreator = htmlIndexFileCreator;
         }
 
         public override ValidationResult Process(IEnumerable<string> urls, string outputPath)
