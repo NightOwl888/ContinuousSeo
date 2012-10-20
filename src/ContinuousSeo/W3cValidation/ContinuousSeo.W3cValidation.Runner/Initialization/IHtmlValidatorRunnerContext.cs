@@ -15,13 +15,13 @@ namespace ContinuousSeo.W3cValidation.Runner.Initialization
     /// </summary>
     public interface IHtmlValidatorRunnerContext : IHtmlValidatorSettings, IValidatorRunnerContext
     {
-        IEnumerable<string> TargetSitemapsFiles { get; set; }
-        IEnumerable<string> TargetUrls { get; set; }
-        IEnumerable<string> TargetProjectFiles { get; set; }
-        IEnumerable<string> UrlReplacementArgs { get; set; }
-        string OutputPath { get; set; } // Directory to write output files
-        string OutputFormat { get; set; }
-        string ValidatorUrl { get; set; }
-        bool DirectInputMode { get; set; }
+        //IEnumerable<string> TargetSitemapsFiles { get; set; }
+        //IEnumerable<string> TargetUrls { get; set; }
+        //IEnumerable<string> TargetProjectFiles { get; set; }
+        //IEnumerable<string> UrlReplacementArgs { get; set; }
+        //string OutputPath { get; set; } // Directory to write output files
+        //string OutputFormat { get; set; }
+        //string ValidatorUrl { get; set; }
+        //bool DirectInputMode { get; set; }
     }
 }
