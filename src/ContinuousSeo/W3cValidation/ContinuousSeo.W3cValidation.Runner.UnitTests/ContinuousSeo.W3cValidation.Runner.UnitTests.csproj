@@ -53,7 +53,7 @@
     <Compile Include="Parsers\ProjectFileParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parsers\SitemapsParserTests.cs" />
-    <Compile Include="UrlProcessors\UrlProcessorTests.cs" />
+    <Compile Include="UrlProcessors\HtmlOutputUrlProcessorTests.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
