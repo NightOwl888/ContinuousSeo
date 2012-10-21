@@ -1,19 +1,22 @@
 ﻿<!-- Change the default targets to run specific tasks to debug -->
 <Project DefaultTargets="W3cHtmlValidator" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+	
+	<!-- These tags declare the MSBuild Tasks so they can be used -->
 	<UsingTask AssemblyFile="bin\Debug\ContinuousSeo.MSBuild.dll"
 		TaskName="ContinuousSeo.MSBuild.W3cHtmlValidator" />
 	<UsingTask AssemblyFile="bin\Debug\ContinuousSeo.MSBuild.dll"
 		TaskName="ContinuousSeo.MSBuild.W3cCssValidator" />
 
 
+	<!-- This is a target that will run the W3C HTML Validation -->
 	<Target Name="W3cHtmlValidator">
+		
+		<!-- Declare Target URLs, Target Sitemaps Files, or Target Project Files to run validation on -->
 		<ItemGroup>
-			<TargetUrls Include="http://www.shuttercontractor.com/"/>
-			<TargetUrls Include="http://www.foldingchairdepot.com/"/>
-			<TargetUrls Include="http://www.foldingchairdepot.com/c/Folding-Chairs/PlasticBlow-Molded-Folding-Chairs.aspx"/>
-			<TargetUrls Include="http://www.foldingchairdepot.com/c/Folding-Tables/Wood-Folding-Tables.aspx"/>
-			<TargetUrls Include="http://www.foldingchairdepot.com/p/Correll-18-x-72-Quick-Ship-3-Person-High-Pressure-Laminate-Surface-Seminar-Folding-Table-wOff-Set-Legs__COR-ST1872PX.aspx"/>
+			<TargetUrls Include="http://www.google.com/"/>
+			<TargetUrls Include="http://www.yahoo.com/"/>
+			<TargetUrls Include="http://www.bing.com/"/>
 		</ItemGroup>
 
 		<!--<ItemGroup>
@@ -24,6 +27,7 @@
 			<TargetProjectFiles Include="W3cHtmlValidator.project"/>
 		</ItemGroup>-->
 
+		<!-- This declaration will run the W3C HTML validator -->
 		<W3cHtmlValidator
 			TargetUrls="@(TargetUrls)"
 			TargetSitemapsFiles="@(TargetSitemapsFiles)"
@@ -35,6 +39,7 @@
 			<Output TaskParameter="TotalWarnings" PropertyName="HtmlValidatorWarnings"/>
 		</W3cHtmlValidator>
 
+		<!-- Break the build by throwing a conditional error. You can decide how many errors or warnings you will tolerate. -->
 		<Error Condition="$(HtmlValidatorErrors) > 0" Text="W3C HTML Validator found $(HtmlValidatorErrors) error(s)."/>
 		
 	</Target>
