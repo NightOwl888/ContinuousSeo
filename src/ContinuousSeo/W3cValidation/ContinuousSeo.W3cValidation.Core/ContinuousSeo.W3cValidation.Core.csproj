@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SolutionInfo.cs">
+      <Link>SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Css\CssValidator.cs" />
     <Compile Include="Css\CssValidatorMessage.cs" />
     <Compile Include="Css\CssValidatorReport.cs" />

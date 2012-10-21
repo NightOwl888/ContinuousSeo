@@ -18,22 +18,18 @@
 // -----------------------------------------------------------------------
 #endregion
 
-namespace ContinuousSeo.Core.Net
+namespace ContinuousSeo.W3cValidation.Runner.Xsl
 {
     using System;
-    using System.Collections.Specialized;
-    using System.IO;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
     /// <summary>
-    /// Interface for HttpClient.
+    /// TODO: Update summary.
     /// </summary>
-    public interface IHttpClient
+    public interface IXslResourceProvider
     {
-        NameValueCollection Get(Stream output, string url);
-        NameValueCollection Post(Stream output, string url, string data);
-        Stream GetResponseStream(string url);
-        void Close();
-        void Dispose();
-        string GetResponseText(string url);
+        string ResourceLocation { get; }
     }
 }

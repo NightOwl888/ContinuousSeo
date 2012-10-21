@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SolutionInfo.cs">
+      <Link>SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="CssValidatorRunner.cs" />
     <Compile Include="DI\CssValidatorRegistry.cs" />
     <Compile Include="DI\HtmlValidatorRegistry.cs" />
@@ -93,7 +96,7 @@
     <Compile Include="ValidationResult.cs" />
     <Compile Include="Xsl\CssXsltResourceProvider.cs" />
     <Compile Include="Xsl\HtmlXsltResourceProvider.cs" />
-    <Compile Include="Xsl\IXsltResourceProvider.cs" />
+    <Compile Include="Xsl\IXslResourceProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Xsl\HtmlValidatorIndex.xsl" />

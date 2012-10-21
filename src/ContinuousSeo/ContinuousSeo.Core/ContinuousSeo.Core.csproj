@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Announcers\Announcer.cs" />
     <Compile Include="Announcers\ConsoleAnnouncer.cs" />
     <Compile Include="Announcers\IAnnouncer.cs" />
